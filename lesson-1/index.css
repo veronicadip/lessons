@@ -1,0 +1,38 @@
+h1 {
+  color: blueviolet;
+  margin-bottom: 200px;
+}
+
+h2 {
+  color: brown;
+}
+h3 {
+  color: cadetblue;
+}
+h4 {
+  color: darkcyan;
+}
+h5 {
+  color: darkgreen;
+}
+h6 {
+  color: darkred;
+}
+
+body {
+  background-color: burlywood;
+}
+
+:any-link {
+  font-weight: bold;
+}
+
+div {
+  background-color: red;
+  padding-top: 100px;
+  margin-top: ;
+}
+
+i .purple-text {
+    color: purple;
+}
