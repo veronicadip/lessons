@@ -32,3 +32,4 @@ $ cd lessons
 - To add files to be commited: `git add FILE_NAME`
 - To create a commit (take a new photo): `git commit -m "your message"`
 - To send the commit to GitHub: `git push`
+- To bring the changes: `git pull`
