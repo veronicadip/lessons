@@ -1,4 +1,16 @@
 body {
-    display: flex;
-    justify-content: center;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.container {
+  display: flex;
+}
+img {
+  max-width: 250px;
+  max-height: 280px;
+  margin: 25px 15px 0px;
+  border-radius: 10%;
+}
+img:hover {
+  opacity: 0.3;
 }
