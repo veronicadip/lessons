@@ -1,5 +1,25 @@
 body {
-  margin: 250px 600px;
+  background-color: #efefef;
+}
+ul {
+  list-style-type: none;
+  display: flex;
+}
+li {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+label.name {
+  margin-right: 24px;
+}
+label.surname {
+  margin-right: 5px;
+}
+label.address {
+  margin-right: 10px;
+}
+label.age {
+  margin-right: 34px;
 }
 button {
   background-color: rgb(16, 90, 16);
@@ -11,7 +31,6 @@ button {
   border: none;
   border-radius: 8px;
   color: white;
-  margin-left: 5px;
 }
 button:hover {
   background-color: rgba(9, 104, 9, 0.685);

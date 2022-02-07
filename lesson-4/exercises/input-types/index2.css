@@ -1,5 +1,6 @@
 body {
-  margin: 250px 600px;
+    background-color: #efefef;
+    margin: 200px 500px;
 }
 button {
   background-color: rgb(16, 90, 16);
@@ -11,7 +12,7 @@ button {
   border: none;
   border-radius: 8px;
   color: white;
-  margin-left: 5px;
+  margin-left: 150px;
 }
 button:hover {
   background-color: rgba(9, 104, 9, 0.685);
