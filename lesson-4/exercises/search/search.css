@@ -1,0 +1,21 @@
+body {
+    margin: 250px 600px;
+}
+button {
+    background-color: rgb(16, 90, 16);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    height: 30px;
+    padding: 5px 9px;
+    border: none;
+    border-radius: 8px;
+    color:white;
+    margin-left: 5px;
+}
+button:hover {
+    background-color: rgba(9, 104, 9, 0.685);
+}
+button:active {
+    background-color: rgb(8, 73, 8)
+}
