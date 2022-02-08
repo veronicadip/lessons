@@ -18,7 +18,7 @@
   <div class="whitebox">
     <div class="headofbox">
       <h2>Create a new account</h2>
-      <p>It's quick and easy.</p>
+      <p class="p1">It's quick and easy.</p>
     </div>
     <div class="forms">
       <ul>
@@ -58,7 +58,7 @@
             />
           </li>
           <li>
-            <p>Birthday</p>
+            <p class="p2">Birthday</p>
             <label for="bdaymonth"></label>
             <select name="bdaymonth" id="bdaymonth">
               <option value="jan">Jan</option>
@@ -126,15 +126,15 @@
             </select>
           </li>
           <li>
-            <p>Gender</p>
-            <label for="female">Female</label>
+            <p class="p3">Gender</p>
+            <label for="female" class="gender">Female</label>
             <input type="radio" name="gender" id="female" value="female" />
-            <label for="male">Male</label>
+            <label for="male" class="gender">Male</label>
             <input type="radio" name="gender" id="male" value="male" />
-            <label for="custom">Custom</label>
+            <label for="custom" class="gender">Custom</label>
             <input type="radio" name="gender" id="custom" value="custom" />
           </li>
-          <p>
+          <p class="p4">
             By clicking Sign Up, you agree to our
             <a href="https://www.facebook.com/legal/terms/update">Terms</a>,
             <a href="https://www.facebook.com/about/privacy/update"
@@ -146,10 +146,16 @@
             >. You may receive SMS Notifications from us and can opt out any
             time.
           </p>
-          <label for="singup"></label>
+          <label for="singup" class="button"></label>
           <input type="button" name="singup" id="singup" value="Sing Up" />
         </form>
       </ul>
     </div>
+    <p>
+      <a 
+      href="https://www.facebook.com/login/?privacy_mutation_token=eyJ0eXBlIjowLCJjcmVhdGlvbl90aW1lIjoxNjQ0Mjk2OTQ4LCJjYWxsc2l0ZV9pZCI6MjY5NTQ4NDUzMDcyMDk1MX0%3D">
+      Already have an account?
+      </a>
+    </p>
   </div>
 </body>
