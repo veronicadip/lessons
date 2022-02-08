@@ -59,6 +59,8 @@
           </li>
           <li>
             <p class="p2">Birthday</p>
+            <div class="bdayforms">
+            <div class="bdaymonthform">
             <label for="bdaymonth"></label>
             <select name="bdaymonth" id="bdaymonth">
               <option value="jan">Jan</option>
@@ -74,6 +76,8 @@
               <option value="nov">Nov</option>
               <option value="dec">Dec</option>
             </select>
+          </div>
+          <div class="bdadayform">
             <label for="bdayday"></label>
             <select name="bdayday" id="bdayday">
               <option value="1">1</option>
@@ -108,6 +112,8 @@
               <option value="30">30</option>
               <option value="31">31</option>
             </select>
+          </div>
+          <div class="bdayyearform">
             <label for="bdayyear"></label>
             <select name="bdayyear" id="bdayyear">
               <option value="2022">2022</option>
@@ -124,15 +130,25 @@
               <option value="2011">2011</option>
               <option value="2010">2010</option>
             </select>
+          </div>
+        </div>
           </li>
           <li>
             <p class="p3">Gender</p>
+            <div class="genderforms">
+            <div class="femalegender">
             <label for="female" class="gender">Female</label>
             <input type="radio" name="gender" id="female" value="female" />
+          </div>
+          <div class="malegender">
             <label for="male" class="gender">Male</label>
             <input type="radio" name="gender" id="male" value="male" />
+          </div>
+          <div class="customgender">
             <label for="custom" class="gender">Custom</label>
             <input type="radio" name="gender" id="custom" value="custom" />
+          </div>
+        </div>
           </li>
           <p class="p4">
             By clicking Sign Up, you agree to our
@@ -146,12 +162,14 @@
             >. You may receive SMS Notifications from us and can opt out any
             time.
           </p>
-          <label for="singup" class="button"></label>
-          <input type="button" name="singup" id="singup" value="Sing Up" />
+          <div class="buttonform">
+          <label for="singup"></label>
+          <input type="button" name="singup" id="singup" value="Sing Up" class="button"/>
+        </div>
         </form>
       </ul>
     </div>
-    <p>
+    <p class="p5">
       <a 
       href="https://www.facebook.com/login/?privacy_mutation_token=eyJ0eXBlIjowLCJjcmVhdGlvbl90aW1lIjoxNjQ0Mjk2OTQ4LCJjYWxsc2l0ZV9pZCI6MjY5NTQ4NDUzMDcyMDk1MX0%3D">
       Already have an account?
