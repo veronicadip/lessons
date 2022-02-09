@@ -7,7 +7,7 @@ img {
   height: 100px;
   padding-top: 5px;
   text-align: center;
-  margin-left: 110px;
+  margin-left: 80px;
 }
 .whitebox {
   background-color: #fff;
@@ -64,7 +64,7 @@ p.p4 {
   font-size: 11px;
 }
 p.p5 {
-  margin-left: 150px;
+  margin-left: 125px;
   color: #1877f2;
   font-size: 17px;
   margin-top: 1px;
