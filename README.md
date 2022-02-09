@@ -35,4 +35,4 @@ $ cd lessons
 - To bring the changes: `git pull`
 - To create a new branch: `git checkout -b BRANCH_NAME`
 - To switch to a branch: `git checkout BRANCH_NAME`
-- To push a branch: `git push -u BRANCH_NAME`
+- To push a branch: `git push -u origin BRANCH_NAME`
