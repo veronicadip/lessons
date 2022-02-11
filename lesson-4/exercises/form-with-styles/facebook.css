@@ -1,5 +1,5 @@
 body {
-  background-color: #f0f2f5 ;
+  background-color: #f0f2f5;
   max-width: 500px;
   margin: 0 auto;
 }
@@ -28,16 +28,12 @@ img {
 .nameandlastname {
   display: flex;
   justify-content: space-between;
-
-}
-.nameandlastname input {
-  width: 49%;
 }
 h2 {
   font-size: 25px;
   line-height: 32px;
   text-align: center;
-  margin: 20px 0px 0px
+  margin: 20px 0px 0px;
 }
 p.p1 {
   font-size: 15px;
@@ -76,8 +72,7 @@ a {
 ul {
   list-style-type: none;
 }
-input[type="text"],
-input[type="password"] {
+.input {
   padding: 12px;
   font-size: 15px;
   line-height: 16px;
@@ -86,6 +81,12 @@ input[type="password"] {
   border-style: solid;
   width: 100%;
   margin-bottom: 10px;
+}
+.firstname {
+  width: 49%;
+}
+.lastname {
+  width: 49%;
 }
 .bdayforms {
   display: flex;
@@ -109,29 +110,15 @@ select {
   font-size: 15px;
   padding-left: 5px;
 }
-.femalegender {
+.gender {
   border: 1px solid #ccd0d5;
   box-sizing: border-box;
   padding: 12px;
   border-radius: 4px;
   width: 140px;
   margin-right: 5px;
-}
-.malegender {
-  border: 1px solid #ccd0d5;
-  box-sizing: border-box;
-  padding: 12px;
-  border-radius: 4px;
-  width: 140px;
-  margin-right: 5px;
-}
-.customgender {
-  border: 1px solid #ccd0d5;
-  box-sizing: border-box;
-  padding: 12px;
-  border-radius: 4px;
-  width: 140px;
-  margin-right: 5px;
+  display: flex;
+  justify-content: space-between;
 }
 input.button {
   background-color: #00a400;
