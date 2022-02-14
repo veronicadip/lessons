@@ -5,8 +5,9 @@
   *
   */
 
-const myVariable = "yes!"
+const myVariable1 = "yes!"
 
-myVariable = 1
+myVariable2 = 1
 
-console.table({ myVariable })
+console.table({ myVariable1 })
+console.table({ myVariable2 })
