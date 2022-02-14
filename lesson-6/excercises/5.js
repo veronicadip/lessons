@@ -14,5 +14,5 @@ const lastelement = "bird";
 const array1 = [firstelement, secondelement, thirdelement, fourthelement, lastelement];
 
 console.log("This array has " + (array1.length) + " elements")
-console.log("The first element is " + firstelement)
-console.log("The last element is " + lastelement)
+console.log("The first element is " + array1[0])
+console.log("The last element is " + array1[array1.length -1])
