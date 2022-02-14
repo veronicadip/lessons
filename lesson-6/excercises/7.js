@@ -2,12 +2,14 @@
   * If you run the following code it will give you an error.
   *
   * Why? Investigate what you can change in the code to avoid that error
-  *
+  * 
+  * You can't define another variable
+  * 
   */
 
-const myVariable1 = "yes!"
+let myVariable = "yes!"
 
-myVariable2 = 1
+myVariable = 1
 
-console.table({ myVariable1 })
-console.table({ myVariable2 })
+console.table({ myVariable })
+
