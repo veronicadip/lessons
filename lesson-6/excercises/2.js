@@ -4,3 +4,5 @@
   *
   * Write the code to print three different things
   */
+
+console.log("dogs", ["kira", "tommy", "puki"]);
