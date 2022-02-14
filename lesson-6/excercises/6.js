@@ -6,3 +6,8 @@
   *   iii. `.includes()`
   *
   */
+const favcolors = ["green", "black", "purple", "brown", "silver"]
+console.log(favcolors.at(-2))
+console.log(favcolors.join(''))
+console.log(favcolors.includes("black"))
+console.log(favcolors.includes("blue"))
