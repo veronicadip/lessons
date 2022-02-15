@@ -48,3 +48,32 @@ while (number !== 10) {
     number = number + 1
 }
 ```
+
+
+```js
+function isEven(number) {
+  if (number % 2 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// returns the sum only if number1 is even AND number2 is even
+// otherwise returns false
+function sumIfEven(number1, number2) {
+    const isNumber1Even = isEven(number1)
+    const isNumber2Even = isEven(number2)
+
+    if(isNumber1Even && isNumber2Even) {
+        return number1 + number2
+    } else {
+        return false
+    }
+}
+
+console.log(sumIfEven(2, 2), 4)
+console.log(sumIfEven(3, 2), false)
+```
+
+https://eloquentjavascript.net/02_program_structure.html#h_wpz5oi2dy7
