@@ -7,7 +7,11 @@
 const words = ["store", "plant", "green"];
 
 function wordle(word, day) {
-  // your implementation here
+  if (words >= length[6]) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 if (wordle("longword") !== false) {
