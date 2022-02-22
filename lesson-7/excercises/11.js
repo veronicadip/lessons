@@ -4,3 +4,9 @@
  * 
  * Example: fullname({ name: 'Puki', surname: 'Dip' }) returns 'Puki Dip'
  */
+
+function fullnameFunc(fullnameObj) {
+    return fullnameObj.name + " " + fullnameObj.surname
+}
+
+console.log(fullnameFunc({name: "Puki", surname: "Dip"}))
