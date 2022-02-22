@@ -10,7 +10,8 @@
 function combineArr(array1, array2) {
   let result = [];
   for (let counter = 0; counter !== array1.length; counter++) {
-    result.push(array1.at(counter)) + result.push(array2.at(counter));
+    result.push(array1.at(counter));
+    result.push(array2.at(counter));
   }
   return result;
 }
