@@ -6,9 +6,22 @@
  *  returns [2, 3, 4]
  */
 
-const array = [5, 10, 15];
-const multiplyArr = array.map(function (item) {
-  return item * 5;
-});
+function myMap(array, func) {
+  const result = [];
+  for (let counter = 0; counter !== array.length; counter++) {
+    const item = array.at(counter);
+    result.push(func(item));
+  }
+  return result;
+}
 
-console.log(multiplyArr);
+console.log(
+  myMap([1, 2, 3], function (item) {
+    return item + 1;
+  })
+);
+console.log(
+  myMap([1, 2, 3], function (item) {
+    return item * 10;
+  })
+);
