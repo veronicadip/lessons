@@ -11,9 +11,22 @@
  * Use this function to multiply all the items in an array
  */
 
-const array = [2, 4, 2];
-const reduceArr = array.reduce(function (total, item) {
-  return total * item;
-}, 1);
-
-console.log(reduceArr);
+ function myReduce(array, func, initialVal) {
+    let result = initialVal;
+    for (let counter = 0; counter !== array.length; counter++) {
+      const item = array.at(counter);
+      result = func(result, item);
+    }
+    return result;
+  }
+  
+  console.log(
+    myReduce(
+      [4, 5, 4],
+      function (result, item) {
+        return result * item;
+      },
+      1
+    )
+  );
+  
