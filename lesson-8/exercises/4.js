@@ -11,33 +11,44 @@ class Person {
     this.name = personName;
     this.age = personAge;
   }
-  presentation() {
-    console.log("Hi, my name is " + this.name + " and my age is " + this.age);
-  }
 }
 
-class Professor extends Person {}
-
-const Fulano = new Professor("Fulano", 37);
-{
-  Fulano.presentation();
+class Professor extends Person {
+    constructor(personName, personAge, profSubject) {
+        super(personName, personAge)
+        this.subject = profSubject
+    }
+    profPresentation() {
+        console.log("Hi, my name is " + this.name + ", I'm " + this.age + " years old and I will teach you " + this.subject);
+    }
 }
 
-const Mengano = new Professor("Mengano", 49);
+const Fulano = new Professor("Fulano", 37, "history");
 {
-  Mengano.presentation();
+    Fulano.profPresentation();
 }
 
-class Student extends Person {}
-
-const Fulanito = new Student("Fulanito", 14);
+const Mengano = new Professor("Mengano", 49, "english");
 {
-  Fulanito.presentation();
+  Mengano.profPresentation();
 }
 
-const Menganito = new Student("Menganito", 16);
-{
-  Menganito.presentation();
+class Student extends Person {
+    constructor(personName, personAge, studentYear) {
+        super(personName, personAge)
+        this.year = studentYear
+    }
+    studPresentation() {
+        console.log("Hi, my name is " + this.name + ", I'm " + this.age + " years old and I'm at my " + this.year + " year in this school");
+    }
+}
+
+const Fulanito = new Student("Fulanito", 14, "third"); {
+    Fulanito.studPresentation();
+}
+
+const Menganito = new Student("Menganito", 16, "fifth");{
+    Menganito.studPresentation();
 }
 
 class Lesson {
