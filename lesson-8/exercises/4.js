@@ -6,54 +6,48 @@
  *
  */
 
+
 class Person {
-  constructor(personName, personAge) {
-    this.name = personName;
-    this.age = personAge;
-  }
+    constructor(personName, personAge, personLesson) {
+        this.name = personName;
+        this.age = personAge;
+        this.lesson = personLesson
+    }
 }
 
 class Professor extends Person {
-    constructor(personName, personAge, profSubject) {
-        super(personName, personAge)
-        this.subject = profSubject
+    constructor(personName, personAge, personLesson) {
+        super(personName, personAge, personLesson)
     }
-    profPresentation() {
-        console.log("Hi, my name is " + this.name + ", I'm " + this.age + " years old and I will teach you " + this.subject);
+    profPresent() {
+        console.log("Hi, my name is " + this.name + ", I'm " + this.age + " years old and I will teach you " + this.lesson);
     }
 }
 
-const Fulano = new Professor("Fulano", 37, "history");
-{
-    Fulano.profPresentation();
-}
+const fulano = new Professor("Fulano", 37, "history");
+fulano.profPresent();
 
-const Mengano = new Professor("Mengano", 49, "english");
-{
-  Mengano.profPresentation();
-}
+const mengano = new Professor("Mengano", 49, "english");
+mengano.profPresent();
 
 class Student extends Person {
-    constructor(personName, personAge, studentYear) {
-        super(personName, personAge)
+    constructor(personName, personAge, studentYear, personLesson) {
+        super(personName, personAge, personLesson)
         this.year = studentYear
     }
-    studPresentation() {
+    studPresent() {
         console.log("Hi, my name is " + this.name + ", I'm " + this.age + " years old and I'm at my " + this.year + " year in this school");
+    }
+    studLessons() {
+        console.log("I'm taking these classes: " + this.lesson)
     }
 }
 
-const Fulanito = new Student("Fulanito", 14, "third"); {
-    Fulanito.studPresentation();
-}
+const fulanito = new Student("Fulanito", 14, "third", "history, english and psychology");
+fulanito.studPresent();
+fulanito.studLessons();
 
-const Menganito = new Student("Menganito", 16, "fifth");{
-    Menganito.studPresentation();
-}
 
-class Lesson {
-  constructor(lessonSubject, lessonNumber) {
-    this.subject = lessonSubject;
-    this.number = lessonNumber;
-  }
-}
+const menganito = new Student("Menganito", 16, "fifth", "spanish, math, biology and history II");
+menganito.studPresent();
+menganito.studLessons();
