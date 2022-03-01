@@ -17,11 +17,7 @@ class Rectangle {
         console.log(this.width * this.height)
     }
     isSquare() {
-        if (this.width !== this.height) {
-            return false
-        } else {
-            return true
-        }
+        return this.width === this.height
     }
 }
 
