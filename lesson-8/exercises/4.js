@@ -39,7 +39,7 @@ class Student extends Person {
         console.log("Hi, my name is " + this.name + ", I'm " + this.age + " years old and I'm at my " + this.year + " year in this school");
     }
     studLessons() {
-        console.log("I'm taking these classes: " + this.lesson)
+        console.log("I'm taking these classes: " + this.lesson.join(", "))
     }
 }
 
@@ -48,7 +48,7 @@ fulanito.present();
 fulanito.studLessons();
 
 
-const menganito = new Student("Menganito", 16, "fifth", "spanish, math, biology and history II");
+const menganito = new Student("Menganito", 16, "fifth", ["spanish", "math", "biology", "history II"]);
 menganito.present();
 menganito.studLessons();
 
