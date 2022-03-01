@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- 
+        <TodoList> has:
+            - A text input to write TODOs
+            - A button to add the TODO to the list
+            - A list with all the TODO items
+
+        Hints:
+            - store the TODOs in an array in the state
+            - don't worry about styles
+     -->
+    
+    <script type="text/babel">
+      ReactDOM.render(
+        <TodoList />,
+        document.getElementById('root')
+      );
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <style>
+      .pukibutton {
+        color: rebeccapurple;
+      }
+    </style>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+      class PukiButton extends React.Component {
+        render() {
+          return <button className="pukibutton">Puki Button</button>;
+        }
+      }
+
+      class Text extends React.Component {
+        render() {
+          console.log(this.props);
+
+          return (
+            <div>
+              {this.props.text}
+
+              <PukiButton></PukiButton>
+            </div>
+          );
+        }
+      }
+
+      class Counter extends React.Component {
+        state = {
+          count: this.props.count,
+        };
+
+        increment = () => {
+            this.setState({ count: this.state.count + 1 })
+        };
+
+        decrement = () => {
+            this.setState({ count: this.state.count - 1 })
+        }
+
+
+        render() {
+          return (
+            <div>
+              {this.state.count}
+              <button onClick={this.increment}>+</button>
+              <button onClick={this.decrement}>-</button>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<Counter count={10}></Counter>, document.getElementById("root"));
+    </script>
+  </body>
+</html>
