@@ -89,3 +89,30 @@ class Cat extends Animal {
 }
 ```
 
+## Arrow functions
+
+
+```js
+function namedFunction () {
+  //code 
+}
+
+const variableFunction = function () {
+  // code
+}
+
+arr.every(function (currentString) {
+  console.log('asdf')
+  console.log('0sfasdfda')
+  return currentString === 'puki'
+})
+
+arr.every((currentString) => currentString === 'puki')
+
+const arrowFn = (item) => {
+  console.log('asdf')
+  console.log('0sfasdfda')
+  return currentString === 'puki'
+}
+```
+
