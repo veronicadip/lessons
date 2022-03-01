@@ -4,7 +4,10 @@
  */
 
 const pukiFunc = (currentString) => currentString === "puki"
-console.log(allPukis.every(pukiFunc))
+
+const allPukis = function(arr) {
+  return arr.every(pukiFunc)
+}
 
 
 if (allPukis(["puki", "puki", "puki"]) !== true) {
