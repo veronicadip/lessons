@@ -3,6 +3,13 @@
  * to write a function that passes the tests
  */
 
+const pukiFunc = (currentString) => currentString === "puki"
+
+const allPukis = function(arr) {
+  return arr.every(pukiFunc)
+}
+
+
 if (allPukis(["puki", "puki", "puki"]) !== true) {
   throw new Error(
     "it should return true when all the items in the array are pukis"
