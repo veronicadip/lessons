@@ -19,23 +19,23 @@ class Professor extends Person {
     constructor(personName, personAge, personLesson) {
         super(personName, personAge, personLesson)
     }
-    profPresent() {
+    present() {
         console.log("Hi, my name is " + this.name + ", I'm " + this.age + " years old and I will teach you " + this.lesson);
     }
 }
 
 const fulano = new Professor("Fulano", 37, "history");
-fulano.profPresent();
+fulano.present();
 
 const mengano = new Professor("Mengano", 49, "english");
-mengano.profPresent();
+mengano.present();
 
 class Student extends Person {
     constructor(personName, personAge, studentYear, personLesson) {
         super(personName, personAge, personLesson)
         this.year = studentYear
     }
-    studPresent() {
+    present() {
         console.log("Hi, my name is " + this.name + ", I'm " + this.age + " years old and I'm at my " + this.year + " year in this school");
     }
     studLessons() {
@@ -43,11 +43,20 @@ class Student extends Person {
     }
 }
 
-const fulanito = new Student("Fulanito", 14, "third", "history, english and psychology");
-fulanito.studPresent();
+const fulanito = new Student("Fulanito", 14, "third", ["history", "english", "psicology"]);
+fulanito.present();
 fulanito.studLessons();
 
 
 const menganito = new Student("Menganito", 16, "fifth", "spanish, math, biology and history II");
-menganito.studPresent();
+menganito.present();
 menganito.studLessons();
+
+
+
+/**
+ * Hey, I'm {pesonName} and I'm taking the following lessons:
+ * 
+ * - {lesson 1}
+ * - {lesson 2}
+ */
