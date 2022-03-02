@@ -21,12 +21,15 @@
 
     <script type="text/babel">
       class TodoList extends React.Component {
+
         render() {
           const strList = this.props.list.map((thingToDo) => (
             <li>{thingToDo}</li>
           ));
           return (
             <div>
+              <input type="text"/>
+              <button>Add</button>
               <ul>{strList}</ul>
             </div>
           );
