@@ -14,6 +14,12 @@
       -->
 
     <script type="text/babel">
+      class ObjectList extends React.Component {
+        render() {
+          const itemList = this.props.items.map((item) => <li>{item.name}</li>);
+          return <ul>{itemList}</ul>
+        }
+      }
       ReactDOM.render(
         <ObjectList
           items={[{ name: "puki" }, { name: "tomi" }, { name: "kira" }]}
