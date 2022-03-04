@@ -21,7 +21,9 @@
 
     <script type="text/babel">
       class TodoList extends React.Component {
-
+        add = () => {
+          this.setState({ strList: this.})
+        }
         render() {
           const strList = this.props.list.map((thingToDo) => (
             <li>{thingToDo}</li>
