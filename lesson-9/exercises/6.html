@@ -6,44 +6,47 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <style>
       div {
-          display: flex;
-          font-family: "Cutive Mono", monospace;
-          max-width: 280px;
-          max-height: 95px;
+        display: flex;
+        font-family: "Cutive Mono", monospace;
+        max-width: 280px;
+        max-height: 95px;
       }
-  
+
       .text {
-          display: flex;
-          flex-direction: column;
-          max-height: 78px;
-          margin-left: 8px;
+        display: flex;
+        flex-direction: column;
+        max-height: 78px;
+        margin-left: 8px;
       }
-  
+
       img {
-          border-radius: 50%;
-          max-width: 78px;
-          max-height: 78px;
-          margin: 2%;
+        border-radius: 50%;
+        max-width: 78px;
+        max-height: 78px;
+        margin: 2%;
       }
-  
+
       h4 {
-          margin: 2%;
-          font-size: 26px;
-          width: 175.266;
-          margin-top: 13.5;
-          margin-left: 3.5;
+        margin: 2%;
+        font-size: 26px;
+        width: 175.266;
+        margin-top: 13.5;
+        margin-left: 3.5;
       }
-  
+
       p {
-          margin: 2%;
-          font-size: 16px;
+        margin: 2%;
+        font-size: 16px;
       }
-  </style>
+    </style>
     <div id="root"></div>
 
     <!-- 
@@ -57,21 +60,21 @@
         render() {
           return (
             <div>
-            <img src={this.props.imageSrc}/>
-            <div class="text">
-            <h4>{this.props.name}</h4>
-            <p>{this.props.shares}</p>
+              <img src={this.props.imageSrc} />
+              <div class="text">
+                <h4>{this.props.name}</h4>
+                <p>{this.props.shares}</p>
+              </div>
             </div>
-            </div>
-          )
+          );
         }
       }
       ReactDOM.render(
-          <Profile
-            name="Dillon Kydd"
-            shares="100 SHARES"
-            imageSrc="https://i.picsum.photos/id/257/78/78.jpg?hmac=7NxqMbEdQgDoV4aM8GalJz_FCQfORVytYMy1BVcgNJs"
-          ></Profile>,
+        <Profile
+          name="Dillon Kydd"
+          shares="100 SHARES"
+          imageSrc="https://i.picsum.photos/id/257/78/78.jpg?hmac=7NxqMbEdQgDoV4aM8GalJz_FCQfORVytYMy1BVcgNJs"
+        ></Profile>,
         document.getElementById("root")
       );
     </script>
