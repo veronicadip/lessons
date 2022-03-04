@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <style>
+    </style>
+    <div id="root"></div>
+    <!--
+      Create a component <Greeter> that renders only an input
+      when an user types something in the input, a text should appear
+      below the input with "Hello, {inputContent}!"
+
+      For example:
+
+      1. I visit the page
+      2. I type "p" in the input => the text "Hello, p!" appears below the input
+      3. I type "pu" in the input => the text "Hello, pu!" replaces the previous text
+      4. ... 
+
+    -->
+
+    <script type="text/babel">
+      ReactDOM.render(
+        <Greeter>,
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>
