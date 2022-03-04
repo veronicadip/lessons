@@ -30,14 +30,15 @@
         addstr = (event) => {
           event.preventDefault();
           this.setState({
-            list: this.state.list.push(
-              event.nativeEvent.currentTarget.querySelector("input").value
-            ),
+            list: [
+              ...this.state.list,
+              event.nativeEvent.currentTarget.querySelector("input").value,
+            ],
           });
         };
 
         render() {
-          const strList = this.props.list.map((thingToDo) => (
+          const strList = this.state.list.map((thingToDo) => (
             <li>{thingToDo}</li>
           ));
 
