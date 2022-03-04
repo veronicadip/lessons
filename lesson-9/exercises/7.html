@@ -6,8 +6,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style>
-    </style>
+    <style></style>
     <div id="root"></div>
     <!--
       Create a component <Greeter> that renders only an input
@@ -24,8 +23,28 @@
     -->
 
     <script type="text/babel">
+      class Greeter extends React.Component {
+        state = {
+          greetingText: this.props.greetingText,
+        };
+        addGreeting = () => {
+          this.setState({
+            greetingText:
+            event.srcElement.value,
+          });
+          console.log(this.state.greetingText)
+        };
+        render() {
+          return (
+            <div>
+              <input type="text" onChange={this.addGreeting} />
+              <p>{this.state.greetingText}</p>
+            </div>
+          );
+        }
+      }
       ReactDOM.render(
-        <Greeter>,
+        <Greeter greetingText={""}></Greeter>,
         document.getElementById("root")
       );
     </script>
