@@ -49,12 +49,7 @@
     <script type="text/babel">
       class MyButton extends React.Component {
         render() {
-          console.log(this.props);
-          return (
-            <div>
-            <button className="mybutton">{this.props.text}</button>
-            </div>
-          );
+          return <button className="mybutton">{this.props.text}</button>;
         }
       }
 
