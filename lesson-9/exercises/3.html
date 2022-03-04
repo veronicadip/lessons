@@ -17,21 +17,37 @@
         Hints:
             - store the TODOs in an array in the state
             - don't worry about styles
+
+
+            EVENT -> EVENT HANDLER -> UPDATE STATE
      -->
 
     <script type="text/babel">
       class TodoList extends React.Component {
-        add = () => {
-          this.setState({ strList: this.})
-        }
+        state = {
+          list: this.props.list,
+        };
+        addstr = (event) => {
+          event.preventDefault();
+          this.setState({
+            list: this.state.list.push(
+              event.nativeEvent.currentTarget.querySelector("input").value
+            ),
+          });
+        };
+
         render() {
           const strList = this.props.list.map((thingToDo) => (
             <li>{thingToDo}</li>
           ));
+
           return (
             <div>
-              <input type="text"/>
-              <button>Add</button>
+              <form onSubmit={this.addstr}>
+                <input type="text" />
+                <button>{this.props.buttontext}</button>
+              </form>
+
               <ul>{strList}</ul>
             </div>
           );
@@ -40,6 +56,7 @@
 
       ReactDOM.render(
         <TodoList
+          buttontext="Add"
           list={["pet puki's head", "go to the market", "pet puki's tripa"]}
         ></TodoList>,
         document.getElementById("root")
