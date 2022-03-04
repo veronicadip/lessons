@@ -57,7 +57,7 @@
         render() {
           return (
             <div>
-            <img alt="dyllon-kydd-profile-picture" src={this.props.src}/>
+            <img src={this.props.imageSrc}/>
             <div class="text">
             <h4>{this.props.name}</h4>
             <p>{this.props.shares}</p>
@@ -70,7 +70,7 @@
           <Profile
             name="Dillon Kydd"
             shares="100 SHARES"
-            src="https://i.picsum.photos/id/257/78/78.jpg?hmac=7NxqMbEdQgDoV4aM8GalJz_FCQfORVytYMy1BVcgNJs"
+            imageSrc="https://i.picsum.photos/id/257/78/78.jpg?hmac=7NxqMbEdQgDoV4aM8GalJz_FCQfORVytYMy1BVcgNJs"
           ></Profile>,
         document.getElementById("root")
       );
