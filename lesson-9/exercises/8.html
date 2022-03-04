@@ -6,8 +6,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style>
-    </style>
+    <style></style>
     <div id="root"></div>
     <!--
       You are given the component <Puki />,
@@ -19,14 +18,47 @@
     -->
 
     <script type="text/babel">
-
       // Surprise! functions can be components too!
       // if your component doesn't need `this.state` or `this.props`
       // you can use a function instead if you want.
-      const Puki = () => <span>🐄</span>
+
+      const Puki = () => <span>🐄</span>;
+
+      class PukiGenerator extends React.Component {
+        state = {
+          count: this.props.count,
+        };
+
+        increment = () => {
+          this.setState({ count: this.state.count + 1 });
+        };
+
+        decrement = () => {
+          this.setState({ count: this.state.count - 1 });
+        };
+
+        renderPukis() {
+          const pukiArr = [];
+          for (let counter = 0; counter !== this.state.count; counter++) {
+            pukiArr.push(<Puki />);
+          }
+          return pukiArr;
+        }
+
+        render() {
+          return (
+            <div>
+              {this.state.count}
+              <button onClick={this.increment}>+</button>
+              <button onClick={this.decrement}>-</button>
+              {this.renderPukis()}
+            </div>
+          );
+        }
+      }
 
       ReactDOM.render(
-        <PukiGenerator />,
+        <PukiGenerator count={1} />,
         document.getElementById("root")
       );
     </script>
