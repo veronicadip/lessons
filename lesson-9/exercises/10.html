@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <style>
+    </style>
+    <div id="root"></div>
+    <!--
+      Create two components:
+
+      1. <List /> that receives an array of strings as prop
+         and renders a list of things
+      2. <Filter /> that receives an array of strings and:
+          i.   Renders a list of tings using <List />
+          ii.  Has an <input> in which you can enter a string
+          iii. The input works as a search: if you type something
+               in there, the elements that doesn't start with what
+               you typed are removed from the list
+
+      Hints:
+
+        - Remember that arrays have a `filter` method
+        - Remember that strings have a `startsWith` method
+        - Remember that you already know how to listen for input changes
+    -->
+
+    <script type="text/babel">
+      ReactDOM.render(
+        <Filter items={['Rock', 'Pop', 'Country', 'Blues', 'Jazz', 'Heavy metal']}>,
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>

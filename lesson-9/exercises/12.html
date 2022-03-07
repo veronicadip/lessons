@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <style>
+    </style>
+    <div id="root"></div>
+    <!--
+      Create a component for pagination, here's an example: https://6i02ej.csb.app/
+
+      The component should accept two props:
+
+        - `count`: to control how many pages are
+        - `defaultPage`: to control which page is selected by default
+    -->
+
+    <script type="text/babel">
+      ReactDOM.render(
+        <Pagination count={5} defaultPage={2}>,
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>
