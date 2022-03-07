@@ -6,8 +6,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style>
-    </style>
+    <style></style>
     <div id="root"></div>
     <!--
       Create two components:
@@ -29,8 +28,38 @@
     -->
 
     <script type="text/babel">
+      class List extends React.Component {
+        render() {
+          const itemsList = this.props.items.map((item) => <li>{item}</li>);
+          return <ul>{itemsList}</ul>;
+        }
+      }
+
+      class Filter extends React.Component {
+        state = {
+          listState: this.props.items,
+        };
+        filterItem = (event) => {
+          this.setState({
+            listState: this.props.items.filter((word) =>
+              word.toLowerCase().startsWith(event.target.value.toLowerCase())
+            ),
+          });
+        };
+        render() {
+          return (
+            <div>
+              <input type="text" onChange={this.filterItem}></input>
+              <List items={this.state.listState}></List>
+            </div>
+          );
+        }
+      }
+
       ReactDOM.render(
-        <Filter items={['Rock', 'Pop', 'Country', 'Blues', 'Jazz', 'Heavy metal']}>,
+        <Filter
+          items={["Rock", "Pop", "Country", "Blues", "Jazz", "Heavy metal"]}
+        />,
         document.getElementById("root")
       );
     </script>
