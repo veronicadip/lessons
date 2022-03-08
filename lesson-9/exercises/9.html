@@ -17,8 +17,20 @@
     -->
 
     <script type="text/babel">
+      class MySelect extends React.Component {
+
+        render() {
+          const itemsList = this.props.options.map((item) => <option value={item}>{item}</option>)
+          return (
+            <div>
+              <label for="selector">Select food</label>
+            <select name="food" id="selector">{itemsList}</select>
+            </div>
+          )
+        }
+      }
       ReactDOM.render(
-        <MySelect options={['salad', 'pizza', 'hotdog']}>,
+        <MySelect options={['salad', 'pizza', 'hotdog']}/>,
         document.getElementById("root")
       );
     </script>
