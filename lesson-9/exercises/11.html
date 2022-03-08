@@ -14,8 +14,33 @@
     -->
 
     <script type="text/babel">
+      const Tab = () => <button>button</button>
+      class TabsPanel extends React.Component {
+        state = {
+          log: 1
+        }
+        button1 = () => {
+          this.setState({ log: this.state.log + 1})
+        }
+        button2 = () => {
+          this.setState({ log: this.state.log + 2})
+        }
+        button3 = () => {
+          this.setState({ log: this.state.log + 3})
+        }
+        render() {
+          return (
+            <div>
+              {this.state.log}
+              <Tab onClick={this.button1}></Tab>
+              <Tab onClick={this.button2}></Tab>
+              <Tab onClick={this.button3}></Tab>
+              </div>
+          )
+        }
+      }
       ReactDOM.render(
-        <span></span>,
+        <TabsPanel/>,
         document.getElementById("root")
       );
     </script>
