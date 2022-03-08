@@ -6,8 +6,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style>
-    </style>
+    <style></style>
     <div id="root"></div>
     <!--
       Create a component for pagination, here's an example: https://6i02ej.csb.app/
@@ -19,8 +18,37 @@
     -->
 
     <script type="text/babel">
+      class Pagination extends React.Component {
+        state = {
+          count: this.props.defaultPage,
+        };
+        previousPage = () => {
+          this.setState({ count: this.state.count - 1 });
+        };
+        nextPage = () => {
+          this.setState({ count: this.state.count + 1 });
+        };
+        pageNumber = (event) => {
+          this.setState({ count: Number(event.currentTarget.value) });
+        };
+
+        render() {
+          console.log(this.state);
+          return (
+            <div>
+              {this.state.count}
+              <button onClick={this.previousPage} disabled={this.state.count <= this.props.minCount}>Back</button>
+              <input type="button" value="1" onClick={this.pageNumber}></input>
+              <input type="button" value="2" onClick={this.pageNumber}></input>
+              <input type="button" value="3" onClick={this.pageNumber}></input>
+              <input type="button" value="4" onClick={this.pageNumber}></input>
+              <button onClick={this.nextPage} disabled={this.state.count >= this.props.maxCount}>Next</button>
+            </div>
+          );
+        }
+      }
       ReactDOM.render(
-        <Pagination count={5} defaultPage={2}>,
+        <Pagination maxCount={4} minCount={1} defaultPage={1} />,
         document.getElementById("root")
       );
     </script>
