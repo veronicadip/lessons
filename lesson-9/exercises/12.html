@@ -6,7 +6,39 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style></style>
+    <style>
+      button {
+        background-color: white;
+        border: none;
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+        margin: 5px;
+      }
+      button:hover {
+        background-color: rgb(240, 240, 240);
+      }
+      button:active {
+        background-color: rgb(190, 190, 190);
+      }
+      input {
+        background-color: white;
+        border: none;
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+        margin: 5px;
+      }
+      input:hover {
+        background-color: rgb(240, 240, 240);
+      }
+      input:active {
+        background-color: rgb(190, 190, 190);
+      }
+      .active {
+        background-color: rgb(221, 221, 221);
+      }
+    </style>
     <div id="root"></div>
     <!--
       Create a component for pagination, here's an example: https://6i02ej.csb.app/
@@ -33,16 +65,44 @@
         };
 
         render() {
-          console.log(this.state);
           return (
             <div>
-              {this.state.count}
-              <button onClick={this.previousPage} disabled={this.state.count <= this.props.minCount}>Back</button>
-              <input type="button" value="1" onClick={this.pageNumber}></input>
-              <input type="button" value="2" onClick={this.pageNumber}></input>
-              <input type="button" value="3" onClick={this.pageNumber}></input>
-              <input type="button" value="4" onClick={this.pageNumber}></input>
-              <button onClick={this.nextPage} disabled={this.state.count >= this.props.maxCount}>Next</button>
+              <button
+                onClick={this.previousPage}
+                disabled={this.state.count <= this.props.minCount}
+              >
+                Back
+              </button>
+              <input
+                type="button"
+                value="1"
+                onClick={this.pageNumber}
+                className={this.state.count === 1 ? "active" : ""}
+              ></input>
+              <input
+                type="button"
+                value="2"
+                onClick={this.pageNumber}
+                className={this.state.count === 2 ? "active" : ""}
+              ></input>
+              <input
+                type="button"
+                value="3"
+                onClick={this.pageNumber}
+                className={this.state.count === 3 ? "active" : ""}
+              ></input>
+              <input
+                type="button"
+                value="4"
+                onClick={this.pageNumber}
+                className={this.state.count === 4 ? "active" : ""}
+              ></input>
+              <button
+                onClick={this.nextPage}
+                disabled={this.state.count >= this.props.maxCount}
+              >
+                Next
+              </button>
             </div>
           );
         }
