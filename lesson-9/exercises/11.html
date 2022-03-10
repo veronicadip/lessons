@@ -7,6 +7,28 @@
   </head>
   <body>
     <style>
+      button {
+        background-color: white;
+        color: rgb(49, 49, 49);
+        border: none;
+        font-size: 15px;
+        height: 40px;
+        margin: 5px;
+      }
+      button:active {
+        background-color: rgb(175, 175, 175);
+      }
+      .active {
+        color: rgb(22, 138, 255);
+      }
+      p {
+        margin: 10px;
+        font-size: 17px;
+      }
+      .head {
+        border-bottom-color: #f0f0f0;
+        border-bottom-style: inset;
+      }
     </style>
     <div id="root"></div>
     <!--
@@ -14,35 +36,50 @@
     -->
 
     <script type="text/babel">
-      const Tab = () => <button>button</button>
       class TabsPanel extends React.Component {
         state = {
-          log: 1
-        }
+          item: this.props.item,
+        };
         button1 = () => {
-          this.setState({ log: this.state.log + 1})
-        }
+          this.setState({ item: (this.state.item = "Item One") });
+        };
         button2 = () => {
-          this.setState({ log: this.state.log + 2})
-        }
+          this.setState({ item: (this.state.item = "Item Two") });
+        };
         button3 = () => {
-          this.setState({ log: this.state.log + 3})
-        }
+          this.setState({ item: (this.state.item = "Item Three") });
+        };
         render() {
           return (
             <div>
-              {this.state.log}
-              <Tab onClick={this.button1}></Tab>
-              <Tab onClick={this.button2}></Tab>
-              <Tab onClick={this.button3}></Tab>
+              <div className={"head"}>
+                <button
+                  onClick={this.button1}
+                  className={this.state.item === "Item One" ? "active" : ""}
+                >
+                  ITEM ONE
+                </button>
+                <button
+                  onClick={this.button2}
+                  className={this.state.item === "Item Two" ? "active" : ""}
+                >
+                  ITEM TWO
+                </button>
+                <button
+                  onClick={this.button3}
+                  className={this.state.item === "Item Three" ? "active" : ""}
+                >
+                  ITEM THREE
+                </button>
               </div>
-          )
+              <div>
+                <p>{this.state.item}</p>
+              </div>
+            </div>
+          );
         }
       }
-      ReactDOM.render(
-        <TabsPanel/>,
-        document.getElementById("root")
-      );
+      ReactDOM.render(<TabsPanel item={""} />, document.getElementById("root"));
     </script>
   </body>
 </html>
