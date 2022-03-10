@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      .progress-container {
+        width: 100%;
+        height: 5px;
+        background-color: rgb(167, 202, 237);
+      }
+
+      .progress-bar {
+        height: 5px;
+        background-color: rgb(25, 118, 210);
+        transition: width .3s ease;
+      }
+
+      .linear-progress {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .linear-progress-value {
+        min-width: 70px;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      class ProgressBar extends React.Component {
+        render() {
+          return (
+            <div className="progress-container">
+              <div
+                className="progress-bar"
+                style={{ width: `${this.props.value}%` }}
+              />
+            </div>
+          );
+        }
+      }
+
+      class LinearProgress extends React.Component {
+        render() {
+          return (
+            <div className="linear-progress">
+              <ProgressBar value={this.props.value} />
+              <span className="linear-progress-value">
+                {this.props.value} %
+              </span>
+            </div>
+          );
+        }
+      }
+
+      class App extends React.Component {
+        state = {
+          value: 40,
+        };
+
+        componentDidMount() {
+          setInterval(() => {
+            if (this.state.value < 100) {
+              this.setState({ value: this.state.value + 1 });
+            } else {
+              this.setState({ value: 0 });
+            }
+          }, 0.1 * 1000);
+        }
+
+        render() {
+          return <LinearProgress value={this.state.value} />;
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
