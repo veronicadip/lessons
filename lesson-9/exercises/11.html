@@ -38,17 +38,28 @@
     <script type="text/babel">
       class TabsPanel extends React.Component {
         state = {
-          item: this.props.item,
+          item: "",
         };
-        button1 = () => {
-          this.setState({ item: (this.state.item = "Item One") });
+        addText = () => {
+          this.setState({ item: "Item One" });
         };
         button2 = () => {
-          this.setState({ item: (this.state.item = "Item Two") });
+          this.setState({ item: "Item Two" });
         };
         button3 = () => {
-          this.setState({ item: (this.state.item = "Item Three") });
+          this.setState({ item: "Item Three" });
         };
+        addButton() {
+          const buttonArr = [];
+          for (let counter = 1; counter !== this.props.map() + 1; counter++) {
+            buttonArr.push(
+              <button
+                onClick={this.addText}
+                className={this.state.item === this.props.name.map()}
+              />
+            );
+          }
+        }
         render() {
           return (
             <div>
@@ -79,7 +90,10 @@
           );
         }
       }
-      ReactDOM.render(<TabsPanel item={""} />, document.getElementById("root"));
+      ReactDOM.render(
+        <TabsPanel item={[{ name: "ITEM ONE", content: "Item One"}, { name: "ITEM TWO", content: "Item Two"}, { name: "ITEM THREE", content:"Item Three"}]} />,
+        document.getElementById("root")
+      );
     </script>
   </body>
 </html>
