@@ -7,6 +7,37 @@
   </head>
   <body>
     <style>
+      button {
+        background-color: white;
+        border: none;
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+        margin: 5px;
+      }
+      button:hover {
+        background-color: rgb(240, 240, 240);
+      }
+      button:active {
+        background-color: rgb(190, 190, 190);
+      }
+      input {
+        background-color: white;
+        border: none;
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+        margin: 5px;
+      }
+      input:hover {
+        background-color: rgb(240, 240, 240);
+      }
+      input:active {
+        background-color: rgb(190, 190, 190);
+      }
+      .active {
+        background-color: rgb(221, 221, 221);
+      }
     </style>
     <div id="root"></div>
     <!--
@@ -19,8 +50,57 @@
     -->
 
     <script type="text/babel">
+      class Pagination extends React.Component {
+        state = {
+          count: this.props.defaultPage,
+        };
+        previousPage = () => {
+          this.setState({ count: this.state.count - 1 });
+        };
+        nextPage = () => {
+          this.setState({ count: this.state.count + 1 });
+        };
+        pageNumber = (event) => {
+          this.setState({ count: Number(event.currentTarget.value) });
+        };
+        newButton() {
+          const buttonArr = [];
+          for (let counter = 1; counter !== this.props.maxCount + 1; counter++) {
+            buttonArr.push(
+              <input
+                type="button"
+                value={counter}
+                onClick={this.pageNumber}
+                className={this.state.count === counter ? "active" : ""}
+              />
+            );
+          }
+          return buttonArr;
+        }
+
+        render() {
+          return (
+            <div>
+              <button
+                onClick={this.previousPage}
+                disabled={this.state.count <= this.props.minCount}
+              >
+                Back
+              </button>
+              
+              {this.newButton()}
+              <button
+                onClick={this.nextPage}
+                disabled={this.state.count >= this.props.maxCount}
+              >
+                Next
+              </button>
+            </div>
+          );
+        }
+      }
       ReactDOM.render(
-        <Pagination count={5} defaultPage={2}>,
+        <Pagination maxCount={6} minCount={1} defaultPage={1} />,
         document.getElementById("root")
       );
     </script>
