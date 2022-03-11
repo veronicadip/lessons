@@ -38,60 +38,50 @@
     <script type="text/babel">
       class TabsPanel extends React.Component {
         state = {
-          item: "",
+          content: this.props.item.at(0).content,
         };
-        addText = () => {
-          this.setState({ item: "Item One" });
+        addThings = (value) => {
+          this.setState({ content: this.props.item.at(value).content });
         };
-        button2 = () => {
-          this.setState({ item: "Item Two" });
-        };
-        button3 = () => {
-          this.setState({ item: "Item Three" });
-        };
+
         addButton() {
           const buttonArr = [];
-          for (let counter = 1; counter !== this.props.map() + 1; counter++) {
+          for (let counter = 0; counter !== this.props.item.length; counter++) {
             buttonArr.push(
               <button
-                onClick={this.addText}
-                className={this.state.item === this.props.name.map()}
-              />
+                onClick={() => this.addThings(counter)}
+                className={
+                  this.state.content === this.props.item.at(counter).content
+                    ? "active"
+                    : ""
+                }
+              >
+                {this.props.item.at(counter).name}
+              </button>
             );
           }
+          return buttonArr;
         }
         render() {
           return (
             <div>
-              <div className={"head"}>
-                <button
-                  onClick={this.button1}
-                  className={this.state.item === "Item One" ? "active" : ""}
-                >
-                  ITEM ONE
-                </button>
-                <button
-                  onClick={this.button2}
-                  className={this.state.item === "Item Two" ? "active" : ""}
-                >
-                  ITEM TWO
-                </button>
-                <button
-                  onClick={this.button3}
-                  className={this.state.item === "Item Three" ? "active" : ""}
-                >
-                  ITEM THREE
-                </button>
-              </div>
+              <div className={"head"}>{this.addButton()}</div>
               <div>
-                <p>{this.state.item}</p>
+                <p>{this.state.content}</p>
               </div>
             </div>
           );
         }
       }
       ReactDOM.render(
-        <TabsPanel item={[{ name: "ITEM ONE", content: "Item One"}, { name: "ITEM TWO", content: "Item Two"}, { name: "ITEM THREE", content:"Item Three"}]} />,
+        <TabsPanel
+          item={[
+            { name: "ITEM ONE", content: "Item One" },
+            { name: "ITEM TWO", content: "Item Two" },
+            { name: "ITEM THREE", content: "Item Three" },
+            { name: "PUKI BUTTON", content: "🐄" },
+          ]}
+        />,
         document.getElementById("root")
       );
     </script>
