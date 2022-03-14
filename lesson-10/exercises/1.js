@@ -24,8 +24,8 @@ function f3(n) {
 }
 
 const f4 = function (a, b) {
-  return Math.pow(a, b)
-}
+  return Math.pow(a, b);
+};
 
 // bonus, try to understand what this does and what's the result
-[1, 2, 3].reduce(f4)
+[1, 2, 3].reduce(f4);
