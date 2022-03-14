@@ -1,14 +1,12 @@
 // Convert the following functions to arrow functions
 
-() => console.log("f1");
+() => "f1";
 
 
 (a, b, c) => a + b + c;
 
 
-setInterval(() => {
-  console.log("interval passed");
-}, 1000);
+setInterval(() => "interval passed", 1000);
 
 [1, 2, 3, 4].map((item, index) => {
   const temp = item + index;
