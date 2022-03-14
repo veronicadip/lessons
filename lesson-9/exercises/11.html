@@ -7,6 +7,28 @@
   </head>
   <body>
     <style>
+      button {
+        background-color: white;
+        color: rgb(49, 49, 49);
+        border: none;
+        font-size: 15px;
+        height: 40px;
+        margin: 5px;
+      }
+      button:active {
+        background-color: rgb(175, 175, 175);
+      }
+      .active {
+        color: rgb(22, 138, 255);
+      }
+      p {
+        margin: 10px;
+        font-size: 17px;
+      }
+      .head {
+        border-bottom-color: #f0f0f0;
+        border-bottom-style: inset;
+      }
     </style>
     <div id="root"></div>
     <!--
@@ -14,8 +36,64 @@
     -->
 
     <script type="text/babel">
+      class TabsPanel extends React.Component {
+        state = {
+          item: 0,
+        };
+        addContent = (value) => {
+          this.setState({ item: value });
+        };
+
+        renderButtons() {
+          const buttonsFunc = (item, index) => {
+            return (
+              <button
+                onClick={() => this.addContent(index)}
+                className={this.state.item === index ? "active" : ""}
+              >
+                {item.name}
+              </button>
+            );
+          };
+
+          return this.props.items.map(buttonsFunc);
+        }
+
+        render() {
+          const item = this.props.items.at(this.state.item);
+
+          return (
+            <div>
+              <div className={"head"}>{this.renderButtons()}</div>
+              <div>{item.content}</div>
+            </div>
+          );
+        }
+      }
       ReactDOM.render(
-        <span></span>,
+        <TabsPanel
+          items={[
+            { name: "ITEM ONE", content: "Item One" },
+            {
+              name: "ITEM TWO",
+              content: (
+                <div>
+                  <strong>test</strong>
+                </div>
+              ),
+            },
+            {
+              name: "ITEM THREE",
+              content: (
+                <div>
+                  <h2>hey!</h2>
+                  <p> was it worth it?</p> <strong> nope</strong>
+                </div>
+              ),
+            },
+            { name: "PUKI BUTTON", content: "🐄" },
+          ]}
+        />,
         document.getElementById("root")
       );
     </script>
