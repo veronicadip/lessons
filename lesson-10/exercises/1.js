@@ -1,31 +1,28 @@
 // Convert the following functions to arrow functions
 
-function f1() {
-  console.log("f1");
-}
+() => console.log("f1");
 
-function f2(a, b, c) {
-  return a + b + c;
-}
 
-setInterval(function () {
+(a, b, c) => a + b + c;
+
+
+setInterval(() => {
   console.log("interval passed");
 }, 1000);
 
-[1, 2, 3, 4].map(function (item, index) {
+[1, 2, 3, 4].map((item, index) => {
   const temp = item + index;
   return temp * item;
 });
 
-function f3(n) {
-  return function () {
-    return n + 1;
-  };
-}
+n => n + 1;
 
-const f4 = function (a, b) {
-  return Math.pow(a, b);
-};
+const f4 = (a, b) => Math.pow(a, b)
+
 
 // bonus, try to understand what this does and what's the result
-[1, 2, 3].reduce(f4);
+[1, 2, 3].reduce(f4)
+
+/**  this will reduce the array to a number that results from the first
+number in the array taken to the power of the second number and then
+to the third. In this case the result will be 1 */
