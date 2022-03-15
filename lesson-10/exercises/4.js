@@ -11,3 +11,19 @@
 //
 // Example:
 // `print('abc', {letterSpacing: 2, upper: true})` prints in the console the string 'A  B  C'
+
+
+function print(str, obj) {
+    if (obj.upper === true) {
+        console.log(str.toUpperCase())
+    }
+    for (let counter = 0; counter !== obj.repeat; counter++) {
+        console.log(str)
+    }
+    for (let count = 0; count !== obj.letterSpacing; count++) {
+        console.log(str.join(' '))
+    }
+
+}
+
+print('abc', {upper: true, repeat: 4})
