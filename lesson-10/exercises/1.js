@@ -1,23 +1,19 @@
 // Convert the following functions to arrow functions
 
- const f1 = () => console.log("f1");
+const f1 = () => console.log("f1");
 
 
 const f2 = (a, b, c) => a + b + c;
 
 
-setInterval(() => "interval passed", 1000);
+setInterval(() => console.log("interval passed"), 1000);
 
 [1, 2, 3, 4].map((item, index) => {
   const temp = item + index;
   return temp * item;
 });
 
-const f3 = (n) => {
-  return function () {
-    return n + 1;
-  };
-}
+const f3 = (n) => () => n + 1
 
 const f4 = (a, b) => Math.pow(a, b)
 
