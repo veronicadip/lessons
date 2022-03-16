@@ -7,5 +7,16 @@
 // 2. think about what setState does and try to mimic that
 
 class Component {
-  // TODO: implement the function setState
-}
+  constructor(props) {
+    this.props = props
+    this.state = {}
+  }
+
+  setState = (newState) => {
+    state = {newState}
+    render() {
+      return state
+    }
+    }
+  }
+
