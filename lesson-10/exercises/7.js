@@ -8,15 +8,12 @@
 
 class Component {
   constructor(props) {
-    this.props = props
-    this.state = {}
+    this.props = props;
+    this.state = {};
   }
 
-  setState = (newState) => {
-    state = {newState}
-    render() {
-      return state
-    }
-    }
+  setState(newState) {
+    const newObj = Object.assign(this.state, newState);
+    return render(newObj);
   }
-
+}
