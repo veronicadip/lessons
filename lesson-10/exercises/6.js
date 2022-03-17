@@ -5,8 +5,8 @@ function objVal(obj) {
 }
 
 function print(obj, func) {
-    result = ''
-    arr = objVal(obj)
+    let result = ''
+    const arr = objVal(obj)
     for (let counter = 0; counter !== arr.length; counter++) {
         result = arr.at(counter)
         console.log(result)
