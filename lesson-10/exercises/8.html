@@ -27,49 +27,61 @@
 
     <script type="text/babel">
       class StrModifier extends React.Component {
+        static defaultProps = {
+          upper: false,
+          repeat: 1,
+          letterSpacing: 0,
+        };
         print() {
-          let result = this.props.str;
+          let result = this.state.string;
           let finalResult = "";
           const space = " ";
-          if (this.props.obj.upper === undefined) {
-            let upper = false;
-          } else {
-            let upper = this.props.obj.upper;
-          }
-          if (this.props.obj.repeat === undefined) {
-            let repeat = 1;
-          } else {
-            let repeat = this.props.obj.repeat;
-          }
-          if (this.props.obj.letterSpacing === undefined) {
-            let letterSpacing = 0;
-          } else {
-            let letterSpacing = this.props.obj.letterSpacing;
-          }
-          if (upper === true) {
+          if (this.props.upper === true) {
             result = result.toUpperCase();
           }
-
           for (let letter of result) {
             finalResult = `${finalResult}${letter}${space.repeat(
-              letterSpacing
+              this.props.letterSpacing
             )}`;
           }
 
-          if (repeat >= 0) {
-            finalResult = `${finalResult.repeat(repeat)}`;
+          if (this.props.repeat >= 0) {
+            finalResult = `${finalResult.repeat(this.props.repeat)}`;
           }
           return finalResult;
         }
+        state = {
+          string: "",
+        };
+        addString = (event) => {
+          this.setState({
+            string: event.currentTarget.value,
+          });
+        };
+
         render() {
-          return <p>{this.finalResult}</p>;
+          return (
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <input
+                  type="text"
+                  value={this.state.string}
+                  onChange={this.addString}
+                />
+                <input type="checkbox"/>
+              </form>
+              <pre>{this.print()}</pre>
+            </div>
+          );
         }
       }
-      
+
       ReactDOM.render(
         <StrModifier
-          str="abc"
-          obj={{ upper: true, repeat: 3, letterSpacing: 5 }}
+          str="la pukarda"
+          upper={true}
+          repeat={1}
+          letterSpacing={2}
         />,
         document.getElementById("root")
       );
