@@ -27,48 +27,67 @@
 
     <script type="text/babel">
       class StrModifier extends React.Component {
-        static defaultProps = {
-          upper: false,
-          repeat: 1,
-          letterSpacing: 0,
-        };
         print() {
           let result = this.state.string;
           let finalResult = "";
           const space = " ";
-          if (this.props.upper === true) {
+          if (this.state.checkbox === true) {
             result = result.toUpperCase();
           }
           for (let letter of result) {
             finalResult = `${finalResult}${letter}${space.repeat(
-              this.props.letterSpacing
+              this.state.space
             )}`;
           }
 
-          if (this.props.repeat >= 0) {
-            finalResult = `${finalResult.repeat(this.props.repeat)}`;
+          if (this.state.strNum >= 0) {
+            finalResult = `${finalResult.repeat(this.state.strNum)}`;
           }
           return finalResult;
         }
         state = {
           string: "",
+          checkbox: false,
+          space: 0,
+          strNum: 1,
         };
         addString = (event) => {
           this.setState({
             string: event.currentTarget.value,
           });
         };
+        checkUpperCase = (event) => {
+          this.setState({
+            checkbox: this.state.checkbox === false ? true : false,
+          });
+        };
+        addSpace = (event) => {
+          this.setState({
+            space: event.currentTarget.value,
+          });
+        };
+        strNumber = (event) => {
+          this.setState({
+            strNum: event.currentTarget.value,
+          });
+        };
 
         render() {
           return (
             <div>
-              <form onSubmit={this.handleSubmit}>
+              <form>
                 <input
                   type="text"
                   value={this.state.string}
                   onChange={this.addString}
                 />
-                <input type="checkbox"/>
+                <input
+                  type="checkbox"
+                  checked={this.state.checkbox}
+                  onChange={this.checkUpperCase}
+                />
+                <input type="number" onChange={this.addSpace} min={0} />
+                <input type="number" onChange={this.strNumber} min={0} />
               </form>
               <pre>{this.print()}</pre>
             </div>
@@ -76,15 +95,7 @@
         }
       }
 
-      ReactDOM.render(
-        <StrModifier
-          str="la pukarda"
-          upper={true}
-          repeat={1}
-          letterSpacing={2}
-        />,
-        document.getElementById("root")
-      );
+      ReactDOM.render(<StrModifier />, document.getElementById("root"));
     </script>
   </body>
 </html>
