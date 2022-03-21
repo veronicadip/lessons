@@ -31,7 +31,7 @@
           let result = this.state.string;
           let finalResult = "";
           const space = " ";
-          if (this.state.checkbox === true) {
+          if (this.state.convertToUpperCase === true) {
             result = result.toUpperCase();
           }
           for (let letter of result) {
@@ -47,7 +47,7 @@
         }
         state = {
           string: "",
-          checkbox: false,
+          convertToUpperCase: false,
           space: 0,
           strNum: 1,
         };
@@ -58,7 +58,7 @@
         };
         checkUpperCase = (event) => {
           this.setState({
-            checkbox: this.state.checkbox === false ? true : false,
+            convertToUpperCase: this.state.convertToUpperCase === false ? true : false,
           });
         };
         addSpace = (event) => {
@@ -83,7 +83,7 @@
                 />
                 <input
                   type="checkbox"
-                  checked={this.state.checkbox}
+                  checked={this.state.convertToUpperCase}
                   onChange={this.checkUpperCase}
                 />
                 <input type="number" onChange={this.addSpace} min={0} />
