@@ -14,6 +14,6 @@ class Component {
 
   setState(newState) {
     const newObj = Object.assign(this.state, newState);
-    return render(newObj);
+    return render();
   }
 }
