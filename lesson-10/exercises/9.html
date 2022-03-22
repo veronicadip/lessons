@@ -6,8 +6,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style>
-    </style>
+    <style></style>
     <div id="root"></div>
     <!--
       In previous exercises you learned about `setTimeout`, create a component
@@ -19,7 +18,26 @@
     -->
 
     <script type="text/babel">
+      class DateTime extends React.Component {
+        state = {
+          date: "",
+        };
+        setDate = () => {
+          this.setState({
+            date: Date(),
+          });
+        };
+        render() {
+          setTimeout(this.setDate, 1000);
+          return (
+            <div>
+              <p>{this.state.date}</p>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<DateTime />, document.getElementById("root"));
     </script>
   </body>
 </html>
-
