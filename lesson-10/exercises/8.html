@@ -26,6 +26,90 @@
     -->
 
     <script type="text/babel">
+      class StrModifier extends React.Component {
+        print() {
+          let result = this.state.showText;
+          let finalResult = "";
+          const space = " ";
+          if (this.state.convertToUpperCase === true) {
+            result = result.toUpperCase();
+          }
+          for (let letter of result) {
+            finalResult = `${finalResult}${letter}${space.repeat(
+              this.state.setSpaces
+            )}`;
+          }
+
+          if (this.state.repeatString >= 0) {
+            finalResult = `${finalResult.repeat(this.state.repeatString)}`;
+          }
+          return finalResult;
+        }
+        state = {
+          showText: "",
+          convertToUpperCase: false,
+          setSpaces: 0,
+          repeatString: 1,
+        };
+        setString = (event) => {
+          this.setState({
+            showText: event.currentTarget.value,
+          });
+        };
+        setUpperCase = (event) => {
+          this.setState({
+            convertToUpperCase: !this.state.convertToUpperCase,
+          });
+        };
+        setSpace = (event) => {
+          this.setState({
+            setSpaces: event.currentTarget.value,
+          });
+        };
+        setRepeatText = (event) => {
+          this.setState({
+            repeatString: event.currentTarget.value,
+          });
+        };
+
+        render() {
+          return (
+            <div>
+              <form>
+                <div>
+                  <label for="showText">Type here whatever you want:</label>
+                  <input
+                    type="text"
+                    value={this.state.showText}
+                    onChange={this.setString}
+                  />
+                </div>
+                <div>
+                  <label>Do you want the text to be in upper case?</label>
+                  <input
+                    type="checkbox"
+                    checked={this.state.convertToUpperCase}
+                    onChange={this.setUpperCase}
+                  />
+                </div>
+                <div>
+                  <label>
+                    How many spaces do you want between the letters?
+                  </label>
+                  <input type="number" onChange={this.setSpace} min={0} />
+                </div>
+                <div>
+                  <label>How many times do you want to repeat the text?</label>
+                  <input type="number" onChange={this.setRepeatText} min={0} />
+                </div>
+              </form>
+              <pre>{this.print()}</pre>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<StrModifier />, document.getElementById("root"));
     </script>
   </body>
 </html>
