@@ -6,8 +6,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style>
-    </style>
+    <style></style>
     <div id="root"></div>
     <!--
       In 9.html you created a component that renders and updates a date,
@@ -17,7 +16,79 @@
     -->
 
     <script type="text/babel">
+      class DateTime extends React.Component {
+        state = {
+          firstDate: "",
+          secondDate: "",
+          thirdDate: "",
+          fourthDate: "",
+          fifthDate: "",
+        };
+        firstSetDate = () => {
+          this.setState({
+            firstDate: new Date().toLocaleString(this.props.zone.at(0), {
+              timeZone: this.props.timeZone.at(0),
+            }),
+          });
+        };
+        secondSetDate = () => {
+          this.setState({
+            secondDate: new Date().toLocaleString(this.props.zone.at(0), {
+              timeZone: this.props.timeZone.at(1),
+            }),
+          });
+        };
+        thirdSetDate = () => {
+          this.setState({
+            thirdDate: new Date().toLocaleString(this.props.zone.at(0), {
+              timeZone: this.props.timeZone.at(2),
+            }),
+          });
+        };
+        fourthSetDate = () => {
+          this.setState({
+            fourthDate: new Date().toLocaleString(this.props.zone.at(0), {
+              timeZone: this.props.timeZone.at(3),
+            }),
+          });
+        };
+        fifthSetDate = () => {
+          this.setState({
+            fifthDate: new Date().toLocaleString(this.props.zone.at(0), {
+              timeZone: this.props.timeZone.at(4),
+            }),
+          });
+        };
+        render() {
+          setTimeout(this.firstSetDate, 1000);
+          setTimeout(this.secondSetDate, 1000);
+          setTimeout(this.thirdSetDate, 1000);
+          setTimeout(this.fourthSetDate, 1000);
+          setTimeout(this.fifthSetDate, 1000);
+          return (
+            <div>
+              <p>America, New York: {this.state.firstDate}</p>
+              <p>Asia, Baku: {this.state.secondDate}</p>
+              <p>America, Argentina, Tucuman: {this.state.thirdDate}</p>
+              <p>Europe, Moscow: {this.state.fourthDate}</p>
+              <p>Africa, Johannesburg: {this.state.fifthDate}</p>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(
+        <DateTime
+          zone={["en-US"]}
+          timeZone={[
+            "America/New_York",
+            "Asia/Baku",
+            "America/Argentina/Tucuman",
+            "Europe/Moscow",
+            "Africa/Johannesburg",
+          ]}
+        />,
+        document.getElementById("root")
+      );
     </script>
   </body>
 </html>
-
