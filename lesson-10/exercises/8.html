@@ -76,18 +76,32 @@
           return (
             <div>
               <form>
-                <input
-                  type="text"
-                  value={this.state.showText}
-                  onChange={this.setString}
-                />
-                <input
-                  type="checkbox"
-                  checked={this.state.convertToUpperCase}
-                  onChange={this.setUpperCase}
-                />
-                <input type="number" onChange={this.setSpace} min={0} />
-                <input type="number" onChange={this.setRepeatText} min={0} />
+                <div>
+                  <label for="showText">Type here whatever you want:</label>
+                  <input
+                    type="text"
+                    value={this.state.showText}
+                    onChange={this.setString}
+                  />
+                </div>
+                <div>
+                  <label>Do you want the text to be in upper case?</label>
+                  <input
+                    type="checkbox"
+                    checked={this.state.convertToUpperCase}
+                    onChange={this.setUpperCase}
+                  />
+                </div>
+                <div>
+                  <label>
+                    How many spaces do you want between the letters?
+                  </label>
+                  <input type="number" onChange={this.setSpace} min={0} />
+                </div>
+                <div>
+                  <label>How many times do you want to repeat the text?</label>
+                  <input type="number" onChange={this.setRepeatText} min={0} />
+                </div>
               </form>
               <pre>{this.print()}</pre>
             </div>
