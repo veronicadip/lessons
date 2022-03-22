@@ -22,13 +22,13 @@
         state = {
           date: "",
         };
-        getDate = () => {
+        setDate = () => {
           this.setState({
             date: Date(),
           });
         };
         render() {
-          setTimeout(this.getDate, 1000);
+          setTimeout(this.setDate, 1000);
           return (
             <div>
               <p>{this.state.date}</p>
