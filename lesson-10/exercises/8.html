@@ -28,7 +28,7 @@
     <script type="text/babel">
       class StrModifier extends React.Component {
         print() {
-          let result = this.state.string;
+          let result = this.state.showText;
           let finalResult = "";
           const space = " ";
           if (this.state.convertToUpperCase === true) {
@@ -36,39 +36,39 @@
           }
           for (let letter of result) {
             finalResult = `${finalResult}${letter}${space.repeat(
-              this.state.space
+              this.state.setSpaces
             )}`;
           }
 
-          if (this.state.strNum >= 0) {
-            finalResult = `${finalResult.repeat(this.state.strNum)}`;
+          if (this.state.repeatString >= 0) {
+            finalResult = `${finalResult.repeat(this.state.repeatString)}`;
           }
           return finalResult;
         }
         state = {
-          string: "",
+          showText: "",
           convertToUpperCase: false,
-          space: 0,
-          strNum: 1,
+          setSpaces: 0,
+          repeatString: 1,
         };
-        addString = (event) => {
+        setString = (event) => {
           this.setState({
-            string: event.currentTarget.value,
+            showText: event.currentTarget.value,
           });
         };
-        checkUpperCase = (event) => {
+        setUpperCase = (event) => {
           this.setState({
-            convertToUpperCase: this.state.convertToUpperCase === false ? true : false,
+            convertToUpperCase: !this.state.convertToUpperCase,
           });
         };
-        addSpace = (event) => {
+        setSpace = (event) => {
           this.setState({
-            space: event.currentTarget.value,
+            setSpaces: event.currentTarget.value,
           });
         };
-        strNumber = (event) => {
+        setRepeatText = (event) => {
           this.setState({
-            strNum: event.currentTarget.value,
+            repeatString: event.currentTarget.value,
           });
         };
 
@@ -78,16 +78,16 @@
               <form>
                 <input
                   type="text"
-                  value={this.state.string}
-                  onChange={this.addString}
+                  value={this.state.showText}
+                  onChange={this.setString}
                 />
                 <input
                   type="checkbox"
                   checked={this.state.convertToUpperCase}
-                  onChange={this.checkUpperCase}
+                  onChange={this.setUpperCase}
                 />
-                <input type="number" onChange={this.addSpace} min={0} />
-                <input type="number" onChange={this.strNumber} min={0} />
+                <input type="number" onChange={this.setSpace} min={0} />
+                <input type="number" onChange={this.setRepeatText} min={0} />
               </form>
               <pre>{this.print()}</pre>
             </div>
