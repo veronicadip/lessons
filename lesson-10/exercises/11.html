@@ -31,22 +31,63 @@
         }
       }
 
+      const SortOrder = {
+        Asc: "asc",
+        Desc: "desc",
+      };
+
+      const sortByYearDesc = (a, b) => a.Year - b.Year;
+      const sortByYearAsc = (a, b) => b.Year - a.Year;
+
       class MultiTabs extends React.Component {
+        state = {
+          sortOrder: SortOrder.Desc,
+          valueOfSearch: "",
+        };
+
+        searchNameFunc = (event) => {
+          this.setState({
+            valueOfSearch: event.currentTarget.value,
+          });
+        };
+
+        sortRows = () => {
+          this.setState({
+            sortOrder:
+              this.state.sortOrder === SortOrder.Asc
+                ? SortOrder.Desc
+                : SortOrder.Asc,
+          });
+        };
+
         renderTabs = () => {
-          return this.props.data.map((personalData) => (
+          const filteredNames = this.props.data.filter((element) =>
+            element.Name.toLowerCase().startsWith(
+              this.state.valueOfSearch.toLocaleLowerCase()
+            )
+          );
+          const sortFunction =
+            this.state.sortOrder === SortOrder.Asc
+              ? sortByYearAsc
+              : sortByYearDesc;
+
+          const sortedData = filteredNames.sort(sortFunction);
+
+          return sortedData.map((personalData) => (
             <MyTab personalData={personalData} />
           ));
         };
-        sortRows = () => {
-          
-        }
+
         render() {
           return (
             <div>
+              <input type="text" onChange={this.searchNameFunc} />
               <table>
                 <thead>
                   <tr>
-                    <th scope="col" onClick={sortRows()}>Year</th>
+                    <th scope="col" onClick={this.sortRows}>
+                      Year
+                    </th>
                     <th scope="col">Gender</th>
                     <th scope="col">Rank</th>
                     <th scope="col">Name</th>
