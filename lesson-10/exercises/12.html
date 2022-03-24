@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <style></style>
+    <div id="root"></div>
+    <!--
+      Given the list of products below, your task is to build a simplified version of Mercado Libre
+      according to this image: https://imgur.com/a/c8FmE8L
+
+      Notes:
+
+      - All the filters in the image should work
+      - A number must be displayed to the right of the cart icon on the navigation with the total number of items purchased,
+      each time an user clicks on 'Comprar ahora', this number must be updated.
+      - Styles must match, but don't kill yourself if something doesn't look 100% like the picture
+
+      Hints:
+        - Discounts are given in percent, to calculate the value of a product with discounts you have to do `price * discount`
+        - Try to use different components:
+          - One for the button
+          - One for each item on the list
+          - One that renders the list
+          - etc.
+        - To display the list of items, flex is your friend
+
+    -->
+
+    <script type="text/babel">
+      const products = [
+        [
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_769951-MLA49366985648_032022-W.webp",
+            price: 37.699,
+            discount: 0.23,
+            freeDelivery: true,
+            title:
+              "Banqueta Taburete Sillon Desayunador Barra Bar Acolchado X2",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_846963-MLA49150022694_022022-W.webp",
+            price: 7.699,
+            discount: 0.09,
+            freeDelivery: true,
+            title: "Combo 2 Mesas De Luz Escandinava Vintage Pino Macizo Color",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_600634-MLA44576602026_012021-W.webp",
+            price: 24.197,
+            discount: 0.22,
+            freeDelivery: true,
+            title: "Sombrilla Parasol Jardin Grande Lateral Base 300 Cm",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_681784-MLA49304989474_032022-W.webp",
+            price: 33.799,
+            discount: 0.23,
+            freeDelivery: true,
+            title:
+              "Silla Eames Tulip Almohadon Patas Madera Colores Comedor X4",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_861004-MLA44403134669_122020-W.webp",
+            price: 85.824,
+            discount: 0.25,
+            freeDelivery: true,
+            title:
+              "Depósito De Jardin Keter Manor 4x3 Beige - 128x94x196 Cm\n\npor Keter",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_807728-MLA31041775793_062019-W.webp",
+            price: 32.01,
+            discount: 0.18,
+            freeDelivery: true,
+            title:
+              "Combo 6 Sillas Eames Dsw Blancas - Desillas\n\npor Desillas",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_912890-MLA42060130599_062020-W.webp",
+            price: 580,
+            discount: 0.37,
+            freeDelivery: false,
+            title:
+              "Cortina Roller Doble, Screen + Blackout, Fabrica C/ Garantía",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_925717-MLA49352091375_032022-W.webp",
+            price: 1.979,
+            discount: 0.09,
+            freeDelivery: false,
+            title: "Banco Silla De Pino Nordica 75 Cm De Alto Con Respaldar",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_948297-MLA49333568730_032022-W.webp",
+            price: 22.749,
+            discount: 0.23,
+            freeDelivery: true,
+            title: "Silla Eames Diseño Patas Madera Dsw Colores X4",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_933917-MLA46540687548_062021-W.webp",
+            price: 1.724,
+            discount: 0.13,
+            freeDelivery: false,
+            title: "Perchero Pared Nordico Estante Repisa Madera Pino Oferta",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_912559-MLA44902447744_022021-W.webp",
+            price: 10,
+            discount: 0.3,
+            freeDelivery: true,
+            title:
+              "Puff Redondo En Pana Premium Y Metal Dorado Modelo Andrus 02",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_975070-MLA31083488281_062019-W.webp",
+            price: 37.06,
+            discount: 0.16,
+            freeDelivery: false,
+            title:
+              "Combo 4 Sillas Tolix Varios Colores - Desillas\n\npor Desillas",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_783298-MLA31612340268_072019-W.webp",
+            price: 2.078,
+            discount: 0.23,
+            freeDelivery: false,
+            title:
+              "Cesped Sintetico Pasto Artificial Rollo Cuatricolor Premium 30 Mm",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_898100-MLA31035708274_062019-W.webp",
+            price: 28.32,
+            discount: 0.1,
+            freeDelivery: true,
+            title: "Sillón De Oficina Wolf Bajo - Desillas\n\npor Desillas",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_689584-MLA48378545568_112021-W.webp",
+            price: 35.558,
+            discount: 0.21,
+            freeDelivery: true,
+            title:
+              "Silla de escritorio Green Deco Gamer negra, gris y blanca con tapizado de cuero sintético",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_817567-MLA46196353429_052021-W.webp",
+            price: 15.999,
+            discount: 0,
+            freeDelivery: true,
+            title:
+              "Combo 2 Sillones Apilable Plastico Pvc Simil Ratan Jardin\n\npor Prestigio",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_946562-MLA43766542739_102020-W.webp",
+            price: 17.549,
+            discount: 0.35,
+            freeDelivery: true,
+            title:
+              "Kit Luces Emergencia 2 En 1 Potentes Recargables X4 60 Leds\n\npor Gadnic",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_926453-MLA47448404212_092021-W.webp",
+            price: 29.8,
+            discount: 0.2,
+            freeDelivery: false,
+            title: "Sillon 1 Cuerpo Moderno Pana Unico Diceño Arkana 2022",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_918528-MLA43766108147_102020-W.webp",
+            price: 9.249,
+            discount: 0.35,
+            freeDelivery: true,
+            title:
+              "Luces Emergencia Potentes Recargables Kit X4 + Tornillos\n\npor Gadnic",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_843330-MLA42127146228_062020-W.webp",
+            price: 22.999,
+            discount: 0.2,
+            freeDelivery: true,
+            title:
+              "Carpa Indoor Cultivo 100 X 100 X 200 Invernadero Jardin Myla",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_977304-MLA49366981774_032022-W.webp",
+            price: 37.699,
+            discount: 0.23,
+            freeDelivery: true,
+            title: "Banqueta Desayunador Barra Espacial Taburete Alta X2",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_997173-MLA45812984951_052021-W.webp",
+            price: 81.999,
+            discount: 0.09,
+            freeDelivery: false,
+            title:
+              "Pileta estructural redonda Bestway 56420 con capacidad de 10250 litros de 3.66m de diámetro azul diseño mosaico",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_646424-MLA48848269596_012022-W.webp",
+            price: 19.817,
+            discount: 0.14,
+            freeDelivery: true,
+            title:
+              "Combo 2 Sillones Exterior Sorrento Skarpo Jardin - Prestigio\n\npor Prestigio",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_719146-MLA46496058379_062021-W.webp",
+            price: 4.106,
+            discount: 0,
+            freeDelivery: true,
+            title: "Bacha Cocina Simple Ariel 4304 Acero Inoxidable Aisi 430",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_826100-MLA49449065324_032022-W.webp",
+            price: 13.358,
+            discount: 0.4,
+            freeDelivery: true,
+            title: "Reflector Led Solar Luminaria 90w Sensor Movimiento Ext",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_834229-MLA48197761258_112021-W.webp",
+            price: 12.499,
+            discount: 0.05,
+            freeDelivery: true,
+            title:
+              "Cortacerco A Explosion Naftero Podador Espada 52cm 20 Pulgad",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_611690-MLA41179103513_032020-W.webp",
+            price: 21.199,
+            discount: 0.24,
+            freeDelivery: true,
+            title:
+              "Motosierra a nafta Philco 52cc MJPMO217 2.4hp\n\npor Mall 360",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_729451-MLA49367023679_032022-W.webp",
+            price: 37.699,
+            discount: 0.23,
+            freeDelivery: true,
+            title:
+              "Banqueta Barra Desayunador Taburete Sofia Alta C/respaldo X2",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_930861-MLA44093132710_112020-W.webp",
+            price: 1.846,
+            discount: 0.24,
+            freeDelivery: false,
+            title:
+              "Cesped Sintetico Pasto Artificial Rollo Cuatricolor Premium 20 Mm",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_763803-MLA49367023384_032022-W.webp",
+            price: 44.198,
+            discount: 0.23,
+            freeDelivery: true,
+            title: "Silla Ejecutivo Escritorio Oficina Acolchado Sillón X2",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_982557-MLA31352805054_072019-W.webp",
+            price: 3.657,
+            discount: 0,
+            freeDelivery: true,
+            title: "Manguera Riego Tecnocom Mlt1325 Trenzada Azul 1/2 X 25 P",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_950692-MLA49367126167_032022-W.webp",
+            price: 25.999,
+            discount: 0.23,
+            freeDelivery: true,
+            title: "Silla Bar Taburete Banqueta Premium Banco Desayunador X2",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_726842-MLA46950103077_082021-W.webp",
+            price: 4.998,
+            discount: 0.36,
+            freeDelivery: false,
+            title:
+              "Lampara Led Bulb Wiz Wifi Color 9w E27 X2 Unidades\n\npor WiZ",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_721252-MLA49304758861_032022-W.webp",
+            price: 33.669,
+            discount: 0.23,
+            freeDelivery: true,
+            title:
+              "Silla Eames Tulip Almohadon Patas Madera Comedor X4\n\npor Harte Flooring",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_736334-MLA31356205553_072019-W.webp",
+            price: 2.992,
+            discount: 0.37,
+            freeDelivery: false,
+            title: "Pack X20 Lámparas Led Osram 9w = 75w Luz Día/fría Por E631",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_653019-MLA49448997410_032022-W.webp",
+            price: 13.358,
+            discount: 0.4,
+            freeDelivery: true,
+            title: "Lampara Solar Led 90w/patio Jardin Plazas Calles Exterior",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_885326-MLA49333573533_032022-W.webp",
+            price: 22.618,
+            discount: 0.23,
+            freeDelivery: true,
+            title:
+              "Silla Eames Diseño Patas Madera Dsw Colores X4\n\npor Harte Flooring",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_861109-MLA46387337052_062021-W.webp",
+            price: 19.999,
+            discount: 0.35,
+            freeDelivery: true,
+            title:
+              "Velador Lámpara Giratoria Parlante Bluetooth Gadnic Pro\n\npor Gadnic",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_803344-MLA48197690355_112021-W.webp",
+            price: 15.999,
+            discount: 0.21,
+            freeDelivery: true,
+            title: "Cortacerco Naftero Cuchilla 65cm Podador 1hp Explosion",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_743878-MLA46721839773_072021-W.webp",
+            price: 8.159,
+            discount: 0.13,
+            freeDelivery: true,
+            title:
+              "Silla Tolix Metal Interior Colores Resistente - Prestigio\n\npor Prestigio",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_679039-MLA32586366035_102019-W.webp",
+            price: 53.623,
+            discount: 0.28,
+            freeDelivery: false,
+            title: "Reposera Para Jardín De Acero Aluminio Exterior - Hazel",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_975546-MLA44865909747_022021-W.webp",
+            price: 14.477,
+            discount: 0.1,
+            freeDelivery: false,
+            title: "Mueble Columna De Cocina 4 Puertas Despensero Organizador",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_824335-MLA46949778919_082021-W.webp",
+            price: 7.497,
+            discount: 0.36,
+            freeDelivery: true,
+            title:
+              "Lampara Led Bulb Wiz Wifi Color 9w E27 X3 Unidades\n\npor WiZ",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_878598-MLA45737219277_042021-W.webp",
+            price: 15.299,
+            discount: 0.18,
+            freeDelivery: true,
+            title: "Pillow Top Desmontable Multiflex 140 X 190 Cubre Colchón",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_731485-MLA49139785124_022022-W.webp",
+            price: 6.327,
+            discount: 0.11,
+            freeDelivery: true,
+            title: "Combo 2 Mesas De Luz Vintage Nordica Pino Con Puerta",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_754920-MLA48599525783_122021-W.webp",
+            price: 52.798,
+            discount: 0.24,
+            freeDelivery: true,
+            title:
+              "Silla Ejecutivo Gerencial Pc Respaldo Oficina Premiun Gamer",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_986843-MLA31114989185_062019-W.webp",
+            price: 1.599,
+            discount: 0.11,
+            freeDelivery: false,
+            title: "Lámparas Osram Led 12w = 90w Luz Cálida Pack X 10",
+          },
+          {
+            image:
+              "https://http2.mlstatic.com/D_NQ_NP_871135-MLA32138426538_092019-W.webp",
+            price: 1.295,
+            discount: 0.08,
+            freeDelivery: false,
+            title:
+              "Pack X 10 Lámparas Led Osram 9w = 75w Luz Día/fría Por E631",
+          },
+        ],
+      ];
+    </script>
+  </body>
+</html>
