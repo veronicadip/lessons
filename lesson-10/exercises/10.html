@@ -6,8 +6,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style>
-    </style>
+    <style></style>
     <div id="root"></div>
     <!--
       In 9.html you created a component that renders and updates a date,
@@ -17,7 +16,49 @@
     -->
 
     <script type="text/babel">
+      class DateTime extends React.Component {
+        state = {
+          date: "",
+        };
+        setDate = () => {
+          this.setState({
+            date: new Date().toLocaleString(this.props.locale, {
+              timeZone: this.props.zone,
+            }),
+          });
+        };
+
+        render() {
+          setTimeout(this.setDate, 1000);
+          return (
+            <div>
+              Time in {this.props.zone} - {this.state.date}
+            </div>
+          );
+        }
+      }
+
+      class MultiDateTimes extends React.Component {
+        renderDateTimes = () => {
+          return this.props.zones.map((zone) => (
+            <DateTime locale="en-US" zone={zone} />
+          ));
+        };
+
+        render() {
+          return (
+            <div>
+              <h1>Time zones</h1>
+              {this.renderDateTimes()}
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <MultiDateTimes zones={["America/New_York", "Asia/Baku", "America/Argentina/Tucuman", "Europe/Moscow", "Africa/Johannesburg"]} />,
+        document.getElementById("root")
+      );
     </script>
   </body>
 </html>
-
