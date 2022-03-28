@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
-  <body>
-    <style></style>
-    <div id="root"></div>
-    <!--
+
+<head>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <style></style>
+  <div id="root"></div>
+  <!--
       Given the list of products below, your task is to build a simplified version of Mercado Libre
       according to this image: https://imgur.com/a/c8FmE8L
 
@@ -30,13 +32,81 @@
 
     -->
 
-    <script type="text/babel">
-      const products = [
+  <script type="text/babel">
+     
+    class PurchasedItems extends React.Component {
+      render() {
+        return (
+          <div>{this.purchasedProducts}</div>
+        )
+      }
+    }
+    
+    class BuyButton extends React.Component {
+       state = {
+        purchasedProducts: 0
+      }
+       addPurchase = () => {
+      this.setState({
+        purchasedProducts: this.state.purchasedProducts + 1
+      })
+    }
+      
+      render() {
+        console.log(this.purchasedProducts)
+        return (
+          <button onClick={this.addPurchase}>Comprar ahora</button>
+        )
+      }
+    }
+    
+    class Product extends React.Component {
+      multiply = this.props.product.price * this.props.product.discount
+      addDiscount = () => {
+        this.props.product.discount !== 0 ? this.multiply : this.props.product.price
+      }
+      addDiscounttt() {
+        const finalPrice = this.props.product.price
+        if (this.props.product.discount !== false ) {
+          finalPrice = finalPrice * this.props.product.discount
+        }
+        return finalPrice
+      }
+      render () {
+        return (
+          <div>
+          <img alt={this.props.product.title} href={this.props.product.image} />
+          <h6>$ {this.props.product.price}</h6>
+          <h2>$ {this.addDiscount()}</h2>
+          <h5>{this.props.product.discount * 100}% OFF</h5>
+          <p>{this.props.product.title}</p>
+          <BuyButton />
+          </div> 
+        )
+      }
+    }
+
+    
+
+    class MercadoLibreApp extends React.Component {
+      renderProducts = () => {
+        return this.props.products.map((product) => <Product product={product}/>)
+      }
+      render() {
+        return (
+          <div>
+          {this.renderProducts()}
+          </div>
+        )
+      }
+    }
+      ReactDOM.render(
+        <MercadoLibreApp products={
         [
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_769951-MLA49366985648_032022-W.webp",
-            price: 37.699,
+            price: 37699,
             discount: 0.23,
             freeDelivery: true,
             title:
@@ -45,7 +115,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_846963-MLA49150022694_022022-W.webp",
-            price: 7.699,
+            price: 7699,
             discount: 0.09,
             freeDelivery: true,
             title: "Combo 2 Mesas De Luz Escandinava Vintage Pino Macizo Color",
@@ -53,7 +123,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_600634-MLA44576602026_012021-W.webp",
-            price: 24.197,
+            price: 24197,
             discount: 0.22,
             freeDelivery: true,
             title: "Sombrilla Parasol Jardin Grande Lateral Base 300 Cm",
@@ -61,7 +131,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_681784-MLA49304989474_032022-W.webp",
-            price: 33.799,
+            price: 33799,
             discount: 0.23,
             freeDelivery: true,
             title:
@@ -70,7 +140,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_861004-MLA44403134669_122020-W.webp",
-            price: 85.824,
+            price: 85824,
             discount: 0.25,
             freeDelivery: true,
             title:
@@ -79,7 +149,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_807728-MLA31041775793_062019-W.webp",
-            price: 32.01,
+            price: 3201,
             discount: 0.18,
             freeDelivery: true,
             title:
@@ -97,7 +167,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_925717-MLA49352091375_032022-W.webp",
-            price: 1.979,
+            price: 1979,
             discount: 0.09,
             freeDelivery: false,
             title: "Banco Silla De Pino Nordica 75 Cm De Alto Con Respaldar",
@@ -105,7 +175,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_948297-MLA49333568730_032022-W.webp",
-            price: 22.749,
+            price: 22749,
             discount: 0.23,
             freeDelivery: true,
             title: "Silla Eames Diseño Patas Madera Dsw Colores X4",
@@ -113,7 +183,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_933917-MLA46540687548_062021-W.webp",
-            price: 1.724,
+            price: 1724,
             discount: 0.13,
             freeDelivery: false,
             title: "Perchero Pared Nordico Estante Repisa Madera Pino Oferta",
@@ -130,7 +200,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_975070-MLA31083488281_062019-W.webp",
-            price: 37.06,
+            price: 3706,
             discount: 0.16,
             freeDelivery: false,
             title:
@@ -139,7 +209,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_783298-MLA31612340268_072019-W.webp",
-            price: 2.078,
+            price: 2078,
             discount: 0.23,
             freeDelivery: false,
             title:
@@ -148,7 +218,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_898100-MLA31035708274_062019-W.webp",
-            price: 28.32,
+            price: 2832,
             discount: 0.1,
             freeDelivery: true,
             title: "Sillón De Oficina Wolf Bajo - Desillas\n\npor Desillas",
@@ -156,7 +226,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_689584-MLA48378545568_112021-W.webp",
-            price: 35.558,
+            price: 35558,
             discount: 0.21,
             freeDelivery: true,
             title:
@@ -165,7 +235,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_817567-MLA46196353429_052021-W.webp",
-            price: 15.999,
+            price: 15999,
             discount: 0,
             freeDelivery: true,
             title:
@@ -174,7 +244,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_946562-MLA43766542739_102020-W.webp",
-            price: 17.549,
+            price: 17549,
             discount: 0.35,
             freeDelivery: true,
             title:
@@ -183,7 +253,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_926453-MLA47448404212_092021-W.webp",
-            price: 29.8,
+            price: 298,
             discount: 0.2,
             freeDelivery: false,
             title: "Sillon 1 Cuerpo Moderno Pana Unico Diceño Arkana 2022",
@@ -191,7 +261,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_918528-MLA43766108147_102020-W.webp",
-            price: 9.249,
+            price: 9249,
             discount: 0.35,
             freeDelivery: true,
             title:
@@ -200,7 +270,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_843330-MLA42127146228_062020-W.webp",
-            price: 22.999,
+            price: 22999,
             discount: 0.2,
             freeDelivery: true,
             title:
@@ -209,7 +279,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_977304-MLA49366981774_032022-W.webp",
-            price: 37.699,
+            price: 37699,
             discount: 0.23,
             freeDelivery: true,
             title: "Banqueta Desayunador Barra Espacial Taburete Alta X2",
@@ -217,7 +287,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_997173-MLA45812984951_052021-W.webp",
-            price: 81.999,
+            price: 81999,
             discount: 0.09,
             freeDelivery: false,
             title:
@@ -226,7 +296,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_646424-MLA48848269596_012022-W.webp",
-            price: 19.817,
+            price: 19817,
             discount: 0.14,
             freeDelivery: true,
             title:
@@ -235,7 +305,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_719146-MLA46496058379_062021-W.webp",
-            price: 4.106,
+            price: 4106,
             discount: 0,
             freeDelivery: true,
             title: "Bacha Cocina Simple Ariel 4304 Acero Inoxidable Aisi 430",
@@ -243,7 +313,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_826100-MLA49449065324_032022-W.webp",
-            price: 13.358,
+            price: 13358,
             discount: 0.4,
             freeDelivery: true,
             title: "Reflector Led Solar Luminaria 90w Sensor Movimiento Ext",
@@ -251,7 +321,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_834229-MLA48197761258_112021-W.webp",
-            price: 12.499,
+            price: 12499,
             discount: 0.05,
             freeDelivery: true,
             title:
@@ -260,7 +330,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_611690-MLA41179103513_032020-W.webp",
-            price: 21.199,
+            price: 21199,
             discount: 0.24,
             freeDelivery: true,
             title:
@@ -269,7 +339,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_729451-MLA49367023679_032022-W.webp",
-            price: 37.699,
+            price: 37699,
             discount: 0.23,
             freeDelivery: true,
             title:
@@ -278,7 +348,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_930861-MLA44093132710_112020-W.webp",
-            price: 1.846,
+            price: 1846,
             discount: 0.24,
             freeDelivery: false,
             title:
@@ -287,7 +357,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_763803-MLA49367023384_032022-W.webp",
-            price: 44.198,
+            price: 44198,
             discount: 0.23,
             freeDelivery: true,
             title: "Silla Ejecutivo Escritorio Oficina Acolchado Sillón X2",
@@ -295,7 +365,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_982557-MLA31352805054_072019-W.webp",
-            price: 3.657,
+            price: 3657,
             discount: 0,
             freeDelivery: true,
             title: "Manguera Riego Tecnocom Mlt1325 Trenzada Azul 1/2 X 25 P",
@@ -303,7 +373,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_950692-MLA49367126167_032022-W.webp",
-            price: 25.999,
+            price: 25999,
             discount: 0.23,
             freeDelivery: true,
             title: "Silla Bar Taburete Banqueta Premium Banco Desayunador X2",
@@ -311,7 +381,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_726842-MLA46950103077_082021-W.webp",
-            price: 4.998,
+            price: 4998,
             discount: 0.36,
             freeDelivery: false,
             title:
@@ -320,7 +390,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_721252-MLA49304758861_032022-W.webp",
-            price: 33.669,
+            price: 33669,
             discount: 0.23,
             freeDelivery: true,
             title:
@@ -329,7 +399,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_736334-MLA31356205553_072019-W.webp",
-            price: 2.992,
+            price: 2992,
             discount: 0.37,
             freeDelivery: false,
             title: "Pack X20 Lámparas Led Osram 9w = 75w Luz Día/fría Por E631",
@@ -337,7 +407,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_653019-MLA49448997410_032022-W.webp",
-            price: 13.358,
+            price: 13358,
             discount: 0.4,
             freeDelivery: true,
             title: "Lampara Solar Led 90w/patio Jardin Plazas Calles Exterior",
@@ -345,7 +415,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_885326-MLA49333573533_032022-W.webp",
-            price: 22.618,
+            price: 22618,
             discount: 0.23,
             freeDelivery: true,
             title:
@@ -354,7 +424,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_861109-MLA46387337052_062021-W.webp",
-            price: 19.999,
+            price: 19999,
             discount: 0.35,
             freeDelivery: true,
             title:
@@ -363,7 +433,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_803344-MLA48197690355_112021-W.webp",
-            price: 15.999,
+            price: 15999,
             discount: 0.21,
             freeDelivery: true,
             title: "Cortacerco Naftero Cuchilla 65cm Podador 1hp Explosion",
@@ -371,7 +441,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_743878-MLA46721839773_072021-W.webp",
-            price: 8.159,
+            price: 8159,
             discount: 0.13,
             freeDelivery: true,
             title:
@@ -380,7 +450,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_679039-MLA32586366035_102019-W.webp",
-            price: 53.623,
+            price: 53623,
             discount: 0.28,
             freeDelivery: false,
             title: "Reposera Para Jardín De Acero Aluminio Exterior - Hazel",
@@ -388,7 +458,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_975546-MLA44865909747_022021-W.webp",
-            price: 14.477,
+            price: 14477,
             discount: 0.1,
             freeDelivery: false,
             title: "Mueble Columna De Cocina 4 Puertas Despensero Organizador",
@@ -396,7 +466,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_824335-MLA46949778919_082021-W.webp",
-            price: 7.497,
+            price: 7497,
             discount: 0.36,
             freeDelivery: true,
             title:
@@ -405,7 +475,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_878598-MLA45737219277_042021-W.webp",
-            price: 15.299,
+            price: 15299,
             discount: 0.18,
             freeDelivery: true,
             title: "Pillow Top Desmontable Multiflex 140 X 190 Cubre Colchón",
@@ -413,7 +483,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_731485-MLA49139785124_022022-W.webp",
-            price: 6.327,
+            price: 6327,
             discount: 0.11,
             freeDelivery: true,
             title: "Combo 2 Mesas De Luz Vintage Nordica Pino Con Puerta",
@@ -421,7 +491,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_754920-MLA48599525783_122021-W.webp",
-            price: 52.798,
+            price: 52798,
             discount: 0.24,
             freeDelivery: true,
             title:
@@ -430,7 +500,7 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_986843-MLA31114989185_062019-W.webp",
-            price: 1.599,
+            price: 1599,
             discount: 0.11,
             freeDelivery: false,
             title: "Lámparas Osram Led 12w = 90w Luz Cálida Pack X 10",
@@ -438,14 +508,17 @@
           {
             image:
               "https://http2.mlstatic.com/D_NQ_NP_871135-MLA32138426538_092019-W.webp",
-            price: 1.295,
+            price: 1295,
             discount: 0.08,
             freeDelivery: false,
             title:
               "Pack X 10 Lámparas Led Osram 9w = 75w Luz Día/fría Por E631",
           },
-        ],
-      ];
+        ]
+      } />,
+        document.getElementById("root")
+      );
     </script>
-  </body>
+</body>
+
 </html>
