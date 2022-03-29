@@ -33,17 +33,11 @@
     -->
 
   <script type="text/babel">
-     
-    class PurchasedItems extends React.Component {
-      render() {
-        return (
-          <div>{this.purchasedProducts}</div>
-        )
-      }
-    }
-    
     class BuyButton extends React.Component {
-       state = {
+      constructor(props) {
+        super(props)
+      }
+      state = {
         purchasedProducts: 0
       }
        addPurchase = () => {
@@ -53,9 +47,19 @@
     }
       
       render() {
-        console.log(this.purchasedProducts)
         return (
+          <div>
+          <p>{this.state.purchasedProducts}</p>
           <button onClick={this.addPurchase}>Comprar ahora</button>
+          </div>
+        )
+      }
+    }
+
+    class PurchasedItems extends React.Component {
+      render() {
+        return (
+          <div>aaaaa{this.purchasedProducts}</div>
         )
       }
     }
@@ -75,6 +79,7 @@
       render () {
         return (
           <div>
+          
           <img alt={this.props.product.title} href={this.props.product.image} />
           <h6>$ {this.props.product.price}</h6>
           <h2>$ {this.addDiscount()}</h2>
@@ -95,6 +100,7 @@
       render() {
         return (
           <div>
+          <PurchasedItems />
           {this.renderProducts()}
           </div>
         )
