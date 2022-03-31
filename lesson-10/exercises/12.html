@@ -58,9 +58,55 @@
       class FreeDeliveryFilter extends React.Component {
         render() {
           return (
-            <button onClick={this.props.onClick}>
+            <button onClick={this.props.onFilterFreeDelivery}>
               Envio Gratis
             </button>
+          );
+        }
+      }
+      class DiscountPercentFilters extends React.Component {
+        discounts = [5, 10, 15, 20, 25, 30];
+
+        renderDiscountOptions = () =>
+          this.discounts.map((discount) => (
+            <button
+              key={discount}
+              onClick={() => this.props.onDiscountApplied(discount)}
+            >
+              Desde {discount}% OFF
+            </button>
+          ));
+
+        render() {
+          return (
+            <div>
+              <h3>Descuentos</h3>
+              {this.renderDiscountOptions()}
+            </div>
+          );
+        }
+      }
+
+      class PriceRangeFilters extends React.Component {
+        prices = [
+          { name: `Hasta $`, min: 0, max: 6500 },
+          { name: `$ a $`, min: 6500, max: 15000 },
+          { name: `Más de $`, min: 15000, max: Infinity },
+        ];
+        renderPriceOptions = () =>
+          this.prices.map((price) => (
+            <button
+              onClick={() => this.props.onPriceFilter(price.min, price.max)}
+            >
+              {price.name}
+            </button>
+          ));
+        render() {
+          return (
+            <div>
+              <h3>Precio</h3>
+              {this.renderPriceOptions()}
+            </div>
           );
         }
       }
@@ -71,11 +117,8 @@
       }
 
       class Product extends React.Component {
-        multiply = this.props.product.price * this.props.product.discount;
-        addDiscount = () =>
-          this.props.product.discount !== 0
-            ? this.multiply
-            : this.props.product.price;
+        discountedPrice = priceWithDiscount(this.props.product);
+
         render() {
           return (
             <div className="product">
@@ -84,7 +127,7 @@
                 src={this.props.product.image}
               />
               <h6>$ {this.props.product.price}</h6>
-              <h2>$ {this.addDiscount()}</h2>
+              <h2>$ {this.discountedPrice}</h2>
               <h5>{this.props.product.discount * 100}% OFF</h5>
               <p>{this.props.product.title}</p>
               <BuyButton onClick={this.props.onPurchase} />
@@ -97,7 +140,10 @@
       class MercadoLibreApp extends React.Component {
         state = {
           purchasedProducts: 0,
-          filterByFreeDelivery: false
+          filterByFreeDelivery: false,
+          discountPercentageFilterValue: 0,
+          minPriceFilterValue: 0,
+          maxPriceFilterValue: 0,
         };
 
         addPurchase = () => {
@@ -105,22 +151,58 @@
             purchasedProducts: this.state.purchasedProducts + 1,
           });
         };
-        
+
         setFreeDeliveryFilter = () => {
           this.setState({
-            filterByFreeDelivery: !false ? true : false
-          })
-        }
+            filterByFreeDelivery:
+              this.state.filterByFreeDelivery === false ? true : false,
+          });
+        };
+
+        setDiscountFilter = (discountPercentageFilterValue) => {
+          this.setState({
+            discountPercentageFilterValue,
+          });
+        };
+
+        setPriceFilter = (minPriceFilterValue, maxPriceFilterValue) => {
+          this.setState({
+            minPriceFilterValue,
+            maxPriceFilterValue,
+          });
+        };
 
         renderProducts = () => {
-          let products = this.props.products
+          let products = this.props.products;
 
-          if(this.state.filterByFreeDelivery === true) {
-            products = this.props.products.filter((product) => product.freeDelivery)
+          if (this.state.filterByFreeDelivery === true) {
+            products = this.props.products.filter(
+              (product) => product.freeDelivery
+            );
+          }
+
+          if (this.state.discountPercentageFilterValue) {
+            products = products.filter(
+              (product) =>
+                product.discount * 100 >
+                this.state.discountPercentageFilterValue
+            );
+          }
+
+          if (
+            this.state.minPriceFilterValue ||
+            this.state.maxPriceFilterValue
+          ) {
+            products = products.filter(
+              (product) =>
+                priceWithDiscount(product) >= this.state.minPriceFilterValue &&
+                priceWithDiscount(product) <= this.state.maxPriceFilterValue
+            );
           }
 
           return products.map((product) => (
             <Product
+              key={product.id}
               onPurchase={this.addPurchase}
               product={product}
             />
@@ -130,331 +212,166 @@
           return (
             <div>
               ({this.state.purchasedProducts})
-              <FreeDeliveryFilter onClick={this.setFreeDeliveryFilter} />
+              <DiscountPercentFilters
+                onDiscountApplied={this.setDiscountFilter}
+              />
+              <PriceRangeFilters onPriceFilter={this.setPriceFilter} />
+              <FreeDeliveryFilter
+                onFilterFreeDelivery={this.setFreeDeliveryFilter}
+              />
               {this.renderProducts()}
             </div>
           );
         }
       }
 
+      function priceWithDiscount(product) {
+        const discountNumber = product.price * product.discount;
+        return product.price - discountNumber;
+      }
+
       ReactDOM.render(
         <MercadoLibreApp
           products={[
             {
+              id: 971.982743648373,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_769951-MLA49366985648_032022-W.webp",
-              price: 37699,
-              discount: 0.23,
-              freeDelivery: true,
-              title:
-                "Banqueta Taburete Sillon Desayunador Barra Bar Acolchado X2",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_846963-MLA49150022694_022022-W.webp",
-              price: 7699,
-              discount: 0.09,
-              freeDelivery: true,
-              title:
-                "Combo 2 Mesas De Luz Escandinava Vintage Pino Macizo Color",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_600634-MLA44576602026_012021-W.webp",
-              price: 24197,
-              discount: 0.22,
-              freeDelivery: true,
-              title: "Sombrilla Parasol Jardin Grande Lateral Base 300 Cm",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_681784-MLA49304989474_032022-W.webp",
-              price: 33799,
-              discount: 0.23,
-              freeDelivery: true,
-              title:
-                "Silla Eames Tulip Almohadon Patas Madera Colores Comedor X4",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_861004-MLA44403134669_122020-W.webp",
-              price: 85824,
-              discount: 0.25,
-              freeDelivery: true,
-              title:
-                "Depósito De Jardin Keter Manor 4x3 Beige - 128x94x196 Cm\n\npor Keter",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_807728-MLA31041775793_062019-W.webp",
-              price: 3201,
-              discount: 0.18,
-              freeDelivery: true,
-              title:
-                "Combo 6 Sillas Eames Dsw Blancas - Desillas\n\npor Desillas",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_912890-MLA42060130599_062020-W.webp",
-              price: 580,
-              discount: 0.37,
+                "https://http2.mlstatic.com/D_NQ_NP_685425-MLA48733347192_012022-W.webp",
+              price: 24720,
+              discount: 0.1,
               freeDelivery: false,
               title:
-                "Cortina Roller Doble, Screen + Blackout, Fabrica C/ Garantía",
+                "Silla Eames Comedor Plastico Patas Madera Colores X 4 Un\n\npor REX",
             },
             {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_925717-MLA49352091375_032022-W.webp",
-              price: 1979,
-              discount: 0.09,
-              freeDelivery: false,
-              title: "Banco Silla De Pino Nordica 75 Cm De Alto Con Respaldar",
-            },
-            {
+              id: 547.9307328477425,
               image:
                 "https://http2.mlstatic.com/D_NQ_NP_948297-MLA49333568730_032022-W.webp",
-              price: 22749,
-              discount: 0.23,
+              price: 22398,
+              discount: 0.21,
               freeDelivery: true,
               title: "Silla Eames Diseño Patas Madera Dsw Colores X4",
             },
             {
+              id: 507.21859434228867,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_933917-MLA46540687548_062021-W.webp",
-              price: 1724,
-              discount: 0.13,
-              freeDelivery: false,
-              title: "Perchero Pared Nordico Estante Repisa Madera Pino Oferta",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_912559-MLA44902447744_022021-W.webp",
-              price: 10,
-              discount: 0.3,
+                "https://http2.mlstatic.com/D_NQ_NP_890400-MLA47991337970_102021-W.webp",
+              price: 15500,
+              discount: 0,
               freeDelivery: true,
               title:
-                "Puff Redondo En Pana Premium Y Metal Dorado Modelo Andrus 02",
+                "Combo Dos Sillas Materas Apoyb Vestidas En Chen Color A Ele",
             },
             {
+              id: 330.39323661162666,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_975070-MLA31083488281_062019-W.webp",
-              price: 3706,
-              discount: 0.16,
+                "https://http2.mlstatic.com/D_NQ_NP_623539-MLA40539936368_012020-W.webp",
+              price: 32557,
+              discount: 0.29,
+              freeDelivery: true,
+              title:
+                "Pack 4 Sillas Diseño Escandinavo Novara Milan Base Madera",
+            },
+            {
+              id: 5.321005390955591,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_950462-MLA48358402230_112021-W.webp",
+              price: 20577,
+              discount: 0.15,
+              freeDelivery: true,
+              title:
+                "Silla Eames Comedor Plastico Patas De Madera Diseño X 4 Uni",
+            },
+            {
+              id: 767.9248533068151,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_893489-MLA47221001805_082021-W.webp",
+              price: 13499,
+              discount: 0,
+              freeDelivery: true,
+              title: "Silla Eames Tulip Sillón Para Comedor Diseño Moderno",
+            },
+            {
+              id: 902.2869035655539,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_980807-MLA47526940238_092021-W.webp",
+              price: 16630,
+              discount: 0,
+              freeDelivery: true,
+              title:
+                "Sillas Caño Apilable Calidad X 6. + Regalo + Envío Gratis",
+            },
+            {
+              id: 75.13549241225826,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_985745-MLA48982551023_012022-W.webp",
+              price: 18099,
+              discount: 0,
               freeDelivery: false,
               title:
-                "Combo 4 Sillas Tolix Varios Colores - Desillas\n\npor Desillas",
+                "Pack X4 Sillas Allegra Garden Life Apto Interior Y Exterior",
             },
             {
+              id: 849.9342409584372,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_783298-MLA31612340268_072019-W.webp",
-              price: 2078,
-              discount: 0.23,
-              freeDelivery: false,
+                "https://http2.mlstatic.com/D_NQ_NP_631309-MLA43631602842_092020-W.webp",
+              price: 24950,
+              discount: 0,
+              freeDelivery: true,
               title:
-                "Cesped Sintetico Pasto Artificial Rollo Cuatricolor Premium 30 Mm",
+                "Sillas Tulip X 4 Unidades, Comedor, Living, Blancas Modernas",
             },
             {
+              id: 584.5926250602238,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_898100-MLA31035708274_062019-W.webp",
-              price: 2832,
+                "https://http2.mlstatic.com/D_NQ_NP_915605-MLA46317500021_062021-W.webp",
+              price: 17950,
+              discount: 0,
+              freeDelivery: false,
+              title: "Silla Sillon Eames Set X4 Para Comedor Patas De Madera",
+            },
+            {
+              id: 21.167312445927287,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_623539-MLA40539936368_012020-W.webp",
+              price: 32557,
+              discount: 0.29,
+              freeDelivery: true,
+              title:
+                "Pack 4 Sillas Diseño Escandinavo Novara Milan Base Madera",
+            },
+            {
+              id: 621.520407423946,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_800794-MLA31018868785_062019-W.webp",
+              price: 21340,
+              discount: 0.18,
+              freeDelivery: false,
+              title: "Sillas Eames Blancas X 4 - Desillas\n\npor Desillas",
+            },
+            {
+              id: 435.69254408254545,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 24720,
               discount: 0.1,
-              freeDelivery: true,
-              title: "Sillón De Oficina Wolf Bajo - Desillas\n\npor Desillas",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_689584-MLA48378545568_112021-W.webp",
-              price: 35558,
-              discount: 0.21,
-              freeDelivery: true,
+              freeDelivery: false,
               title:
-                "Silla de escritorio Green Deco Gamer negra, gris y blanca con tapizado de cuero sintético",
+                "Silla Eames Comedor Plastico Patas Madera Colores X 4 Un\n\npor REX",
             },
             {
+              id: 360.40588320164323,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_817567-MLA46196353429_052021-W.webp",
-              price: 15999,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 14250,
               discount: 0,
-              freeDelivery: true,
-              title:
-                "Combo 2 Sillones Apilable Plastico Pvc Simil Ratan Jardin\n\npor Prestigio",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_946562-MLA43766542739_102020-W.webp",
-              price: 17549,
-              discount: 0.35,
-              freeDelivery: true,
-              title:
-                "Kit Luces Emergencia 2 En 1 Potentes Recargables X4 60 Leds\n\npor Gadnic",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_926453-MLA47448404212_092021-W.webp",
-              price: 298,
-              discount: 0.2,
               freeDelivery: false,
-              title: "Sillon 1 Cuerpo Moderno Pana Unico Diceño Arkana 2022",
+              title: "Sillas Tulip, Eames, Con Almoahdon X2 Concepto Tiffany",
             },
             {
+              id: 174.38878092550758,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_918528-MLA43766108147_102020-W.webp",
-              price: 9249,
-              discount: 0.35,
-              freeDelivery: true,
-              title:
-                "Luces Emergencia Potentes Recargables Kit X4 + Tornillos\n\npor Gadnic",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_843330-MLA42127146228_062020-W.webp",
-              price: 22999,
-              discount: 0.2,
-              freeDelivery: true,
-              title:
-                "Carpa Indoor Cultivo 100 X 100 X 200 Invernadero Jardin Myla",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_977304-MLA49366981774_032022-W.webp",
-              price: 37699,
-              discount: 0.23,
-              freeDelivery: true,
-              title: "Banqueta Desayunador Barra Espacial Taburete Alta X2",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_997173-MLA45812984951_052021-W.webp",
-              price: 81999,
-              discount: 0.09,
-              freeDelivery: false,
-              title:
-                "Pileta estructural redonda Bestway 56420 con capacidad de 10250 litros de 3.66m de diámetro azul diseño mosaico",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_646424-MLA48848269596_012022-W.webp",
-              price: 19817,
-              discount: 0.14,
-              freeDelivery: true,
-              title:
-                "Combo 2 Sillones Exterior Sorrento Skarpo Jardin - Prestigio\n\npor Prestigio",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_719146-MLA46496058379_062021-W.webp",
-              price: 4106,
-              discount: 0,
-              freeDelivery: true,
-              title: "Bacha Cocina Simple Ariel 4304 Acero Inoxidable Aisi 430",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_826100-MLA49449065324_032022-W.webp",
-              price: 13358,
-              discount: 0.4,
-              freeDelivery: true,
-              title: "Reflector Led Solar Luminaria 90w Sensor Movimiento Ext",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_834229-MLA48197761258_112021-W.webp",
-              price: 12499,
-              discount: 0.05,
-              freeDelivery: true,
-              title:
-                "Cortacerco A Explosion Naftero Podador Espada 52cm 20 Pulgad",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_611690-MLA41179103513_032020-W.webp",
-              price: 21199,
-              discount: 0.24,
-              freeDelivery: true,
-              title:
-                "Motosierra a nafta Philco 52cc MJPMO217 2.4hp\n\npor Mall 360",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_729451-MLA49367023679_032022-W.webp",
-              price: 37699,
-              discount: 0.23,
-              freeDelivery: true,
-              title:
-                "Banqueta Barra Desayunador Taburete Sofia Alta C/respaldo X2",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_930861-MLA44093132710_112020-W.webp",
-              price: 1846,
-              discount: 0.24,
-              freeDelivery: false,
-              title:
-                "Cesped Sintetico Pasto Artificial Rollo Cuatricolor Premium 20 Mm",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_763803-MLA49367023384_032022-W.webp",
-              price: 44198,
-              discount: 0.23,
-              freeDelivery: true,
-              title: "Silla Ejecutivo Escritorio Oficina Acolchado Sillón X2",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_982557-MLA31352805054_072019-W.webp",
-              price: 3657,
-              discount: 0,
-              freeDelivery: true,
-              title: "Manguera Riego Tecnocom Mlt1325 Trenzada Azul 1/2 X 25 P",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_950692-MLA49367126167_032022-W.webp",
-              price: 25999,
-              discount: 0.23,
-              freeDelivery: true,
-              title: "Silla Bar Taburete Banqueta Premium Banco Desayunador X2",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_726842-MLA46950103077_082021-W.webp",
-              price: 4998,
-              discount: 0.36,
-              freeDelivery: false,
-              title:
-                "Lampara Led Bulb Wiz Wifi Color 9w E27 X2 Unidades\n\npor WiZ",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_721252-MLA49304758861_032022-W.webp",
-              price: 33669,
-              discount: 0.23,
-              freeDelivery: true,
-              title:
-                "Silla Eames Tulip Almohadon Patas Madera Comedor X4\n\npor Harte Flooring",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_736334-MLA31356205553_072019-W.webp",
-              price: 2992,
-              discount: 0.37,
-              freeDelivery: false,
-              title:
-                "Pack X20 Lámparas Led Osram 9w = 75w Luz Día/fría Por E631",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_653019-MLA49448997410_032022-W.webp",
-              price: 13358,
-              discount: 0.4,
-              freeDelivery: true,
-              title:
-                "Lampara Solar Led 90w/patio Jardin Plazas Calles Exterior",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_885326-MLA49333573533_032022-W.webp",
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
               price: 22618,
               discount: 0.23,
               freeDelivery: true,
@@ -462,98 +379,376 @@
                 "Silla Eames Diseño Patas Madera Dsw Colores X4\n\npor Harte Flooring",
             },
             {
+              id: 149.84039531004845,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_861109-MLA46387337052_062021-W.webp",
-              price: 19999,
-              discount: 0.35,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 19271,
+              discount: 0.29,
               freeDelivery: true,
               title:
-                "Velador Lámpara Giratoria Parlante Bluetooth Gadnic Pro\n\npor Gadnic",
+                "Sillón De Comedor Moderno Silla Eames Jim Apoyabrazos Pack 2",
             },
             {
+              id: 148.56471725054888,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_803344-MLA48197690355_112021-W.webp",
-              price: 15999,
-              discount: 0.21,
-              freeDelivery: true,
-              title: "Cortacerco Naftero Cuchilla 65cm Podador 1hp Explosion",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_743878-MLA46721839773_072021-W.webp",
-              price: 8159,
-              discount: 0.13,
-              freeDelivery: true,
-              title:
-                "Silla Tolix Metal Interior Colores Resistente - Prestigio\n\npor Prestigio",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_679039-MLA32586366035_102019-W.webp",
-              price: 53623,
-              discount: 0.28,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 38155,
+              discount: 0.36,
               freeDelivery: false,
-              title: "Reposera Para Jardín De Acero Aluminio Exterior - Hazel",
+              title:
+                "Juego Eames Cross Wood 4 Sillas - Desillas\n\npor Desillas",
             },
             {
+              id: 562.7630428691357,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_975546-MLA44865909747_022021-W.webp",
-              price: 14477,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 13499,
+              discount: 0,
+              freeDelivery: true,
+              title: "Combo 2 Sillas De Comedor - Acapulco - Mod. Tulum - Yute",
+            },
+            {
+              id: 336.34220064361074,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 14999,
+              discount: 0.06,
+              freeDelivery: false,
+              title:
+                "Silla Tolix X2 Unidades - Blancas O Negras - Begônia\n\npor Begonia",
+            },
+            {
+              id: 302.8312379274416,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 13841,
+              discount: 0.19,
+              freeDelivery: true,
+              title:
+                "Silla De Diseño Master Filipo Plastico Apilable X2 Baires 4",
+            },
+            {
+              id: 962.0580588630135,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 31414,
+              discount: 0.29,
+              freeDelivery: true,
+              title:
+                "Silla Plastica Apilable Simil Ratan Harmony Pack 4 - Cuotas",
+            },
+            {
+              id: 19.24511749953983,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 18530,
+              discount: 0.16,
+              freeDelivery: false,
+              title:
+                "2 Sillas Tolix Metálicas Color A Elección - Desillas\n\npor Desillas",
+            },
+            {
+              id: 478.9252915633204,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 12499,
+              discount: 0,
+              freeDelivery: false,
+              title: "Combo 2 Sillas Tulip Eames Con Almohadon Patas De Madera",
+            },
+            {
+              id: 389.0030523224186,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 17271,
+              discount: 0.29,
+              freeDelivery: true,
+              title:
+                "Sillas De Comedor Novara Milan Escandinavo Madera Pack X2",
+            },
+            {
+              id: 837.1872675461856,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 12499,
+              discount: 0,
+              freeDelivery: false,
+              title: "Combo 2 Sillas Tulip Eames Con Almohadon Patas De Madera",
+            },
+            {
+              id: 519.6916092218875,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 19679,
+              discount: 0,
+              freeDelivery: true,
+              title: "Sillas Plásticas Master Negra Pack X 4",
+            },
+            {
+              id: 658.7265711150501,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 16800,
+              discount: 0,
+              freeDelivery: true,
+              title:
+                "Sillas Eames X 4 Unidades, Comedor, Living, Blancas Modernas",
+            },
+            {
+              id: 31.33012618781894,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 18999,
+              discount: 0.15,
+              freeDelivery: true,
+              title:
+                "Sillón Poltrona Silla Diseño Interior Poliester Madera París",
+            },
+            {
+              id: 632.3255306475339,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 24999,
+              discount: 0,
+              freeDelivery: true,
+              title:
+                "Silla Eames Tulip Comedor Moderna Blanca Negra X 4 Unidades",
+            },
+            {
+              id: 514.5677525428365,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 31828,
+              discount: 0.23,
+              freeDelivery: false,
+              title:
+                "Pack X4 Silla Rio Apilable Apta Exterior\n\npor Tienda Rossi",
+            },
+            {
+              id: 55.184265821019096,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 31040,
+              discount: 0.3,
+              freeDelivery: true,
+              title: "Sillas Milan Nordicas Madera Diseño Moderno Novara X4",
+            },
+            {
+              id: 705.3463724658591,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 19000,
+              discount: 0,
+              freeDelivery: true,
+              title: "Set X4 Silla Eames De Plástico Y Madera",
+            },
+            {
+              id: 403.84243327469613,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 10999,
+              discount: 0,
+              freeDelivery: true,
+              title:
+                "Combo X 2 Silla Plástica Tiffany Reforzada Apilable Eventos",
+            },
+            {
+              id: 652.5705405458009,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 21340,
+              discount: 0.18,
+              freeDelivery: false,
+              title: "Sillas Eames Blancas X 4 - Desillas\n\npor Desillas",
+            },
+            {
+              id: 480.00522454286744,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 24490,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Silla Tulip Eames Negro Importada Excelente Calidad X4 Unid",
+            },
+            {
+              id: 707.6477243705858,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 20444,
               discount: 0.1,
               freeDelivery: false,
               title:
-                "Mueble Columna De Cocina 4 Puertas Despensero Organizador",
+                "Silla Eames Comedor Plastico Patas Madera Colores X 4 Uni\n\npor REX",
             },
             {
+              id: 911.5716398616513,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_824335-MLA46949778919_082021-W.webp",
-              price: 7497,
-              discount: 0.36,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 15881,
+              discount: 0.19,
               freeDelivery: true,
               title:
-                "Lampara Led Bulb Wiz Wifi Color 9w E27 X3 Unidades\n\npor WiZ",
+                "Sillas Nordicas Milan Madera Diseño Moderno Novara X2 Uni",
             },
             {
+              id: 377.02396369455846,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_878598-MLA45737219277_042021-W.webp",
-              price: 15299,
-              discount: 0.18,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 17090,
+              discount: 0,
               freeDelivery: true,
-              title: "Pillow Top Desmontable Multiflex 140 X 190 Cubre Colchón",
+              title: "Set X2 Sillones Eames Varios Colores Patas De Madera",
             },
             {
+              id: 765.5709135075762,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_731485-MLA49139785124_022022-W.webp",
-              price: 6327,
-              discount: 0.11,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 14200,
+              discount: 0,
               freeDelivery: true,
-              title: "Combo 2 Mesas De Luz Vintage Nordica Pino Con Puerta",
+              title: "Silla Bertoia X2",
             },
             {
+              id: 81.17958516355395,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_754920-MLA48599525783_122021-W.webp",
-              price: 52798,
-              discount: 0.24,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 11090,
+              discount: 0,
               freeDelivery: true,
-              title:
-                "Silla Ejecutivo Gerencial Pc Respaldo Oficina Premiun Gamer",
+              title: "Set X2 Sillas Eames De Plástico Y Madera",
             },
             {
+              id: 745.496083947534,
               image:
-                "https://http2.mlstatic.com/D_NQ_NP_986843-MLA31114989185_062019-W.webp",
-              price: 1599,
-              discount: 0.11,
-              freeDelivery: false,
-              title: "Lámparas Osram Led 12w = 90w Luz Cálida Pack X 10",
-            },
-            {
-              image:
-                "https://http2.mlstatic.com/D_NQ_NP_871135-MLA32138426538_092019-W.webp",
-              price: 1295,
-              discount: 0.08,
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 20444,
+              discount: 0.1,
               freeDelivery: false,
               title:
-                "Pack X 10 Lámparas Led Osram 9w = 75w Luz Día/fría Por E631",
+                "Silla Eames Blancas Plástico Patas De Madera Comedor X4 Uni\n\npor REX",
+            },
+            {
+              id: 614.9039526844074,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 19765,
+              discount: 0.26,
+              freeDelivery: false,
+              title: "Silla Tulip Eames Cross Wood X2\n\npor Desillas",
+            },
+            {
+              id: 261.6055464787444,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 15290,
+              discount: 0,
+              freeDelivery: true,
+              title: "Pack X2 Silla Bertoia Con Envío Gratis Blanco / Negro",
+            },
+            {
+              id: 135.51068172535375,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 33414,
+              discount: 0.29,
+              freeDelivery: true,
+              title:
+                "Pack 4 Sillas Eames Nordicas Modernas Base Madera - Cuotas",
+            },
+            {
+              id: 851.8877897243326,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 21499,
+              discount: 0.15,
+              freeDelivery: true,
+              title:
+                "Sillas X 4 Comedor Plastico Patas De Madera Diseño Eames Dsw",
+            },
+            {
+              id: 740.8213936787886,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 18530,
+              discount: 0.16,
+              freeDelivery: false,
+              title:
+                "2 Sillas Tolix Metálicas Color A Elección - Desillas\n\npor Desillas",
+            },
+            {
+              id: 875.9111797129221,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 15250,
+              discount: 0,
+              freeDelivery: true,
+              title: "Materas Con Brazos Poltronas Combo X 2 En Chenille",
+            },
+            {
+              id: 353.47175964990265,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 22600,
+              discount: 0,
+              freeDelivery: true,
+              title: "6 Sillas De Diseño Patas Pintada, Comedor, Bar, Jardín",
+            },
+            {
+              id: 221.89802049346375,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 17000,
+              discount: 0,
+              freeDelivery: true,
+              title:
+                "Silla Bertoia X2 Cromada Comedor Cocina Acero Hierro Diseño",
+            },
+            {
+              id: 202.3280046280076,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 22426,
+              discount: 0.19,
+              freeDelivery: true,
+              title: "Silla Eames Dsw Blanca De Diseño Comedor Vintage X4 Uni",
+            },
+            {
+              id: 534.0635197897907,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 33199,
+              discount: 0.31,
+              freeDelivery: true,
+              title: "Silla Master X4 Plástico Eames Apilable Baires4 Cuotas",
+            },
+            {
+              id: 717.2249615831854,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 25650,
+              discount: 0.25,
+              freeDelivery: true,
+              title: "Silla De Comedor Plástico Exterior Apilable - Master X 4",
+            },
+            {
+              id: 147.89594475758295,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 22500,
+              discount: 0,
+              freeDelivery: true,
+              title: "6 Sillas De Diseño Patas Pintadas Promo Black!",
+            },
+            {
+              id: 802.514120560472,
+              image:
+                "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+              price: 18099,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Pack X4 Sillas Allegra Garden Life Apto Interior Y Exterior",
             },
           ]}
         />,
