@@ -28,10 +28,25 @@
         max-width: 150px;
         max-height: 150px;
         margin: 5px, 15px, 15px, 5px;
+        padding-left: 25px;
       }
       .shoppingCartImg {
         max-width: 25px;
         max-height: 25px;
+      }
+      .shoppingCart {
+        padding-right: 35px;
+        margin-top: 10px;
+        display: flex;
+      }
+      .purchasedProducts {
+        background-color: rgb(224, 0, 0);
+        color: #fff;
+        font-size: 10px;
+        height: 10px;
+        padding: 3px;
+        border-radius: 50%;
+
       }
       .bodyOfPage {
         display: flex;
@@ -41,6 +56,67 @@
         width: 200px;
         display: flex;
         flex-direction: column;
+      }
+      .freeDeliveryButton {
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        padding: 11px;
+        border-radius: 6px;
+        width: 140px;
+        margin-right: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #fff;
+      }
+      .envioGratis {
+        font-size: 14px;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 34px;
+        height: 18px;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 13px;
+        width: 13px;
+        left: 4px;
+        bottom: 3px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: #3483fa;
+      }
+      input:focus + .slider {
+        box-shadow: 0 0 1px #3483fa;
+      }
+      input:checked + .slider:before {
+        -webkit-transform: translateX(13px);
+        -ms-transform: translateX(13px);
+        transform: translateX(13px);
       }
       .discountPercentFilters {
         display: flex;
@@ -98,6 +174,40 @@
         width: 284px;
         height: 284px;
       }
+      .productInfo {
+        margin-left: 15px;
+        margin-right: 15px;
+        display: flex;
+        flex-direction: column;
+
+      }
+      .originalPrice {
+        color: #999;
+        font-size: 12px;
+        text-decoration-line: line-through;
+        margin-top: 30px;
+      }
+      .finalPrice {
+        font-size: 24px;
+        margin: 0;
+      }
+      .discountPercent {
+        color: #00a650;
+        font-size: 14px;
+        margin-left: 10px;
+      }
+      .priceAndDiscount {
+        display: flex;
+        align-items: center;
+      }
+      .freeDelivery {
+        color: #00a650;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .productName {
+        font-size: 14px;
+      }
       .comprarAhoraButton {
         background-color: #3483fa;
         color: #fff;
@@ -107,6 +217,7 @@
         font-weight: 400;
         height: 50px;
         width: 200px;
+        margin-left: 27px;
       }
       .comprarAhoraButton:hover {
         background-color: #2968cc;
@@ -142,9 +253,18 @@
       class FreeDeliveryFilter extends React.Component {
         render() {
           return (
-            <button onClick={this.props.onFilterFreeDelivery}>
-              Envio Gratis
-            </button>
+            <div className="freeDeliveryContainer">
+            <label className="switch">
+              <div className="freeDeliveryButton">
+                <div className="envioGratis">Envío Gratis</div>
+                <input
+                  onClick={this.props.onFilterFreeDelivery}
+                  type="checkbox"
+                />
+                <span className="slider"></span>
+              </div>
+            </label>
+            </div>
           );
         }
       }
@@ -209,6 +329,18 @@
 
       class Product extends React.Component {
         discountedPrice = priceWithDiscount(this.props.product);
+        discountPercent = Math.round(this.props.product.discount * 100);
+
+        renderDiscount = () =>
+          this.discountPercent === 0 ? "" : `${this.discountPercent}% OFF`;
+
+        renderOriginalPrice = () =>
+          this.discountPercent === 0
+            ? ""
+            : `$${Math.round(this.props.product.price)}`;
+
+        renderFreeDelivery = () =>
+          this.props.product.freeDelivery === true ? "Envío Gratis" : "";
 
         render() {
           return (
@@ -219,12 +351,16 @@
                   src={this.props.product.image}
                 />
               </div>
-              <h6>$ {Math.round(this.props.product.price)}</h6>
-              <h2>$ {Math.round(this.discountedPrice)}</h2>
-              <h5>{Math.round(this.props.product.discount * 100)}% OFF</h5>
-              <p>{this.props.product.title}</p>
+              <div className="productInfo">
+              <p className="originalPrice">{this.renderOriginalPrice()}</p>
+              <div className="priceAndDiscount">
+              <p className="finalPrice">${Math.round(this.discountedPrice)}</p>
+              <p className="discountPercent">{this.renderDiscount()}</p>
+              </div>
+              <p className="freeDelivery">{this.renderFreeDelivery()}</p>
+              <p className="productName">{this.props.product.title}</p>
               <BuyButton onClick={this.props.onPurchase} />
-              <p>free delivery {this.props.product.freeDelivery.toString()}</p>
+            </div>
             </div>
           );
         }
@@ -314,7 +450,7 @@
                     className="shoppingCartImg"
                     src="https://i.pinimg.com/originals/15/4f/df/154fdf2f2759676a96e9aed653082276.png"
                   />
-                  ({this.state.purchasedProducts})
+                  <div className="purchasedProducts">{this.state.purchasedProducts}</div>
                 </div>
               </div>
               <div className="bodyOfPage">
@@ -406,7 +542,7 @@
                 "https://http2.mlstatic.com/D_NQ_NP_851584-MLA40660301944_022020-W.webp",
               price: 3699,
               discount: 0,
-              freeDelivery: false,
+              freeDelivery: true,
               title:
                 "Juego De Cortinas Blackout Textil Presillas Ocultas Oferta!",
             },
@@ -741,7 +877,7 @@
                 "https://http2.mlstatic.com/D_NQ_NP_767728-MLA43983723833_112020-W.webp",
               price: 4899,
               discount: 0,
-              freeDelivery: false,
+              freeDelivery: true,
               title: "Jgo De Cortinas Blackout Engomado Bloquea 100%",
             },
           ]}
