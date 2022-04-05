@@ -56,25 +56,23 @@
         width: 200px;
         display: flex;
         flex-direction: column;
+        
       }
-      .freeDeliveryButton {
+      
+      .envioGratis {
+        font-size: 14px;
         border: 1px solid #ddd;
         box-sizing: border-box;
         padding: 11px;
         border-radius: 6px;
-        width: 140px;
+        min-width: 140px;
+        min-height: 50px;
         margin-right: 5px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
         background-color: #fff;
-      }
-      .envioGratis {
-        font-size: 14px;
       }
       .switch {
         position: relative;
-        display: inline-block;
+        display: flex;
         width: 34px;
         height: 18px;
       }
@@ -161,12 +159,12 @@
         -webkit-box-shadow: 0px 36px 400px -40px rgba(46, 46, 46, 0.14);
         -moz-box-shadow: 0px 36px 400px -40px rgba(46, 46, 46, 0.14);
       }
-      img {
+      .productImage {
         max-width: 284px;
         max-height: 284px;
         border-radius: 7px;
       }
-      .productImage {
+      .productImageContainer {
         border-bottom: rgba(0, 0, 0, 0.1);
         border-bottom-style: inset;
         display: flex;
@@ -255,14 +253,14 @@
           return (
             <div className="freeDeliveryContainer">
             <label className="switch">
-              <div className="freeDeliveryButton">
+              
                 <div className="envioGratis">Envío Gratis</div>
                 <input
                   onClick={this.props.onFilterFreeDelivery}
                   type="checkbox"
                 />
                 <span className="slider"></span>
-              </div>
+              
             </label>
             </div>
           );
@@ -345,8 +343,9 @@
         render() {
           return (
             <div className="product">
-              <div className="productImage">
+              <div className="productImageContainer">
                 <img
+                  className="productImage"
                   alt={this.props.product.title}
                   src={this.props.product.image}
                 />
