@@ -14,6 +14,55 @@
     -->
 
     <script type="text/babel">
+      class MyModal extends React.Component {
+        state = {
+          dialogOn: false,
+        };
+        setDialog = () => {
+          this.setState({
+            dialogOn: true,
+          });
+        };
+        render() {
+          return (
+            <div>
+              <button onClick={this.setDialog}>Open Dialog</button>
+              <dialog
+                open={this.state.dialogOn}
+                aria-labelledby={this.props.dialogTitle.id}
+                aria-describedby={this.props.dialogDescription.id}
+              >
+                <img src={this.props.image.src} alt={this.props.image.alt} />
+                <h2 id={this.props.dialogTitle.id}>
+                  {this.props.dialogTitle.text}
+                </h2>
+                <p id={this.props.dialogDescription.id}>
+                  {this.props.dialogDescription.text}
+                </p>
+                <div className="dialogButtons">
+                  <button id="close_dialog">Close</button>
+                  <button id="confirm_dialog">Confirm</button>
+                </div>
+              </dialog>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <MyModal
+          dialogTitle={{ text: "Use location services?", id: "dialog_title" }}
+          dialogDescription={{
+            text: "In order to give directional instructions, we kindly ask you to turn on the location services.",
+            id: "dialog_description",
+          }}
+          image={{
+            src: "https://native-dialog.surge.sh/location-service.svg",
+            alt: "Illustration of location services",
+          }}
+        />,
+        document.getElementById("root")
+      );
     </script>
   </body>
 </html>
