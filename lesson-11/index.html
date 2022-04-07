@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      img {
+        max-width: 200px;
+        max-height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      class Artwork extends React.Component {
+        render() {
+          const artwork = this.props.artwork;
+
+          return (
+            <div>
+              <h3>{artwork.title}</h3>
+              <img
+                src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
+              />
+            </div>
+          );
+        }
+      }
+
+      class ArtworkList extends React.Component {
+        render() {
+          return this.props.artworks.map((artwork) => (
+            <Artwork key={artwork.id} artwork={artwork} />
+          ));
+        }
+      }
+
+      class App extends React.Component {
+        state = {
+          artworks: [],
+          isLoading: true,
+          error: false,
+        };
+
+        // lifecycle functions
+        componentDidMount() {
+          fetch("https://api.artic.edu/api/v1/artworks")
+            .then((response) => response.json())
+            .then((jsonData) => {
+              this.setState({ artworks: jsonData.data, isLoading: false });
+            })
+            .catch(() => {
+              this.setState({ error: true, isLoading: false });
+            });
+        }
+
+        renderArtworks = () => {
+          if (this.state.isLoading) {
+            return <span>Loading...</span>;
+          }
+
+          if (this.state.error) {
+            return (
+              <span>There was an error loading the data, please try again</span>
+            );
+          }
+
+          return <ArtworkList artworks={this.state.artworks} />;
+        };
+
+        render() {
+          return (
+            <div>
+              <h1>Artworks</h1>
+              {this.renderArtworks()}
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
