@@ -23,7 +23,7 @@
     <script type="text/babel">
       class Breed extends React.Component {
         render() {
-          return <option value={this.props.breed}>{this.props.breed}</option>
+          return <option value={this.props.breed}>{this.props.breed}</option>;
         }
       }
       class BreedsList extends React.Component {
@@ -51,27 +51,38 @@
             });
         }
 
-        renderBreedNames = () => {
-          if (this.state.isLoading) {
-            return <span>Loading...</span>;
-          }
+        renderError = () => {
           if (this.state.error) {
             return (
               <span>There's an error loading the data, please try again!</span>
             );
           }
-          return <BreedsList breedNamesArr={Object.keys(this.state.breedNames)} />;
+        };
+
+        renderBreedNames = () => {
+          if (this.state.isLoading) {
+            return (
+              <option selected disabled>
+                Loading...
+              </option>
+            );
+          }
+
+          return (
+            <BreedsList breedNamesArr={Object.keys(this.state.breedNames)} />
+          );
         };
         render() {
           return (
             <div>
               <h1>Dogs</h1>
               <div>
-              <label htmlFor="dog-select">Choose a dog breed:</label>
-              <select className="dogs" id="dog-select">
-                {this.renderBreedNames()}
-              </select>
-            </div>
+                <label htmlFor="dog-select">Choose a dog breed: </label>
+                <select className="dogs" id="dog-select">
+                  {this.renderBreedNames()}
+                  {this.renderError()}
+                </select>
+              </div>
             </div>
           );
         }
