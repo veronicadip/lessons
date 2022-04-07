@@ -21,6 +21,63 @@
     -->
 
     <script type="text/babel">
+      class Breed extends React.Component {
+        render() {
+          return <option value={this.props.breed}>{this.props.breed}</option>
+        }
+      }
+      class BreedsList extends React.Component {
+        render() {
+          return this.props.breedNamesArr.map((breed) => (
+            <Breed key={breed} breed={breed} />
+          ));
+        }
+      }
+      class DogsApp extends React.Component {
+        state = {
+          isLoading: true,
+          error: false,
+          breedNames: [],
+        };
+
+        componentDidMount() {
+          fetch("https://dog.ceo/api/breeds/list/all")
+            .then((promise) => promise.json())
+            .then((jsonData) => {
+              this.setState({ breedNames: jsonData.message, isLoading: false });
+            })
+            .catch(() => {
+              this.setState({ error: true, isLoading: false });
+            });
+        }
+
+        renderBreedNames = () => {
+          if (this.state.isLoading) {
+            return <span>Loading...</span>;
+          }
+          if (this.state.error) {
+            return (
+              <span>There's an error loading the data, please try again!</span>
+            );
+          }
+          return <BreedsList breedNamesArr={Object.keys(this.state.breedNames)} />;
+        };
+        render() {
+          return (
+            <div>
+              <h1>Dogs</h1>
+              <div>
+              <label htmlFor="dog-select">Choose a dog breed:</label>
+              <select className="dogs" id="dog-select">
+                {this.renderBreedNames()}
+              </select>
+            </div>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<DogsApp />, document.getElementById("root"));
     </script>
   </body>
 </html>
