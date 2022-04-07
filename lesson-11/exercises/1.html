@@ -33,15 +33,30 @@
           ));
         }
       }
+
       class DogsApp extends React.Component {
         state = {
           isLoading: true,
           error: false,
           breedNames: [],
+          breedPictures: [],
+          selectedBreed: "affenpinscher"
         };
+
 
         componentDidMount() {
           fetch("https://dog.ceo/api/breeds/list/all")
+            .then((promise) => promise.json())
+            .then((jsonData) => {
+              this.setState({ breedNames: jsonData.message, isLoading: false });
+            })
+            .catch(() => {
+              this.setState({ error: true, isLoading: false });
+            });
+        }
+
+        fetchBreedImages = () => {
+          fetch(`https://dog.ceo/api/breed/${this.state.selectedBreed}/images`)
             .then((promise) => promise.json())
             .then((jsonData) => {
               this.setState({ breedNames: jsonData.message, isLoading: false });
@@ -68,6 +83,12 @@
             );
           }
 
+        selectBreed = () => {
+          this.setState({
+            selectedBreed: "african"
+          })
+        }
+
           return (
             <BreedsList breedNamesArr={Object.keys(this.state.breedNames)} />
           );
@@ -78,7 +99,7 @@
               <h1>Dogs</h1>
               <div>
                 <label htmlFor="dog-select">Choose a dog breed: </label>
-                <select className="dogs" id="dog-select">
+                <select className="dogs" id="dog-select" onChange={this.selectBreed}>
                   {this.renderBreedNames()}
                   {this.renderError()}
                 </select>
