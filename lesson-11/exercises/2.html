@@ -6,7 +6,11 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    <style></style>
+    <style>
+      body {
+        background-color: hsl(0, 0%, 100%);
+      }
+    </style>
     <div id="root"></div>
     <!--
       This API allows you to convert https://x-colors.herokuapp.com/ between color representations.
@@ -15,6 +19,63 @@
     -->
 
     <script type="text/babel">
+      class ColorsApp extends React.Component {
+        state = {
+          selectedColorHex: "#000000",
+          selectedColorRgb: "rgb(0, 0, 0)",
+          selectedColorHsl: "hsl(0, 0%, 0%)",
+          error: false,
+        };
+        selectColor = (event) => {
+          this.setState({
+            selectedColorHex: event.target.value,
+          });
+          this.renderRgbColor;
+        };
+        renderRgbColor = () => {
+          fetch(
+            `https://x-colors.herokuapp.com/api/hex2rgb?value=${this.state.selectedColorHex}`
+          )
+            .then((promise) => promise.json())
+            .then((jsonData) => {
+              this.setState({ selectedColorRgb: jsonData.rgb });
+            })
+            .catch(() => {
+              this.setState({ error: true });
+            });
+        };
+        renderColors = () => {
+          if (this.state.error) {
+            return <span>There was an error, please try again.</span>;
+          }
+          return (
+            <div>
+              <p>{`RGB: ${this.state.selectedColorRgb}`}</p>
+              <p>{`HEX: ${this.state.selectedColorHex}`}</p>
+              <p></p>
+            </div>
+          );
+        };
+        render() {
+          return (
+            <div>
+              <h1>Color models</h1>
+              <label htmlFor="color-select">
+                Choose a color to see it in three different color models (RGB,
+                HEX and HSL):
+              </label>
+              <input
+                type="color"
+                id="color-select"
+                onChange={this.selectColor}
+              />
+              {this.renderColors()}
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<ColorsApp />, document.getElementById("root"));
     </script>
   </body>
 </html>
