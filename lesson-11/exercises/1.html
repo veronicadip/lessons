@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
-  <body>
-    <style></style>
-    <div id="root"></div>
-    <!--
+
+<head>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <style></style>
+  <div id="root"></div>
+  <!--
       This is a public API about dogs: https://dog.ceo/dog-api/documentation/ it provides:
 
       - an endpoint to get a list of breeds:  https://dog.ceo/dog-api/documentation
@@ -20,27 +22,41 @@
       Bonus points if there's a breed selected by default.
     -->
 
-    <script type="text/babel">
-      class Breed extends React.Component {
+  <script type="text/babel">
+      class BreedOption extends React.Component {
         render() {
           return <option value={this.props.breed}>{this.props.breed}</option>;
         }
       }
-      class BreedsList extends React.Component {
+      class BreedSelector extends React.Component {
         render() {
-          return this.props.breedNamesArr.map((breed) => (
-            <Breed key={breed} breed={breed} />
-          ));
+          return (
+            <div>
+            <label htmlFor="dog-select">Choose a dog breedslist: </label>
+            <select className="dogs" id="dog-select" onChange={this.props.onSelectBreed}>
+            {this.props.breedNames.map((breed) => (
+            <BreedOption key={breed} breed={breed} /> )) }
+            </select>
+            </div>
+          )
+          
+        }
+      }
+
+      class RenderPictures extends React.Component {
+        render() {
+          return <img alt={`${this.props.selectedBreed}-dog`} src={this.props.image}  />
         }
       }
 
       class DogsApp extends React.Component {
         state = {
           isLoading: true,
+          loadingPictures: true,
           error: false,
           breedNames: [],
           breedPictures: [],
-          selectedBreed: "affenpinscher"
+          selectedBreed: ""
         };
 
 
@@ -59,11 +75,18 @@
           fetch(`https://dog.ceo/api/breed/${this.state.selectedBreed}/images`)
             .then((promise) => promise.json())
             .then((jsonData) => {
-              this.setState({ breedNames: jsonData.message, isLoading: false });
+              this.setState({ breedPictures: jsonData.message, loadingPictures: false });
             })
             .catch(() => {
-              this.setState({ error: true, isLoading: false });
+              this.setState({ error: true, loadingPictures: false });
             });
+        }
+
+        selectBreed = (event) => {
+          this.setState({
+            selectedBreed: event.target.value
+          })
+          this.fetchBreedImages()
         }
 
         renderError = () => {
@@ -77,32 +100,34 @@
         renderBreedNames = () => {
           if (this.state.isLoading) {
             return (
-              <option selected disabled>
+              <option disabled>
                 Loading...
               </option>
             );
           }
-
-        selectBreed = () => {
-          this.setState({
-            selectedBreed: "african"
-          })
-        }
-
           return (
-            <BreedsList breedNamesArr={Object.keys(this.state.breedNames)} />
+            <BreedSelector breedNames={Object.keys(this.state.breedNames)} onSelectBreed={this.selectBreed} />
+            
           );
         };
+
+        renderBreedPictures = () => {
+          if (this.state.loadingPictures) {
+            return <h2>Loading...</h2>
+          };
+          return (
+            <RenderPictures image={this.state.breedPictures.map()} selectedBreed={this.state.selectedBreed} />
+          )
+        }
+
         render() {
           return (
             <div>
               <h1>Dogs</h1>
               <div>
-                <label htmlFor="dog-select">Choose a dog breed: </label>
-                <select className="dogs" id="dog-select" onChange={this.selectBreed}>
                   {this.renderBreedNames()}
+                  {this.renderBreedPictures()}
                   {this.renderError()}
-                </select>
               </div>
             </div>
           );
@@ -111,7 +136,6 @@
 
       ReactDOM.render(<DogsApp />, document.getElementById("root"));
     </script>
-  </body>
+</body>
+
 </html>
-
-
