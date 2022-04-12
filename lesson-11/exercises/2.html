@@ -4,11 +4,20 @@
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
   </head>
   <body>
     <style>
       body {
-        background-color: hsl(0, 0%, 100%);
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        color: rgb(24, 24, 24);
+      }
+      h1 {
+        color: rgb(8, 71, 50);
+      }
+      label {
+        margin-right: 10px;
       }
     </style>
     <div id="root"></div>
@@ -26,19 +35,45 @@
           selectedColorHsl: "hsl(0, 0%, 0%)",
           error: false,
         };
-        selectColor = (event) => {
-          this.setState({
-            selectedColorHex: event.target.value,
-          });
-          this.renderRgbColor;
+
+        selectColor = _.debounce((event) => {
+          this.setState(
+            {
+              selectedColorHex: event.target.value,
+            },
+            this.setColors
+          );
+        }, 200);
+
+        setColors = () => {
+          this.setRgbColor(), this.setHslColor();
         };
-        renderRgbColor = () => {
+
+        setRgbColor = () => {
           fetch(
-            `https://x-colors.herokuapp.com/api/hex2rgb?value=${this.state.selectedColorHex}`
+            `https://x-colors.herokuapp.com/api/hex2rgb?value=${this.state.selectedColorHex.replace(
+              "#",
+              ""
+            )}`
           )
             .then((promise) => promise.json())
             .then((jsonData) => {
               this.setState({ selectedColorRgb: jsonData.rgb });
+            })
+            .catch(() => {
+              this.setState({ error: true });
+            });
+        };
+        setHslColor = () => {
+          fetch(
+            `https://x-colors.herokuapp.com/api/hex2hsl?value=${this.state.selectedColorHex.replace(
+              "#",
+              ""
+            )}`
+          )
+            .then((promise) => promise.json())
+            .then((jsonData) => {
+              this.setState({ selectedColorHsl: jsonData.hsl });
             })
             .catch(() => {
               this.setState({ error: true });
@@ -52,7 +87,7 @@
             <div>
               <p>{`RGB: ${this.state.selectedColorRgb}`}</p>
               <p>{`HEX: ${this.state.selectedColorHex}`}</p>
-              <p></p>
+              <p>{`HSL: ${this.state.selectedColorHsl}`}</p>
             </div>
           );
         };
