@@ -51,7 +51,10 @@
         }
       }
       class BreedSelector extends React.Component {
-        render() {
+        renderBreedSelector = () => {
+          if (this.props.isLoading) {
+            return <option disabled>Loading...</option>;
+          }
           return (
             <div>
               <label htmlFor="dog-select">Choose a dog breedslist: </label>
@@ -66,6 +69,9 @@
               </select>
             </div>
           );
+        };
+        render() {
+          return this.renderBreedSelector();
         }
       }
 
@@ -134,7 +140,7 @@
         selectBreed = (event) => {
           this.setState(
             {
-              selectedBreed: event.target.value.toString(),
+              selectedBreed: event.target.value,
             },
             this.fetchBreedImages
           );
@@ -149,13 +155,11 @@
         };
 
         renderBreedNames = () => {
-          if (this.state.isLoading) {
-            return <option disabled>Loading...</option>;
-          }
           return (
             <BreedSelector
               breedNames={Object.keys(this.state.breedNames)}
               onSelectBreed={this.selectBreed}
+              isLoading={this.state.isLoading}
             />
           );
         };
