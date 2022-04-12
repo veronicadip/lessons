@@ -15,6 +15,15 @@
       h1 {
         color: rgb(10, 118, 133);
       }
+      input {
+        padding: 5px;
+        font-size: 15px;
+        line-height: 16px;
+        border-radius: 5px;
+        border-color: #ccd0d5;
+        border-style: solid;
+        margin-bottom: 10px;
+      }
       button {
         background-color: rgb(10, 118, 133);
         font-size: 14px;
@@ -40,7 +49,7 @@
       .album {
         background-color: #fff;
         max-width: 150px;
-        height: 300px;
+        height: 350px;
         border-radius: 7px;
         border-color: #606770;
         margin: 10px;
@@ -70,7 +79,12 @@
         object-fit: scale-down;
       }
       p {
-        margin: 2px;
+        margin: 5px;
+      }
+      a {
+        color: rgb(10, 118, 133);
+        font-size: smaller;
+        margin: 5px;
       }
     </style>
     <div id="root"></div>
@@ -83,19 +97,21 @@
     <script type="text/babel">
       class Album extends React.Component {
         render() {
-          const album = this.props.album
+          const album = this.props.album;
           return (
             <div className="album">
               <div className="albumImageContainer">
-              <img
-                className="albumImage"
-                src={album.artworkUrl100}
-                alt={`${album.collectionName}-album-cover-by-${album.artistName}`}
-              />
+                <img
+                  className="albumImage"
+                  src={album.artworkUrl100}
+                  alt={`${album.collectionName}-album-cover-by-${album.artistName}`}
+                />
               </div>
               <p>Artist: {album.artistName}</p>
               <p>Album: {album.collectionName}</p>
               <p>Price: ${album.collectionPrice}</p>
+              <p>Genre: {album.primaryGenreName}</p>
+              <a href={album.collectionViewUrl}>Go to iTunes</a>
             </div>
           );
         }
@@ -148,11 +164,16 @@
               this.setState({ error: true, isLoading: false });
             });
         };
+        keyDownHandler = (event) => {
+          if (event.key === "Enter") {
+            this.searchAlbums();
+          }
+        };
 
         render() {
           return (
-            <div>
-            <h1>Albums Info</h1>
+            <div onKeyDown={this.keyDownHandler}>
+              <h1>Find Albums</h1>
               <label htmlFor="search-albums"></label>
               <input
                 placeholder="Search albums here"
@@ -162,12 +183,12 @@
               />
               <button onClick={this.searchAlbums}>Search</button>
               <div className="listOfAlbums">
-              <AlbumsList
-                albumsInfo={this.state.albumsInfo}
-                searchValue={this.state.searchValue}
-                isLoading={this.state.isLoading}
-                error={this.state.error}
-              />
+                <AlbumsList
+                  albumsInfo={this.state.albumsInfo}
+                  searchValue={this.state.searchValue}
+                  isLoading={this.state.isLoading}
+                  error={this.state.error}
+                />
               </div>
             </div>
           );
