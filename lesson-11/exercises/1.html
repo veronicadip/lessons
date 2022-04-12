@@ -51,17 +51,22 @@
         }
       }
       class BreedSelector extends React.Component {
+        onSelectChanged = (event) => {
+          const selectedBreed = event.target.value;
+          this.props.onSelectBreed(selectedBreed);
+        };
         renderBreedSelector = () => {
           if (this.props.isLoading) {
             return <option disabled>Loading...</option>;
           }
+
           return (
             <div>
               <label htmlFor="dog-select">Choose a dog breedslist: </label>
               <select
                 className="dogs"
                 id="dog-select"
-                onChange={this.props.onSelectBreed}
+                onChange={this.onSelectChanged}
               >
                 {this.props.breedNames.map((breed) => (
                   <BreedOption key={breed} breed={breed} />
@@ -137,10 +142,10 @@
             });
         };
 
-        selectBreed = (event) => {
+        selectBreed = (breed) => {
           this.setState(
             {
-              selectedBreed: event.target.value,
+              selectedBreed: breed,
             },
             this.fetchBreedImages
           );
