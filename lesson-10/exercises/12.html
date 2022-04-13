@@ -5,8 +5,218 @@
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
+
   <body>
-    <style></style>
+    <style>
+      body {
+        background-color: rgba(0, 0, 0, 0.1);
+        margin: 0;
+        color: #333;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      button:hover {
+        cursor: pointer;
+      }
+      .topOfPage {
+        background-color: #fff159;
+        margin-top: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+      }
+      .mercadoLibreLogo {
+        max-width: 150px;
+        max-height: 150px;
+        margin: 5px, 15px, 15px, 5px;
+        padding-left: 25px;
+      }
+      .shoppingCartImg {
+        max-width: 25px;
+        max-height: 25px;
+      }
+      .shoppingCart {
+        padding-right: 35px;
+        margin-top: 10px;
+        display: flex;
+      }
+      .purchasedProducts {
+        color: rgb(15, 15, 15);
+        font-size: 10px;
+      }
+      .bodyOfPage {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+      }
+      .filtersContainer {
+        max-width: 294px;
+        min-width: 210px;
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      .envioGratis {
+        font-size: 14px;
+      }
+      .switch {
+        display: flex;
+        justify-content: space-between;
+        height: 18px;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        padding: 16px;
+        border-radius: 6px;
+        min-height: 50px;
+        margin-right: 5px;
+        background-color: #fff;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        cursor: pointer;
+        width: 32px;
+        height: 17px;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        content: "";
+        position: relative;
+        display: flex;
+        height: 12px;
+        width: 12px;
+        left: 3px;
+        bottom: -2px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: #3483fa;
+      }
+      input:focus + .slider {
+        box-shadow: 0 0 1px #3483fa;
+      }
+      input:checked + .slider:before {
+        -webkit-transform: translateX(13px);
+        -ms-transform: translateX(13px);
+        transform: translateX(13px);
+      }
+      .discountPercentFilters {
+        display: flex;
+        flex-direction: column;
+      }
+      .discountPercentButton {
+        color: #666;
+        border: none;
+        background-color: transparent;
+        text-align: left;
+      }
+      .priceRangeFilters {
+        display: flex;
+        flex-direction: column;
+      }
+      .priceRangeButton {
+        color: #666;
+        border: none;
+        background-color: transparent;
+        text-align: left;
+      }
+      .productsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        width: 1000px;
+      }
+      .product {
+        background-color: #fff;
+        max-width: 284px;
+        height: 540px;
+        border-radius: 7px;
+        border-color: #606770;
+        margin: 10px;
+        box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
+        -webkit-box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
+        -moz-box-shadow: 0px 0px 3px 1px rgba(71, 71, 71, 0.14);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .product:hover {
+        box-shadow: 0px 36px 400px -40px rgba(46, 46, 46, 0.14);
+        -webkit-box-shadow: 0px 36px 400px -40px rgba(46, 46, 46, 0.14);
+        -moz-box-shadow: 0px 36px 400px -40px rgba(46, 46, 46, 0.14);
+      }
+      .productImageContainer {
+        border-bottom: rgba(0, 0, 0, 0.1);
+        border-bottom-style: inset;
+        display: flex;
+        justify-content: space-around;
+        height: 284px;
+      }
+      .productImage {
+        border-radius: 7px;
+        width: 100%;
+        object-fit: contain;
+      }
+      .productInfo {
+        margin-left: 15px;
+        margin-right: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+      .originalPrice {
+        color: #999;
+        font-size: 12px;
+        text-decoration-line: line-through;
+        margin-top: 30px;
+        margin-bottom: -2px;
+      }
+      .finalPrice {
+        font-size: 24px;
+        margin: 0;
+      }
+      .discountPercent {
+        color: #00a650;
+        font-size: 14px;
+        margin-left: 10px;
+      }
+      .priceAndDiscount {
+        display: flex;
+        align-items: center;
+      }
+      .freeDelivery {
+        color: #00a650;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .productName {
+        font-size: 14px;
+      }
+      .comprarAhoraButton {
+        background-color: #3483fa;
+        color: #fff;
+        border: transparent;
+        border-radius: 7px;
+        font-size: 14px;
+        font-weight: 400;
+        height: 50px;
+        width: 80%;
+        margin-left: 27px;
+        margin-bottom: 20px;
+      }
+      .comprarAhoraButton:hover {
+        background-color: #2968cc;
+      }
+      .comprarAhoraButton:active {
+        background-color: #2457aa;
+      }
+    </style>
     <div id="root"></div>
     <!--
       Given the list of products below, your task is to build a simplified version of Mercado Libre
@@ -31,421 +241,641 @@
     -->
 
     <script type="text/babel">
-      const products = [
-        [
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_769951-MLA49366985648_032022-W.webp",
-            price: 37.699,
-            discount: 0.23,
-            freeDelivery: true,
-            title:
-              "Banqueta Taburete Sillon Desayunador Barra Bar Acolchado X2",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_846963-MLA49150022694_022022-W.webp",
-            price: 7.699,
-            discount: 0.09,
-            freeDelivery: true,
-            title: "Combo 2 Mesas De Luz Escandinava Vintage Pino Macizo Color",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_600634-MLA44576602026_012021-W.webp",
-            price: 24.197,
-            discount: 0.22,
-            freeDelivery: true,
-            title: "Sombrilla Parasol Jardin Grande Lateral Base 300 Cm",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_681784-MLA49304989474_032022-W.webp",
-            price: 33.799,
-            discount: 0.23,
-            freeDelivery: true,
-            title:
-              "Silla Eames Tulip Almohadon Patas Madera Colores Comedor X4",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_861004-MLA44403134669_122020-W.webp",
-            price: 85.824,
-            discount: 0.25,
-            freeDelivery: true,
-            title:
-              "Depósito De Jardin Keter Manor 4x3 Beige - 128x94x196 Cm\n\npor Keter",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_807728-MLA31041775793_062019-W.webp",
-            price: 32.01,
-            discount: 0.18,
-            freeDelivery: true,
-            title:
-              "Combo 6 Sillas Eames Dsw Blancas - Desillas\n\npor Desillas",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_912890-MLA42060130599_062020-W.webp",
-            price: 580,
-            discount: 0.37,
-            freeDelivery: false,
-            title:
-              "Cortina Roller Doble, Screen + Blackout, Fabrica C/ Garantía",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_925717-MLA49352091375_032022-W.webp",
-            price: 1.979,
-            discount: 0.09,
-            freeDelivery: false,
-            title: "Banco Silla De Pino Nordica 75 Cm De Alto Con Respaldar",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_948297-MLA49333568730_032022-W.webp",
-            price: 22.749,
-            discount: 0.23,
-            freeDelivery: true,
-            title: "Silla Eames Diseño Patas Madera Dsw Colores X4",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_933917-MLA46540687548_062021-W.webp",
-            price: 1.724,
-            discount: 0.13,
-            freeDelivery: false,
-            title: "Perchero Pared Nordico Estante Repisa Madera Pino Oferta",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_912559-MLA44902447744_022021-W.webp",
-            price: 10,
-            discount: 0.3,
-            freeDelivery: true,
-            title:
-              "Puff Redondo En Pana Premium Y Metal Dorado Modelo Andrus 02",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_975070-MLA31083488281_062019-W.webp",
-            price: 37.06,
-            discount: 0.16,
-            freeDelivery: false,
-            title:
-              "Combo 4 Sillas Tolix Varios Colores - Desillas\n\npor Desillas",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_783298-MLA31612340268_072019-W.webp",
-            price: 2.078,
-            discount: 0.23,
-            freeDelivery: false,
-            title:
-              "Cesped Sintetico Pasto Artificial Rollo Cuatricolor Premium 30 Mm",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_898100-MLA31035708274_062019-W.webp",
-            price: 28.32,
-            discount: 0.1,
-            freeDelivery: true,
-            title: "Sillón De Oficina Wolf Bajo - Desillas\n\npor Desillas",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_689584-MLA48378545568_112021-W.webp",
-            price: 35.558,
-            discount: 0.21,
-            freeDelivery: true,
-            title:
-              "Silla de escritorio Green Deco Gamer negra, gris y blanca con tapizado de cuero sintético",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_817567-MLA46196353429_052021-W.webp",
-            price: 15.999,
-            discount: 0,
-            freeDelivery: true,
-            title:
-              "Combo 2 Sillones Apilable Plastico Pvc Simil Ratan Jardin\n\npor Prestigio",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_946562-MLA43766542739_102020-W.webp",
-            price: 17.549,
-            discount: 0.35,
-            freeDelivery: true,
-            title:
-              "Kit Luces Emergencia 2 En 1 Potentes Recargables X4 60 Leds\n\npor Gadnic",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_926453-MLA47448404212_092021-W.webp",
-            price: 29.8,
-            discount: 0.2,
-            freeDelivery: false,
-            title: "Sillon 1 Cuerpo Moderno Pana Unico Diceño Arkana 2022",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_918528-MLA43766108147_102020-W.webp",
-            price: 9.249,
-            discount: 0.35,
-            freeDelivery: true,
-            title:
-              "Luces Emergencia Potentes Recargables Kit X4 + Tornillos\n\npor Gadnic",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_843330-MLA42127146228_062020-W.webp",
-            price: 22.999,
-            discount: 0.2,
-            freeDelivery: true,
-            title:
-              "Carpa Indoor Cultivo 100 X 100 X 200 Invernadero Jardin Myla",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_977304-MLA49366981774_032022-W.webp",
-            price: 37.699,
-            discount: 0.23,
-            freeDelivery: true,
-            title: "Banqueta Desayunador Barra Espacial Taburete Alta X2",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_997173-MLA45812984951_052021-W.webp",
-            price: 81.999,
-            discount: 0.09,
-            freeDelivery: false,
-            title:
-              "Pileta estructural redonda Bestway 56420 con capacidad de 10250 litros de 3.66m de diámetro azul diseño mosaico",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_646424-MLA48848269596_012022-W.webp",
-            price: 19.817,
-            discount: 0.14,
-            freeDelivery: true,
-            title:
-              "Combo 2 Sillones Exterior Sorrento Skarpo Jardin - Prestigio\n\npor Prestigio",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_719146-MLA46496058379_062021-W.webp",
-            price: 4.106,
-            discount: 0,
-            freeDelivery: true,
-            title: "Bacha Cocina Simple Ariel 4304 Acero Inoxidable Aisi 430",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_826100-MLA49449065324_032022-W.webp",
-            price: 13.358,
-            discount: 0.4,
-            freeDelivery: true,
-            title: "Reflector Led Solar Luminaria 90w Sensor Movimiento Ext",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_834229-MLA48197761258_112021-W.webp",
-            price: 12.499,
-            discount: 0.05,
-            freeDelivery: true,
-            title:
-              "Cortacerco A Explosion Naftero Podador Espada 52cm 20 Pulgad",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_611690-MLA41179103513_032020-W.webp",
-            price: 21.199,
-            discount: 0.24,
-            freeDelivery: true,
-            title:
-              "Motosierra a nafta Philco 52cc MJPMO217 2.4hp\n\npor Mall 360",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_729451-MLA49367023679_032022-W.webp",
-            price: 37.699,
-            discount: 0.23,
-            freeDelivery: true,
-            title:
-              "Banqueta Barra Desayunador Taburete Sofia Alta C/respaldo X2",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_930861-MLA44093132710_112020-W.webp",
-            price: 1.846,
-            discount: 0.24,
-            freeDelivery: false,
-            title:
-              "Cesped Sintetico Pasto Artificial Rollo Cuatricolor Premium 20 Mm",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_763803-MLA49367023384_032022-W.webp",
-            price: 44.198,
-            discount: 0.23,
-            freeDelivery: true,
-            title: "Silla Ejecutivo Escritorio Oficina Acolchado Sillón X2",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_982557-MLA31352805054_072019-W.webp",
-            price: 3.657,
-            discount: 0,
-            freeDelivery: true,
-            title: "Manguera Riego Tecnocom Mlt1325 Trenzada Azul 1/2 X 25 P",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_950692-MLA49367126167_032022-W.webp",
-            price: 25.999,
-            discount: 0.23,
-            freeDelivery: true,
-            title: "Silla Bar Taburete Banqueta Premium Banco Desayunador X2",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_726842-MLA46950103077_082021-W.webp",
-            price: 4.998,
-            discount: 0.36,
-            freeDelivery: false,
-            title:
-              "Lampara Led Bulb Wiz Wifi Color 9w E27 X2 Unidades\n\npor WiZ",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_721252-MLA49304758861_032022-W.webp",
-            price: 33.669,
-            discount: 0.23,
-            freeDelivery: true,
-            title:
-              "Silla Eames Tulip Almohadon Patas Madera Comedor X4\n\npor Harte Flooring",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_736334-MLA31356205553_072019-W.webp",
-            price: 2.992,
-            discount: 0.37,
-            freeDelivery: false,
-            title: "Pack X20 Lámparas Led Osram 9w = 75w Luz Día/fría Por E631",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_653019-MLA49448997410_032022-W.webp",
-            price: 13.358,
-            discount: 0.4,
-            freeDelivery: true,
-            title: "Lampara Solar Led 90w/patio Jardin Plazas Calles Exterior",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_885326-MLA49333573533_032022-W.webp",
-            price: 22.618,
-            discount: 0.23,
-            freeDelivery: true,
-            title:
-              "Silla Eames Diseño Patas Madera Dsw Colores X4\n\npor Harte Flooring",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_861109-MLA46387337052_062021-W.webp",
-            price: 19.999,
-            discount: 0.35,
-            freeDelivery: true,
-            title:
-              "Velador Lámpara Giratoria Parlante Bluetooth Gadnic Pro\n\npor Gadnic",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_803344-MLA48197690355_112021-W.webp",
-            price: 15.999,
-            discount: 0.21,
-            freeDelivery: true,
-            title: "Cortacerco Naftero Cuchilla 65cm Podador 1hp Explosion",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_743878-MLA46721839773_072021-W.webp",
-            price: 8.159,
-            discount: 0.13,
-            freeDelivery: true,
-            title:
-              "Silla Tolix Metal Interior Colores Resistente - Prestigio\n\npor Prestigio",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_679039-MLA32586366035_102019-W.webp",
-            price: 53.623,
-            discount: 0.28,
-            freeDelivery: false,
-            title: "Reposera Para Jardín De Acero Aluminio Exterior - Hazel",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_975546-MLA44865909747_022021-W.webp",
-            price: 14.477,
-            discount: 0.1,
-            freeDelivery: false,
-            title: "Mueble Columna De Cocina 4 Puertas Despensero Organizador",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_824335-MLA46949778919_082021-W.webp",
-            price: 7.497,
-            discount: 0.36,
-            freeDelivery: true,
-            title:
-              "Lampara Led Bulb Wiz Wifi Color 9w E27 X3 Unidades\n\npor WiZ",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_878598-MLA45737219277_042021-W.webp",
-            price: 15.299,
-            discount: 0.18,
-            freeDelivery: true,
-            title: "Pillow Top Desmontable Multiflex 140 X 190 Cubre Colchón",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_731485-MLA49139785124_022022-W.webp",
-            price: 6.327,
-            discount: 0.11,
-            freeDelivery: true,
-            title: "Combo 2 Mesas De Luz Vintage Nordica Pino Con Puerta",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_754920-MLA48599525783_122021-W.webp",
-            price: 52.798,
-            discount: 0.24,
-            freeDelivery: true,
-            title:
-              "Silla Ejecutivo Gerencial Pc Respaldo Oficina Premiun Gamer",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_986843-MLA31114989185_062019-W.webp",
-            price: 1.599,
-            discount: 0.11,
-            freeDelivery: false,
-            title: "Lámparas Osram Led 12w = 90w Luz Cálida Pack X 10",
-          },
-          {
-            image:
-              "https://http2.mlstatic.com/D_NQ_NP_871135-MLA32138426538_092019-W.webp",
-            price: 1.295,
-            discount: 0.08,
-            freeDelivery: false,
-            title:
-              "Pack X 10 Lámparas Led Osram 9w = 75w Luz Día/fría Por E631",
-          },
-        ],
-      ];
+      class FreeDeliveryFilter extends React.Component {
+        render() {
+          return (
+            <label className="switch">
+              <div className="envioGratis">Envío Gratis</div>
+              <input
+                onClick={this.props.onFilterFreeDelivery}
+                type="checkbox"
+              />
+              <span className="slider"></span>
+            </label>
+          );
+        }
+      }
+      class DiscountPercentFilters extends React.Component {
+        discounts = [5, 10, 15, 20, 25, 30];
+
+        renderDiscountOptions = () =>
+          this.discounts.map((discount) => (
+            <button
+              className="discountPercentButton"
+              key={discount}
+              onClick={() => this.props.onDiscountApplied(discount)}
+            >
+              Desde {discount}% OFF
+            </button>
+          ));
+
+        render() {
+          return (
+            <div className="discountPercentFilters">
+              <h3>Descuentos</h3>
+              {this.renderDiscountOptions()}
+            </div>
+          );
+        }
+      }
+
+      class PriceRangeFilters extends React.Component {
+        prices = [
+          { name: `Hasta $6500`, min: 0, max: 6500 },
+          { name: `$6500 a $15000`, min: 6500, max: 15000 },
+          { name: `Más de $15000`, min: 15000, max: Infinity },
+        ];
+        renderPriceOptions = () =>
+          this.prices.map((price) => (
+            <button
+              className="priceRangeButton"
+              key={price.min}
+              onClick={() => this.props.onPriceFilter(price.min, price.max)}
+            >
+              {price.name}
+            </button>
+          ));
+        render() {
+          return (
+            <div className="priceRangeFilters">
+              <h3>Precio</h3>
+              {this.renderPriceOptions()}
+            </div>
+          );
+        }
+      }
+      class BuyButton extends React.Component {
+        render() {
+          return (
+            <button className="comprarAhoraButton" onClick={this.props.onClick}>
+              Comprar ahora
+            </button>
+          );
+        }
+      }
+
+      class Product extends React.Component {
+        discountedPrice = priceWithDiscount(this.props.product);
+        discountPercent = Math.round(this.props.product.discount * 100);
+
+        renderDiscount = () =>
+          this.discountPercent === 0 ? "" : `${this.discountPercent}% OFF`;
+
+        renderOriginalPrice = () =>
+          this.discountPercent === 0
+            ? ""
+            : `$${Math.round(this.props.product.price)}`;
+
+        renderFreeDelivery = () =>
+          this.props.product.freeDelivery === true ? "Envío Gratis" : "";
+
+        render() {
+          return (
+            <div className="product">
+              <div className="productImageContainer">
+                <img
+                  className="productImage"
+                  alt={this.props.product.title}
+                  src={this.props.product.image}
+                />
+              </div>
+              <div className="productInfo">
+                <p className="originalPrice">{this.renderOriginalPrice()}</p>
+                <div className="priceAndDiscount">
+                  <p className="finalPrice">
+                    ${Math.round(this.discountedPrice)}
+                  </p>
+                  <p className="discountPercent">{this.renderDiscount()}</p>
+                </div>
+                <p className="freeDelivery">{this.renderFreeDelivery()}</p>
+                <p className="productName">{this.props.product.title}</p>
+              </div>
+              <BuyButton onClick={this.props.onPurchase} />
+            </div>
+          );
+        }
+      }
+
+      class MercadoLibreApp extends React.Component {
+        state = {
+          purchasedProducts: 0,
+          filterByFreeDelivery: false,
+          discountPercentageFilterValue: 0,
+          minPriceFilterValue: 0,
+          maxPriceFilterValue: 0,
+        };
+
+        addPurchase = () => {
+          this.setState({
+            purchasedProducts: this.state.purchasedProducts + 1,
+          });
+        };
+
+        setFreeDeliveryFilter = () => {
+          this.setState({
+            filterByFreeDelivery:
+              this.state.filterByFreeDelivery === false ? true : false,
+          });
+        };
+
+        setDiscountFilter = (discountPercentageFilterValue) => {
+          this.setState({
+            discountPercentageFilterValue,
+          });
+        };
+
+        setPriceFilter = (minPriceFilterValue, maxPriceFilterValue) => {
+          this.setState({
+            minPriceFilterValue,
+            maxPriceFilterValue,
+          });
+        };
+
+        renderProducts = () => {
+          let products = this.props.products;
+
+          if (this.state.filterByFreeDelivery === true) {
+            products = this.props.products.filter(
+              (product) => product.freeDelivery
+            );
+          }
+
+          if (this.state.discountPercentageFilterValue) {
+            products = products.filter(
+              (product) =>
+                product.discount * 100 >
+                this.state.discountPercentageFilterValue
+            );
+          }
+
+          if (
+            this.state.minPriceFilterValue ||
+            this.state.maxPriceFilterValue
+          ) {
+            products = products.filter(
+              (product) =>
+                priceWithDiscount(product) >= this.state.minPriceFilterValue &&
+                priceWithDiscount(product) <= this.state.maxPriceFilterValue
+            );
+          }
+
+          return products.map((product) => (
+            <Product
+              key={product.id}
+              onPurchase={this.addPurchase}
+              product={product}
+            />
+          ));
+        };
+        render() {
+          return (
+            <div>
+              <div className="topOfPage">
+                <img
+                  className="mercadoLibreLogo"
+                  src="https://i.pinimg.com/originals/c2/d8/65/c2d8651cf8c25046733ea69e16b3c58c.png"
+                />
+                <div className="shoppingCart">
+                  <img
+                    className="shoppingCartImg"
+                    src="https://i.pinimg.com/originals/15/4f/df/154fdf2f2759676a96e9aed653082276.png"
+                  />
+                  <div className="purchasedProducts">
+                    {this.state.purchasedProducts}
+                  </div>
+                </div>
+              </div>
+              <div className="bodyOfPage">
+                <div className="filtersContainer">
+                  <h2>Cyberfest</h2>
+                  <FreeDeliveryFilter
+                    onFilterFreeDelivery={this.setFreeDeliveryFilter}
+                  />
+                  <DiscountPercentFilters
+                    onDiscountApplied={this.setDiscountFilter}
+                  />
+                  <PriceRangeFilters onPriceFilter={this.setPriceFilter} />
+                </div>
+                <div className="productsContainer">{this.renderProducts()}</div>
+              </div>
+            </div>
+          );
+        }
+      }
+
+      function priceWithDiscount(product) {
+        const discountNumber = product.price * product.discount;
+        return product.price - discountNumber;
+      }
+
+      ReactDOM.render(
+        <MercadoLibreApp
+          products={[
+            {
+              id: 703.5183852320656,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_600088-MLA31062134507_062019-W.webp",
+              price: 1250,
+              discount: 0.05,
+              freeDelivery: false,
+              title: "Guirnalda 10mts Luces Led Calida Exterior Luz A Pilas",
+            },
+            {
+              id: 12.254880640701016,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_887728-MLA44891406839_022021-W.webp",
+              price: 6850,
+              discount: 0,
+              freeDelivery: true,
+              title:
+                "Planisferio Mdf Laminado Negro Mate Con Led Retro Iluminado.",
+            },
+            {
+              id: 353.0789526882885,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_751827-MLA43579192834_092020-W.webp",
+              price: 699,
+              discount: 0.14,
+              freeDelivery: false,
+              title:
+                "Jardin Vertical Artificial Panel Cesped La Mejor Calidad!!!",
+            },
+            {
+              id: 96.95890618993386,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_712001-MLA44435963789_122020-W.webp",
+              price: 420,
+              discount: 0.52,
+              freeDelivery: false,
+              title:
+                "Guirnalda Microled Alambre Luz Led Rgb Amarilla Azul Rosa",
+            },
+            {
+              id: 304.33607816294807,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_641989-MLA31888471541_082019-W.webp",
+              price: 195,
+              discount: 0.05,
+              freeDelivery: false,
+              title: "Cortinas Black Out Roller Belga Importado 100% Bloqueo",
+            },
+            {
+              id: 194.5239775646772,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_766168-MLA48415601476_122021-W.webp",
+              price: 2399,
+              discount: 0.15,
+              freeDelivery: false,
+              title: "Cuadro Arbol De La Vida Color 4 Estaciones Año Poliptico",
+            },
+            {
+              id: 472.73373842745593,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_851584-MLA40660301944_022020-W.webp",
+              price: 3699,
+              discount: 0,
+              freeDelivery: true,
+              title:
+                "Juego De Cortinas Blackout Textil Presillas Ocultas Oferta!",
+            },
+            {
+              id: 451.7766514013657,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_912890-MLA42060130599_062020-W.webp",
+              price: 580,
+              discount: 0.37,
+              freeDelivery: false,
+              title:
+                "Cortina Roller Doble, Screen + Blackout, Fabrica C/ Garantía",
+            },
+            {
+              id: 589.1959203713102,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_653988-MLA48873829547_012022-W.webp",
+              price: 1178,
+              discount: 0.13,
+              freeDelivery: false,
+              title:
+                "Cuadro Artesanal Cuadriptico Cactus Calado En Mdf - 125x25cm",
+            },
+            {
+              id: 538.6909752087165,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_821004-MLA43611523116_092020-W.webp",
+              price: 3000,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Pared Decowall Placa Auto-adhesiva! 3d! Envios Por 4 Placas!",
+            },
+            {
+              id: 544.9183677808907,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_641989-MLA31888471541_082019-W.webp",
+              price: 195,
+              discount: 0.05,
+              freeDelivery: false,
+              title: "Cortinas Black Out Roller Belga Importado 100% Bloqueo",
+            },
+            {
+              id: 784.0103852441091,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_912890-MLA42060130599_062020-W.webp",
+              price: 580,
+              discount: 0.37,
+              freeDelivery: false,
+              title:
+                "Cortina Roller Doble, Screen + Blackout, Fabrica C/ Garantía",
+            },
+            {
+              id: 868.7767524445769,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_827120-MLA48086198237_112021-W.webp",
+              price: 750,
+              discount: 0,
+              freeDelivery: false,
+              title: "Pared Placa Auto Adhesiva! Decowall Con Relieve Envios!!",
+            },
+            {
+              id: 935.929533686874,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_894373-MLA41180105867_032020-W.webp",
+              price: 1799,
+              discount: 0.44,
+              freeDelivery: false,
+              title:
+                "Portaretratos Cuadros Modernos Decorativos Set X 7 Begônia\n\npor Begonia",
+            },
+            {
+              id: 461.21123799978034,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_963327-MLA43687733630_102020-W.webp",
+              price: 5199,
+              discount: 0.1,
+              freeDelivery: false,
+              title:
+                "15 Mts Guirnalda De Luces P/exterior C/focos Vintage Golden",
+            },
+            {
+              id: 564.5635170214098,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_764908-MLA41734624507_052020-W.webp",
+              price: 1690,
+              discount: 0,
+              freeDelivery: false,
+              title: "Cortina De Tela Baño Con Puntilla + Protector + Ganchos",
+            },
+            {
+              id: 74.45406429511148,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_865139-MLA47338116039_092021-W.webp",
+              price: 2414,
+              discount: 0,
+              freeDelivery: false,
+              title: "Cuadro Pajaros Con Arbol Triptico Calado Negro 140x80cm",
+            },
+            {
+              id: 792.1592338296126,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_939043-MLA41180061515_032020-W.webp",
+              price: 1599,
+              discount: 0.5,
+              freeDelivery: false,
+              title:
+                "Portaretratos Cuadros Modernos Decorativos Set X 5 Begônia\n\npor Begonia",
+            },
+            {
+              id: 260.4208716348111,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_686819-MLA47393825300_092021-W.webp",
+              price: 218,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Guirnalda Hilo Alambre Cobre Microled 30leds Pilas 3mts Deco",
+            },
+            {
+              id: 847.9590795243377,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_852786-MLA46610846225_072021-W.webp",
+              price: 2690,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "3 Cuadros Nórdicos Modernos 45x30 Marco Impreso Decofactory",
+            },
+            {
+              id: 170.01124482475726,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_613346-MLA46911429320_072021-W.webp",
+              price: 2499,
+              discount: 0,
+              freeDelivery: false,
+              title: "10mts Guirnalda De Luces Para Exterior Vintage C/ Focos",
+            },
+            {
+              id: 442.37524441629364,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_600088-MLA31062134507_062019-W.webp",
+              price: 1250,
+              discount: 0.05,
+              freeDelivery: false,
+              title: "Guirnalda 10mts Luces Led Calida Exterior Luz A Pilas",
+            },
+            {
+              id: 372.75374207590886,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_751827-MLA43579192834_092020-W.webp",
+              price: 699,
+              discount: 0.14,
+              freeDelivery: false,
+              title:
+                "Jardin Vertical Artificial Panel Cesped La Mejor Calidad!!!",
+            },
+            {
+              id: 570.9466619788606,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_808498-MLA44677916132_012021-W.webp",
+              price: 545,
+              discount: 0,
+              freeDelivery: false,
+              title: "Cortina De Baño Estampada + Protector Y Ganchos",
+            },
+            {
+              id: 358.48243092302454,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_758588-MLA45856144477_052021-W.webp",
+              price: 916,
+              discount: 0.13,
+              freeDelivery: false,
+              title: "Cuadro Artesanal Gato Con Luna Calado Mdf - 59x48cm",
+            },
+            {
+              id: 932.1445409685579,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_935702-MLA40748521418_022020-W.webp",
+              price: 450,
+              discount: 0.35,
+              freeDelivery: false,
+              title:
+                "Cortina Roller Doble, Screen + Blackout, Fabrica C/ Garantía",
+            },
+            {
+              id: 495.8921426843153,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_757331-MLA43344581912_092020-W.webp",
+              price: 312,
+              discount: 0,
+              freeDelivery: false,
+              title: "Protector De Cortina De Baño Anti Hongos 75 Micrones",
+            },
+            {
+              id: 268.0452860897322,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_665338-MLA40101491946_122019-W.webp",
+              price: 3699,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Jgo De Cortinas Blackout Textil Lavable Presillas Ocultas",
+            },
+            {
+              id: 277.72253633267405,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_951814-MLA46978370914_082021-W.webp",
+              price: 828,
+              discount: 0,
+              freeDelivery: false,
+              title: "Barral Caño Cortina De Baño Extensible De 1 A 2 Mts",
+            },
+            {
+              id: 547.4999620032264,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_658309-MLA42125311190_062020-W.webp",
+              price: 1799,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Cortina De Baño Teflon Impermeable Tipo Hotelera Antihongos Colores Lisos Labrados",
+            },
+            {
+              id: 346.3427515701587,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_983817-MLA43115127568_082020-W.webp",
+              price: 420,
+              discount: 0.33,
+              freeDelivery: false,
+              title:
+                "Cortinas Roller Sun Screen Listas Para Instalar En Sistema",
+            },
+            {
+              id: 991.9700815529795,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_830265-MLA47148469942_082021-W.webp",
+              price: 1199,
+              discount: 0,
+              freeDelivery: false,
+              title: "Cortina De Ambiente 2,40 Ancho X 1,90 Largo Microfibra",
+            },
+            {
+              id: 139.42939364981234,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_607030-MLA44462407070_122020-W.webp",
+              price: 747,
+              discount: 0.23,
+              freeDelivery: false,
+              title: "Jardin Vertical Artificial Muro Verde Panel 40x60",
+            },
+            {
+              id: 147.20988084355824,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_902486-MLA45522046237_042021-W.webp",
+              price: 899,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Barral P/cortina De Baño Blanco/beige/negro De 1 A 2mts Lujo",
+            },
+            {
+              id: 487.5068044404076,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_935702-MLA40748521418_022020-W.webp",
+              price: 450,
+              discount: 0.35,
+              freeDelivery: false,
+              title:
+                "Cortina Roller Doble, Screen + Blackout, Fabrica C/ Garantía",
+            },
+            {
+              id: 640.7093989675894,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_827120-MLA48086198237_112021-W.webp",
+              price: 750,
+              discount: 0,
+              freeDelivery: false,
+              title: "Pared Placa Auto Adhesiva! Decowall Con Relieve Envios!!",
+            },
+            {
+              id: 912.3721352551479,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_760536-MLA43879585383_102020-W.webp",
+              price: 560,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Protector De Baño Antihongos 100micrones 2,20 Metros De Alto",
+            },
+            {
+              id: 804.852904574193,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_878951-MLA44424974209_122020-W.webp",
+              price: 4899,
+              discount: 0,
+              freeDelivery: false,
+              title:
+                "Juego De Cortinas Blackout Vinilico Engomado Bloquea 100%",
+            },
+            {
+              id: 450.1659269835061,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_864346-MLA43543797039_092020-W.webp",
+              price: 530,
+              discount: 0.12,
+              freeDelivery: false,
+              title:
+                "Protector Para Cortina De Baño Extra Grueso Pebd Antihongo",
+            },
+            {
+              id: 337.64887499266496,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_706703-MLA42975774290_082020-W.webp",
+              price: 799,
+              discount: 0,
+              freeDelivery: false,
+              title: "Cuadro Decorativo 20x30 Sin Lámina",
+            },
+            {
+              id: 867.8204991871584,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_629166-MLA42975550493_082020-W.webp",
+              price: 1429,
+              discount: 0,
+              freeDelivery: false,
+              title: "Cuadro 30x45 Cm Con Vidrio Fondo Y Gancho Para Colgar",
+            },
+            {
+              id: 188.6961125264044,
+              image:
+                "https://http2.mlstatic.com/D_NQ_NP_767728-MLA43983723833_112020-W.webp",
+              price: 4899,
+              discount: 0,
+              freeDelivery: true,
+              title: "Jgo De Cortinas Blackout Engomado Bloquea 100%",
+            },
+          ]}
+        />,
+        document.getElementById("root")
+      );
     </script>
   </body>
 </html>
