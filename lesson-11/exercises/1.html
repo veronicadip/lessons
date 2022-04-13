@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
 
-  <body>
-    <style>
-      .body {
-        margin-left: 10px;
-      }
-      h1 {
-        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-      }
-      label {
-        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-      }
-      .pictures {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 30px;
-      }
-      img {
-        max-width: 300px;
-        max-height: 300px;
-        margin: 10px;
-        border-radius: 5%;
-      }
-    </style>
-    <div id="root"></div>
-    <!--
+<head>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <style>
+    .body {
+      margin-left: 10px;
+    }
+
+    h1 {
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    }
+
+    label {
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    }
+
+    .pictures {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    img {
+      max-width: 300px;
+      max-height: 300px;
+      margin: 10px;
+      border-radius: 5%;
+    }
+  </style>
+  <div id="root"></div>
+  <!--
       This is a public API about dogs: https://dog.ceo/dog-api/documentation/ it provides:
 
       - an endpoint to get a list of breeds:  https://dog.ceo/dog-api/documentation
@@ -44,7 +49,7 @@
       Bonus points if there's a breed selected by default.
     -->
 
-    <script type="text/babel">
+  <script type="text/babel">
       class BreedOption extends React.Component {
         render() {
           return <option value={this.props.breed}>{this.props.breed}</option>;
@@ -57,9 +62,12 @@
         };
         renderBreedSelector = () => {
           if (this.props.isLoading) {
-            return <option disabled>Loading...</option>;
+            return (
+              <select id="dog-select">
+               <option disabled>Loading...</option>;
+               </select>
+            )
           }
-
           return (
             <div>
               <label htmlFor="dog-select">Choose a dog breedslist: </label>
@@ -197,5 +205,6 @@
 
       ReactDOM.render(<DogsApp />, document.getElementById("root"));
     </script>
-  </body>
+</body>
+
 </html>
