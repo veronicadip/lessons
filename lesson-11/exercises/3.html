@@ -1,101 +1,127 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
 
-  <body>
-    <style>
-      body {
-        font-family: sans-serif;
-        color: #555;
-      }
-      h1 {
-        color: rgb(10, 118, 133);
-      }
-      input {
-        padding: 5px;
-        font-size: 15px;
-        line-height: 16px;
-        border-radius: 5px;
-        border-color: #ccd0d5;
-        border-style: solid;
-        margin-bottom: 10px;
-      }
-      button {
-        background-color: rgb(10, 118, 133);
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 20px;
-        height: 30px;
-        padding: 5px 9px;
-        border: none;
-        border-radius: 8px;
-        color: white;
-        margin: 10px;
-      }
-      button:hover {
-        background-color: rgb(12, 129, 145);
-      }
-      button:active {
-        background-color: rgb(8, 104, 117);
-      }
-      .listOfAlbums {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      .album {
-        background-color: #fff;
-        max-width: 150px;
-        height: 350px;
-        border-radius: 7px;
-        border-color: #606770;
-        margin: 10px;
-        box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
-        -webkit-box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
-        -moz-box-shadow: 0px 0px 3px 1px rgba(10, 118, 133, 0.14);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        font-size: small;
-      }
-      .album:hover {
-        box-shadow: 0px 0px 3px 5px rgb(12 129 145 / 14%);
-        -webkit-box-shadow: 0px 0px 3px 5px rgb(12 129 145 / 14%);
-        -moz-box-shadow: 0px 0px 3px 5px rgba(71, 71, 71, 0.14);
-      }
-      .albumImageContainer {
-        border-bottom: rgba(0, 0, 0, 0.1);
-        border-bottom-style: inset;
-        display: flex;
-        justify-content: space-around;
-        height: 150px;
-      }
-      .albumImage {
-        border-radius: 7px;
-        width: 100%;
-        object-fit: scale-down;
-      }
-      p {
-        margin: 5px;
-      }
-      a {
-        color: rgb(10, 118, 133);
-        font-size: smaller;
-        margin: 5px;
-      }
-    </style>
-    <div id="root"></div>
-    <!--
+<head>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <style>
+    body {
+      font-family: sans-serif;
+      color: #555;
+    }
+
+    h1 {
+      color: rgb(10, 118, 133);
+    }
+
+    input {
+      padding: 5px;
+      font-size: 15px;
+      line-height: 16px;
+      border-radius: 5px;
+      border-color: #ccd0d5;
+      border-style: solid;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: rgb(10, 118, 133);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      height: 30px;
+      padding: 5px 9px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: rgb(12, 129, 145);
+    }
+
+    button:active {
+      background-color: rgb(8, 104, 117);
+    }
+
+    .tryAgain {
+      color: rgb(10, 118, 133);
+    }
+
+    .tryAgain:hover {
+      cursor: pointer;
+    }
+
+    .listOfAlbums {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .album {
+      background-color: #fff;
+      max-width: 150px;
+      height: 350px;
+      border-radius: 7px;
+      border-color: #606770;
+      margin: 10px;
+      box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
+      -webkit-box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
+      -moz-box-shadow: 0px 0px 3px 1px rgba(10, 118, 133, 0.14);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: small;
+    }
+
+    .album:hover {
+      box-shadow: 0px 0px 3px 5px rgb(12 129 145 / 14%);
+      -webkit-box-shadow: 0px 0px 3px 5px rgb(12 129 145 / 14%);
+      -moz-box-shadow: 0px 0px 3px 5px rgba(71, 71, 71, 0.14);
+    }
+
+    .albumImageContainer {
+      border-bottom: rgba(0, 0, 0, 0.1);
+      border-bottom-style: inset;
+      display: flex;
+      justify-content: space-around;
+      height: 150px;
+    }
+
+    .albumImage {
+      border-radius: 7px;
+      width: 100%;
+      object-fit: scale-down;
+    }
+
+    p {
+      margin: 5px;
+    }
+
+    a {
+      color: rgb(10, 118, 133);
+      font-size: smaller;
+      margin: 5px;
+    }
+  </style>
+  <div id="root"></div>
+  <!--
       This API allows you to search albums https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
 
       Create an app that works like google image search, allowing you to search for images.
     -->
 
-    <script type="text/babel">
+  <script type="text/babel">
       class Album extends React.Component {
+        renderPrice = () => {
+          if (this.props.album.collectionPrice) {
+            return <p>Price: {this.props.album.collectionPrice.toLocaleString("en-US", {style:"currency", currency:"USD"})}</p>
+          }
+        }
         render() {
           const album = this.props.album;
           return (
@@ -109,7 +135,7 @@
               </div>
               <p>Artist: {album.artistName}</p>
               <p>Album: {album.collectionName}</p>
-              <p>Price: ${album.collectionPrice}</p>
+              {this.renderPrice()}
               <p>Genre: {album.primaryGenreName}</p>
               <a href={album.collectionViewUrl}>Go to iTunes</a>
             </div>
@@ -117,12 +143,12 @@
         }
       }
       class AlbumsList extends React.Component {
-        renderAlbums = () => {
+        render() {
           if (this.props.error) {
             return (
-              <span>
-                There was an error loading the albums, please try again.
-              </span>
+              <p>
+                There was an error loading the albums, please <span onClick={this.props.onSearch} className="tryAgain">try again.</span>
+              </p>
             );
           }
           if (this.props.isLoading) {
@@ -135,9 +161,6 @@
               searchValue={this.props.searchValue}
             />
           ));
-        };
-        render() {
-          return this.renderAlbums();
         }
       }
       class SearchAlbumsApp extends React.Component {
@@ -149,7 +172,7 @@
         };
         setSearchValue = () => {
           this.setState({
-            searchValue: event.target.value.replace(" ", "+"),
+            searchValue: encodeURIComponent(event.target.value),
           });
         };
         searchAlbums = () => {
@@ -188,6 +211,7 @@
                   searchValue={this.state.searchValue}
                   isLoading={this.state.isLoading}
                   error={this.state.error}
+                  onSearch={this.searchAlbums}
                 />
               </div>
             </div>
@@ -197,5 +221,6 @@
 
       ReactDOM.render(<SearchAlbumsApp />, document.getElementById("root"));
     </script>
-  </body>
+</body>
+
 </html>
