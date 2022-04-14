@@ -60,8 +60,9 @@
           const selectedBreed = event.target.value;
           this.props.onSelectBreed(selectedBreed);
         };
-        renderBreedSelector = () => {
-          if (this.props.isLoading) {
+        
+        render() {
+            if (this.props.isLoading) {
             return (
               <select id="dog-select">
                <option disabled>Loading...</option>;
@@ -82,9 +83,6 @@
               </select>
             </div>
           );
-        };
-        render() {
-          return this.renderBreedSelector();
         }
       }
 
