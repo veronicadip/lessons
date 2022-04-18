@@ -1,127 +1,134 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
 
-<head>
-  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-</head>
+  <body>
+    <style>
+      body {
+        font-family: sans-serif;
+        color: #555;
+      }
 
-<body>
-  <style>
-    body {
-      font-family: sans-serif;
-      color: #555;
-    }
+      h1 {
+        color: rgb(10, 118, 133);
+      }
 
-    h1 {
-      color: rgb(10, 118, 133);
-    }
+      input {
+        padding: 5px;
+        font-size: 15px;
+        line-height: 16px;
+        border-radius: 5px;
+        border-color: #ccd0d5;
+        border-style: solid;
+        margin-bottom: 10px;
+      }
 
-    input {
-      padding: 5px;
-      font-size: 15px;
-      line-height: 16px;
-      border-radius: 5px;
-      border-color: #ccd0d5;
-      border-style: solid;
-      margin-bottom: 10px;
-    }
+      button {
+        background-color: rgb(10, 118, 133);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        height: 30px;
+        padding: 5px 9px;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        margin: 10px;
+      }
 
-    button {
-      background-color: rgb(10, 118, 133);
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      height: 30px;
-      padding: 5px 9px;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      margin: 10px;
-    }
+      button:hover {
+        background-color: rgb(12, 129, 145);
+      }
 
-    button:hover {
-      background-color: rgb(12, 129, 145);
-    }
+      button:active {
+        background-color: rgb(8, 104, 117);
+      }
 
-    button:active {
-      background-color: rgb(8, 104, 117);
-    }
+      .tryAgain {
+        color: rgb(10, 118, 133);
+      }
 
-    .tryAgain {
-      color: rgb(10, 118, 133);
-    }
+      .tryAgain:hover {
+        cursor: pointer;
+      }
 
-    .tryAgain:hover {
-      cursor: pointer;
-    }
+      .listOfAlbums {
+        display: flex;
+        flex-wrap: wrap;
+      }
 
-    .listOfAlbums {
-      display: flex;
-      flex-wrap: wrap;
-    }
+      .album {
+        background-color: #fff;
+        max-width: 150px;
+        height: 350px;
+        border-radius: 7px;
+        border-color: #606770;
+        margin: 10px;
+        box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
+        -webkit-box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
+        -moz-box-shadow: 0px 0px 3px 1px rgba(10, 118, 133, 0.14);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: small;
+      }
 
-    .album {
-      background-color: #fff;
-      max-width: 150px;
-      height: 350px;
-      border-radius: 7px;
-      border-color: #606770;
-      margin: 10px;
-      box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
-      -webkit-box-shadow: 0px 0px 3px 1px rgb(71 71 71 / 14%);
-      -moz-box-shadow: 0px 0px 3px 1px rgba(10, 118, 133, 0.14);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      font-size: small;
-    }
+      .album:hover {
+        box-shadow: 0px 0px 3px 5px rgb(12 129 145 / 14%);
+        -webkit-box-shadow: 0px 0px 3px 5px rgb(12 129 145 / 14%);
+        -moz-box-shadow: 0px 0px 3px 5px rgba(71, 71, 71, 0.14);
+      }
 
-    .album:hover {
-      box-shadow: 0px 0px 3px 5px rgb(12 129 145 / 14%);
-      -webkit-box-shadow: 0px 0px 3px 5px rgb(12 129 145 / 14%);
-      -moz-box-shadow: 0px 0px 3px 5px rgba(71, 71, 71, 0.14);
-    }
+      .albumImageContainer {
+        border-bottom: rgba(0, 0, 0, 0.1);
+        border-bottom-style: inset;
+        display: flex;
+        justify-content: space-around;
+        height: 150px;
+      }
 
-    .albumImageContainer {
-      border-bottom: rgba(0, 0, 0, 0.1);
-      border-bottom-style: inset;
-      display: flex;
-      justify-content: space-around;
-      height: 150px;
-    }
+      .albumImage {
+        border-radius: 7px;
+        width: 100%;
+        object-fit: scale-down;
+      }
 
-    .albumImage {
-      border-radius: 7px;
-      width: 100%;
-      object-fit: scale-down;
-    }
+      p {
+        margin: 5px;
+      }
 
-    p {
-      margin: 5px;
-    }
-
-    a {
-      color: rgb(10, 118, 133);
-      font-size: smaller;
-      margin: 5px;
-    }
-  </style>
-  <div id="root"></div>
-  <!--
+      a {
+        color: rgb(10, 118, 133);
+        font-size: smaller;
+        margin: 5px;
+      }
+    </style>
+    <div id="root"></div>
+    <!--
       This API allows you to search albums https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
 
       Create an app that works like google image search, allowing you to search for images.
     -->
 
-  <script type="text/babel">
+    <script type="text/babel">
       class Album extends React.Component {
         renderPrice = () => {
           if (this.props.album.collectionPrice) {
-            return <p>Price: {this.props.album.collectionPrice.toLocaleString("en-US", {style:"currency", currency:"USD"})}</p>
+            return (
+              <p>
+                Price:{" "}
+                {this.props.album.collectionPrice.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })}
+              </p>
+            );
           }
-        }
+        };
         render() {
           const album = this.props.album;
           return (
@@ -147,12 +154,18 @@
           if (this.props.error) {
             return (
               <p>
-                There was an error loading the albums, please <span onClick={this.props.onSearch} className="tryAgain">try again.</span>
+                There was an error loading the albums, please{" "}
+                <span onClick={this.props.onSearch} className="tryAgain">
+                  try again.
+                </span>
               </p>
             );
           }
           if (this.props.isLoading) {
             <span>Loading...</span>;
+          }
+          if (this.props.albumsInfo.length === 0) {
+            return <span>No results</span>;
           }
           return this.props.albumsInfo.map((album) => (
             <Album
@@ -170,14 +183,16 @@
           isLoading: true,
           error: false,
         };
+
         setSearchValue = () => {
           this.setState({
-            searchValue: encodeURIComponent(event.target.value),
+            searchValue: event.target.value,
           });
         };
-        searchAlbums = () => {
+
+        searchAlbums = (term) => {
           fetch(
-            `https://itunes.apple.com/search?term=${this.state.searchValue}&entity=album`
+            `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=album`
           )
             .then((promise) => promise.json())
             .then((jsonData) => {
@@ -187,28 +202,33 @@
               this.setState({ error: true, isLoading: false });
             });
         };
-        keyDownHandler = (event) => {
-          if (event.key === "Enter") {
-            this.searchAlbums();
-          }
+
+        onFormSubmit = (event) => {
+          event.preventDefault();
+          this.searchAlbums(this.state.searchValue);
         };
 
         render() {
           return (
-            <div onKeyDown={this.keyDownHandler}>
+            <div>
               <h1>Find Albums</h1>
-              <label htmlFor="search-albums"></label>
-              <input
-                placeholder="Search albums here"
-                type="search"
-                id="search-albums"
-                onChange={this.setSearchValue}
-              />
-              <button onClick={this.searchAlbums}>Search</button>
+              <form onSubmit={this.onFormSubmit}>
+                <label htmlFor="search-albums"></label>
+                <input
+                  value={this.state.searchValue}
+                  onChange={this.setSearchValue}
+                  placeholder="Search albums here"
+                  type="search"
+                  id="search-albums"
+                />
+                <button>Search</button>
+              </form>
+
+              {this.state.searchValue && this.state.albumsInfo.length > 0 && <h3>Search results for {this.state.searchValue}</h3>}
+
               <div className="listOfAlbums">
                 <AlbumsList
                   albumsInfo={this.state.albumsInfo}
-                  searchValue={this.state.searchValue}
                   isLoading={this.state.isLoading}
                   error={this.state.error}
                   onSearch={this.searchAlbums}
@@ -221,6 +241,5 @@
 
       ReactDOM.render(<SearchAlbumsApp />, document.getElementById("root"));
     </script>
-</body>
-
+  </body>
 </html>
