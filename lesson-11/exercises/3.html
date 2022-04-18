@@ -115,66 +115,63 @@
     -->
 
     <script type="text/babel">
-      class Album extends React.Component {
-        renderPrice = () => {
-          if (this.props.album.collectionPrice) {
-            return (
-              <p>
-                Price:{" "}
-                {this.props.album.collectionPrice.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                })}
-              </p>
-            );
-          }
-        };
-        render() {
-          const album = this.props.album;
+      function RenderPrice(props) {
+        if (props.album.collectionPrice) {
           return (
-            <div className="album">
-              <div className="albumImageContainer">
-                <img
-                  className="albumImage"
-                  src={album.artworkUrl100}
-                  alt={`${album.collectionName}-album-cover-by-${album.artistName}`}
-                />
-              </div>
-              <p>Artist: {album.artistName}</p>
-              <p>Album: {album.collectionName}</p>
-              {this.renderPrice()}
-              <p>Genre: {album.primaryGenreName}</p>
-              <a href={album.collectionViewUrl}>Go to iTunes</a>
-            </div>
+            <p>
+              Price:{" "}
+              {props.album.collectionPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </p>
           );
         }
       }
-      class AlbumsList extends React.Component {
-        render() {
-          if (this.props.error) {
-            return (
-              <p>
-                There was an error loading the albums, please{" "}
-                <span onClick={this.props.onSearch} className="tryAgain">
-                  try again.
-                </span>
-              </p>
-            );
-          }
-          if (this.props.isLoading) {
-            <span>Loading...</span>;
-          }
-          if (this.props.albumsInfo.length === 0) {
-            return <span>No results</span>;
-          }
-          return this.props.albumsInfo.map((album) => (
-            <Album
-              album={album}
-              key={album.collectionId}
-              searchValue={this.props.searchValue}
-            />
-          ));
+      function Album(props) {
+        const album = props.album;
+        return (
+          <div className="album">
+            <div className="albumImageContainer">
+              <img
+                className="albumImage"
+                src={album.artworkUrl100}
+                alt={`${album.collectionName}-album-cover-by-${album.artistName}`}
+              />
+            </div>
+            <p>Artist: {album.artistName}</p>
+            <p>Album: {album.collectionName}</p>
+            <RenderPrice album={album} />
+            <p>Genre: {album.primaryGenreName}</p>
+            <a href={album.collectionViewUrl}>Go to iTunes</a>
+          </div>
+        );
+      }
+
+      function Title(props) {
+        return <h1>{props.children}</h1>;
+      }
+
+      function AlbumsList(props) {
+        if (props.error) {
+          return (
+            <p>
+              There was an error loading the albums, please{" "}
+              <span onClick={props.onSearch} className="tryAgain">
+                try again.
+              </span>
+            </p>
+          );
         }
+        if (props.isLoading) {
+          <span>Loading...</span>;
+        }
+        if (props.albumsInfo.length === 0) {
+          return <span>No results</span>;
+        }
+        return props.albumsInfo.map((album) => (
+          <Album album={album} key={album.collectionId} />
+        ));
       }
       class SearchAlbumsApp extends React.Component {
         state = {
@@ -192,7 +189,9 @@
 
         searchAlbums = (term) => {
           fetch(
-            `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=album`
+            `https://itunes.apple.com/search?term=${encodeURIComponent(
+              term
+            )}&entity=album`
           )
             .then((promise) => promise.json())
             .then((jsonData) => {
@@ -211,8 +210,11 @@
         render() {
           return (
             <div>
-              <h1>Find Albums</h1>
-              <form onSubmit={this.onFormSubmit}>
+              <Title>
+                Find <i>Albums</i>
+              </Title>
+
+              <form onSubmit={this.onFormSubmit}>
                 <label htmlFor="search-albums"></label>
                 <input
                   value={this.state.searchValue}
@@ -224,7 +226,9 @@
                 <button>Search</button>
               </form>
 
-              {this.state.searchValue && this.state.albumsInfo.length > 0 && <h3>Search results for {this.state.searchValue}</h3>}
+              {this.state.searchValue && this.state.albumsInfo.length > 0 && (
+                <h3>Search results for {this.state.searchValue}</h3>
+              )}
 
               <div className="listOfAlbums">
                 <AlbumsList
